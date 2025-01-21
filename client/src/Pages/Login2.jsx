@@ -12,37 +12,39 @@ function Login2() {
 
     useEffect(() => {
         // Comprobamos si el usuario está autenticado
-        if (user) {
-            // Si ya está autenticado, verificamos en la base de datos si es un alumno o académico
-            const checkUserInDatabase = async (uid) => {
+        const checkUserStatus = async () => {
+            if (user) {
                 try {
-                    const response = await fetch(`http://localhost:8800/auth/checkUser/${uid}`);
-                    if (response.ok) {
-                        const data = await response.json();  // Asegúrate de que la respuesta sea JSON
-                        console.log(data);
-                        if (data.exists) {
-                            // Usuario encontrado, redirigir según el rol
-                            if (data.rol === 2) {
-                                navigate('/register');  // Redirigir a registro para alumno
-                            } else {
-                                // Usuario es académico, continuar sin redirigir
-                                navigate('/');
-                            }
-                        } else {
-                            console.log('Usuario no encontrado');
-                        }
+                    // Iniciar la carga antes de hacer la consulta
+                    setIsLoading(true);
+
+                    // Aplicar filtro de rol en el frontend según el dominio del correo
+                    const userEmail = user.email || '';
+                    let userRole = 2;  // Rol por defecto es alumno
+                    if (userEmail.includes('@duocuc.cl')) {
+                        userRole = 1;  // Si el correo termina en @duocuc.cl, asignamos rol académico
+                    }
+
+                    // Redirigir según el rol asignado
+                    if (userRole === 1) {
+                        // Si el usuario es académico (rol 1), redirigir al home o página principal
+                        navigate('/login2');
                     } else {
-                        console.error('Error en la respuesta del servidor', await response.text());
+                        // Si es alumno (rol 2), redirigir al formulario de registro
+                        navigate('/register');
                     }
                 } catch (error) {
                     console.error('Error al verificar el usuario:', error);
+                } finally {
+                    // Dejar de mostrar la carga después de la respuesta
+                    setIsLoading(false);
                 }
-            };
-            console.log('Usuario:', user)
-            checkUserInDatabase();
-        } else {
-            setIsLoading(false);  // Si el usuario es null, solo cambia el estado de carga
-        }
+            } else {
+                setIsLoading(false);  // Si no hay usuario, se termina el estado de carga
+            }
+        };
+
+        checkUserStatus();
     }, [user, navigate]);
 
     const handleLogout = async () => {

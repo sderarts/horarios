@@ -10,18 +10,20 @@ router.post('/auth/register', async (req, res) => {
         const { uid, email, displayName } = decodedToken;
 
         const limitedUid = uid.substring(0, 200);  // Limitar la UID
-        const isAcademico = rol === 1;
+        const isAcademico = email && email.endsWith('@duocuc.cl'); // Verificar si el correo termina con '@duocuc.cl'
         const [firstName, lastName] = displayName ? displayName.split(' ') : ['Desconocido', 'Desconocido'];
 
         let query;
         let params;
 
         if (isAcademico) {
+            // Si es académico, asignar rol 1
             query = `INSERT INTO academico (id_academico, correoAcademico, nombreAcademico, apellidoAcademico, fk_rol) VALUES (?, ?, ?, ?, ?)`;
-            params = [limitedUid, email, firstName, lastName, rol];
+            params = [limitedUid, email, firstName, lastName, 1];  // fk_rol para académico es 1
         } else {
+            // Si no es académico, asignar rol 2 (alumno)
             query = `INSERT INTO alumno (ID_ALUMNO, correoAlumno, nombreAlumno, apellidoAlumno, fk_carrera, fk_carrera_nivel, fk_rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-            params = [limitedUid, email, firstName, lastName, carreraSeleccionada, nivelSeleccionado, rol];
+            params = [limitedUid, email, firstName, lastName, carreraSeleccionada, nivelSeleccionado, 2];  // fk_rol para alumno es 2
         }
 
         db.query(query, params, (err, result) => {
@@ -38,6 +40,7 @@ router.post('/auth/register', async (req, res) => {
         return res.status(500).json({ message: 'Autenticación fallida', error: error.message });
     }
 });
+
 
 
 router.get('/auth/checkUser/:uid', async (req, res) => {
