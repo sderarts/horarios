@@ -39,7 +39,7 @@ const FormularioRegistro = () => {
 
         const fetchNiveles = async () => {
             try {
-                const response = await axios.get('http://localhost:8800/nivel_asignaturas');
+                const response = await axios.get('http://localhost:8800/carrera_niveles');
                 setNiveles(response.data);
             } catch (error) {
                 console.error("Error al cargar los niveles:", error);
@@ -59,33 +59,38 @@ const FormularioRegistro = () => {
             return;
         }
 
-        // Obtener el idToken desde Firebase Auth
-        auth.currentUser.getIdToken(true) // `true` para forzar la obtención de un nuevo token si ya ha expirado
-            .then((idToken) => {
-                // Datos a enviar
-                const dataToSend = {
-                    idToken,  // Incluye el idToken
-                    email,  // Correo del usuario
-                    firstName,  // Nombre del usuario
-                    lastName,  // Apellido del usuario
-                    carreraSeleccionada,  // Carrera seleccionada
-                    nivelSeleccionado,  // Nivel seleccionado
-                    rol,  // Rol del usuario (alumno o académico)
-                    uid // UID limitado a 200 caracteres
-                };
+        // Convertir carreraSeleccionada y nivelSeleccionado a enteros
+    const carreraSeleccionadaInt = parseInt(carreraSeleccionada, 10);  // Convierte a número
+    const nivelSeleccionadoInt = parseInt(nivelSeleccionado, 10);  // Convierte a número
 
-                // Enviar los datos al backend
-                axios.post('http://localhost:8800/auth/register', dataToSend)
-                    .then((response) => {
-                        console.log('Usuario registrado con éxito:', response.data);
-                    })
-                    .catch((error) => {
-                        console.error('Error al registrar el usuario:', error.response ? error.response.data : error.message);
-                    });
-            })
-            .catch((error) => {
-                console.error('Error al obtener el idToken:', error);
-            });
+    // Obtener el idToken desde Firebase Auth
+    auth.currentUser.getIdToken(true) // `true` para forzar la obtención de un nuevo token si ya ha expirado
+        .then((idToken) => {
+            // Datos a enviar
+            const dataToSend = {
+                idToken,  // Incluye el idToken
+                email,  // Correo del usuario
+                firstName,  // Nombre del usuario
+                lastName,  // Apellido del usuario
+                carreraSeleccionada: carreraSeleccionadaInt,  // Convertido a número
+                nivelSeleccionado: nivelSeleccionadoInt,  // Convertido a número
+                rol,  // Rol del usuario (alumno o académico)
+                uid // UID limitado a 200 caracteres
+            };
+
+            // Enviar los datos al backend
+            axios.post('http://localhost:8800/auth/register', dataToSend)
+                .then((response) => {
+                    console.log('Usuario registrado con éxito:', response.data);
+                })
+                .catch((error) => {
+                    console.error('Error al registrar el usuario:', error.response ? error.response.data : error.message);
+                });
+        })
+        .catch((error) => {
+            console.error('Error al obtener el idToken:', error);
+        });
+
     };
 
     return (
@@ -135,12 +140,12 @@ const FormularioRegistro = () => {
 
                     <label>Selecciona tu nivel</label>
                     <select
-                        value={nivelSeleccionado}
+                        value={nivelSeleccionado || ''} // Usa un valor vacío si nivelSeleccionado es null
                         onChange={(e) => setNivelSeleccionado(e.target.value)}
                     >
                         <option value="">Selecciona un nivel</option>
                         {niveles.map((nivel) => (
-                            <option key={nivel.id_nivel_carrera} value={nivel.id_nivel_carrera}>
+                            <option key={nivel.id_carrera_nivel} value={nivel.id_carrera_nivel}>
                                 {nivel.relacionNombre}
                             </option>
                         ))}

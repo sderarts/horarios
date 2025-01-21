@@ -3,7 +3,7 @@ const router = express.Router();
 import verifyIdToken from "../../config/firebaseConfig.js";
 import db from '../../config/db.js';  // Esto debería ser tu archivo de conexión a la base de datos MySQL
 
-router.post('/auth', async (req, res) => {
+router.post('/auth/register', async (req, res) => {
     try {
         const { idToken, rol, carreraSeleccionada, nivelSeleccionado } = req.body;
         const decodedToken = await verifyIdToken(idToken);
@@ -20,7 +20,7 @@ router.post('/auth', async (req, res) => {
             query = `INSERT INTO academico (id_academico, correoAcademico, nombreAcademico, apellidoAcademico, fk_rol) VALUES (?, ?, ?, ?, ?)`;
             params = [limitedUid, email, firstName, lastName, rol];
         } else {
-            query = `INSERT INTO alumno (id_alumno, correoAlumno, nombreAlumno, apellidoAlumno, fk_carrera, fk_nivel_carrera, fk_rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            query = `INSERT INTO alumno (ID_ALUMNO, correoAlumno, nombreAlumno, apellidoAlumno, fk_carrera, fk_carrera_nivel, fk_rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
             params = [limitedUid, email, firstName, lastName, carreraSeleccionada, nivelSeleccionado, rol];
         }
 
