@@ -5,15 +5,17 @@ import AddDiaBloque from '../Sections/Dia/AddDiaBloque';
 import VerSecciones from '../Sections/Seccion/Secciones';
 import AddSeccion from '../Sections/Seccion/AddSeccion';
 import AddSeccionDia from '../Sections/Seccion/AddSeccionDia';
+import Navbar from '../Layout/Navbar';
 
 function BloquesHorarios() {
     return (
         <div>
+            <Navbar />
             <VerBloques />
-            <AddBloque />
+            {/* <AddBloque /> */}
             <AddDiaBloque />
             <VerSecciones />
-            <AddSeccion />
+            {/* <AddSeccion /> */}
             <AddSeccionDia />
         </div>
     )

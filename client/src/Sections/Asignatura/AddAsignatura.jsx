@@ -23,13 +23,13 @@ function AddAsignatura() {
     };
 
     return (
-        <div className='p-12'>
+        <div className='p-12 w-1/3'>
             <h1>Agregar Asignatura</h1>
             {/* <input type="number" placeholder='0' onChange={handleChange} name='id_asignatura' />
             <input type="text" placeholder='asignatura' onChange={handleChange} name='nombreAsignatura' />
             <button onClick={handleClick}>Add</button> */}
 
-            <div class="flex flex-wrap -mx-3 mb-6 form w-1/2">
+            <div class="flex flex-wrap -mx-3 mb-6 form w-full">
                 <div class="w-full px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                         id asignatura

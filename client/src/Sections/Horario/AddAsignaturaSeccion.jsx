@@ -58,7 +58,7 @@ function AddAsignaturaSeccion() {
     };
 
     return (
-        <div className='p-12'>
+        <div className='bg-amber-400 w-1/3 p-20'>
             {/* <input
                 type="number"
                 placeholder='ID AsignaturaSeccion'
@@ -104,7 +104,7 @@ function AddAsignaturaSeccion() {
             </select>
             <button onClick={handleClick}>Agregar Asignatura-Sección</button> */}
 
-            <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
+            <div className="flex flex-wrap -mx-3 mb-6 form w-full">
                 {/* Input para id_asignatura_seccion */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_asignatura_seccion">

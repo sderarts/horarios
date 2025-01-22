@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router";
 import axios from 'axios';
+import AddSeccionDia from './AddSeccionDia';
+import AddSeccion from './AddSeccion';
 function VerSecciones() {
 
   const [secciones, setSeccion] = useState([])
@@ -29,16 +31,17 @@ function VerSecciones() {
   }
 
   return (
-    <div>
+    <div className='flex flex-row w-full bg-amber-400 '>
       <div className="p-12">
         <h1> Listado de Secciones</h1>
 
         {secciones.length > 0 ? (
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-200 dark:text-black  bg-black">
               <thead>
                 <tr>
                   <th scope="col" className="px-6 py-3 text-amber-400">Siglas sección</th>
+                  <th scope="col" className="px-6 py-3 text-amber-400">Inscripciones</th>
                   <th scope="col" className="px-6 py-3 text-amber-400">Actualizar</th>
                   <th scope="col" className="px-6 py-3 text-amber-400">Eliminar</th>
                 </tr>
@@ -48,6 +51,9 @@ function VerSecciones() {
                   <tr key={e.id_seccion} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                     <td className="px-6 py-4">
                       {e.id_seccion} - {e.nombreSeccion}
+                    </td>
+                    <td className="px-6 py-4">
+                      {e.inscripciones}/{e.capacidad}
                     </td>
                     <td className="px-6 py-4">
                       <Link to={`/secciones/${e.id_seccion}`}>
@@ -73,6 +79,7 @@ function VerSecciones() {
           <p>No hay secciones disponibles.</p>
         )}
       </div>
+      <AddSeccion />
     </div>
   )
 }

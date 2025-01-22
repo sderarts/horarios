@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router";
 import axios from 'axios';
+import AddAsignaturaSeccion from './AddAsignaturaSeccion';
 
 function AsignaturasSecciones() {
     const [asignaturaSeccion, setAsignaturaSeccion] = useState([]);
@@ -33,28 +34,13 @@ function AsignaturasSecciones() {
     }
 
     return (
-        <div>
-            <h1>Lista de Asignaturas y Secciones</h1>
-            {/* {asignaturaSeccion.length > 0 ? (
-                <ul>
-                    {asignaturaSeccion.map((e) => (
-                        <li key={e.id_asignatura_seccion}>
-                            {e.nombreRelacion} - {e.nombre_asignatura} - {e.nombre_seccion}  - {e.nombreDocente}
-                            <button className='delete' onClick={() => handleDelete(e.id_asignatura_seccion)}>Eliminar</button>
-                            <Link to={`/asignatura_secciones/${e.id_asignatura_seccion}`}>Actualizar</Link>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No hay registros de Día-seccion disponibles.</p>
-            )} */}
+        <div className='flex flex-row bg-amber-400'>
 
             <div>
-                <div className="p-12">
-                    <h1> Lista de Asignaturas</h1>
-
+                <div className="p-12 ">
+                    <h1>Detalles asignaturas</h1>
                     {asignaturaSeccion.length > 0 ? (
-                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2">
+                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-200 dark:text-black  bg-black">
                                 <thead>
                                     <tr>
@@ -106,6 +92,7 @@ function AsignaturasSecciones() {
                     )}
                 </div>
             </div>
+            <AddAsignaturaSeccion />
         </div>
     );
 }

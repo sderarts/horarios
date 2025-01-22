@@ -58,8 +58,8 @@ function AddDiaBloque() {
     };
 
     return (
-        <div className='form'>
-            <input
+        <div className='p-12 bg-amber-400'>
+            {/* <input
                 type="number"
                 placeholder='ID DiaBloque'
                 onChange={handleChange}
@@ -72,7 +72,6 @@ function AddDiaBloque() {
                 name='nombreRelacion'
             />
 
-            {/* Lista desplegable para fk_dia */}
             <select
                 name="fk_dia"
                 onChange={handleChange}
@@ -81,12 +80,11 @@ function AddDiaBloque() {
                 <option value="">Seleccionar Día</option>
                 {dias.map(dia => (
                     <option key={dia.id_dia} value={dia.id_dia}>
-                        {dia.nombreDia} {/* Ajusta esto según la propiedad del objeto `dia` */}
+                        {dia.nombreDia} 
                     </option>
                 ))}
             </select>
 
-            {/* Lista desplegable para fk_bloque */}
             <select
                 name="fk_bloque"
                 onChange={handleChange}
@@ -95,12 +93,95 @@ function AddDiaBloque() {
                 <option value="">Seleccionar Bloque</option>
                 {bloques.map(bloque => (
                     <option key={bloque.id_bloque} value={bloque.id_bloque}>
-                        {bloque.nombreBloqueHora} {/* Ajusta esto según la propiedad del objeto `bloque` */}
+                        {bloque.nombreBloqueHora}
                     </option>
                 ))}
             </select>
 
-            <button onClick={handleClick}>Agregar Día-Bloque</button>
+            <button onClick={handleClick}>Agregar Día-Bloque</button> */}
+
+            <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
+                {/* Input para ID DiaBloque */}
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_dia_bloque">
+                        ID Día Bloque
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="number"
+                        placeholder="ID Día Bloque"
+                        onChange={handleChange}
+                        name="id_dia_bloque"
+                    />
+                    <p className="text-gray-600 text-xs italic">Ingrese un ID único para el Día Bloque</p>
+                </div>
+
+                {/* Input para Nombre de la Relación */}
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
+                        Nombre de la Relación
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text"
+                        placeholder="Nombre de la relación"
+                        onChange={handleChange}
+                        name="nombreRelacion"
+                    />
+                    <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación</p>
+                </div>
+
+                {/* Lista desplegable para fk_dia */}
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_dia">
+                        Día
+                    </label>
+                    <select
+                        className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        name="fk_dia"
+                        onChange={handleChange}
+                        value={diaBloque.fk_dia}
+                    >
+                        <option value="">Seleccionar Día</option>
+                        {dias.map((dia) => (
+                            <option key={dia.id_dia} value={dia.id_dia}>
+                                {dia.nombreDia}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Lista desplegable para fk_bloque */}
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_bloque">
+                        Bloque
+                    </label>
+                    <select
+                        className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        name="fk_bloque"
+                        onChange={handleChange}
+                        value={diaBloque.fk_bloque}
+                    >
+                        <option value="">Seleccionar Bloque</option>
+                        {bloques.map((bloque) => (
+                            <option key={bloque.id_bloque} value={bloque.id_bloque}>
+                                {bloque.nombreBloqueHora}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Botón para agregar Día-Bloque */}
+                <div className="w-full px-3 mb-4">
+                    <button
+                        onClick={handleClick}
+                        className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                    >
+                        Agregar Día-Bloque
+                    </button>
+                </div>
+            </div>
+
         </div>
     );
 }

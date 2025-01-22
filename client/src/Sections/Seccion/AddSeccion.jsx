@@ -37,7 +37,7 @@ function AddSeccion() {
             <input type="number" placeholder='Inscripciones' onChange={handleChange} name='inscripciones' />
             <button onClick={handleClick}>Add Nivel</button> */}
 
-            <div className='p-12 '>
+            <div className='p-12 bg-amber-400'>
                 <h1>Crear Sección</h1>
                 <div class="flex flex-wrap -mx-3 mb-6 form w-1/2">
                     <div class="w-full px-3">
