@@ -37,7 +37,7 @@ function VerSecciones() {
 
         {secciones.length > 0 ? (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-200 dark:text-black  bg-black">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black  bg-black">
               <thead>
                 <tr>
                   <th scope="col" className="px-6 py-3 text-amber-400">Siglas sección</th>

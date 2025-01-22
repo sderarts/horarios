@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function AddAsignatura() {
 
+    const navigate = useNavigate();
     const [asignatura, setAsignatura] = useState({
         id_asignatura: "",
         nombreAsignatura: ""
@@ -17,6 +19,7 @@ function AddAsignatura() {
         try {
             await axios.post("http://localhost:8800/asignaturas", asignatura)
             console.log(asignatura);
+            navigate(0)
         } catch (error) {
             console.error("Error al hacer la solicitud:", error);
         }

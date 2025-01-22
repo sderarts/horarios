@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddSeccion() {
 
+    const navigate = useNavigate();
     const [seccion, setSeccion] = useState({
         id_seccion: "",
         nombreSeccion: ""
@@ -17,6 +19,7 @@ function AddSeccion() {
         try {
             const response = await axios.post("http://localhost:8800/secciones", seccion);
             console.log("Response:", response.data);
+            navigate(0)
         } catch (error) {
             if (error.response) {
                 console.error("Error en la respuesta:", error.response.data);

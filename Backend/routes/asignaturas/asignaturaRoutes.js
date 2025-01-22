@@ -4,6 +4,7 @@ import * as asignaturaController from '../../controllers/asignaturas/asignaturaC
 
 
 router.get('/', asignaturaController.getAsignatura);
+router.get('/2', asignaturaController.getAsignatura2);
 router.post('/', asignaturaController.addAsignatura);
 router.delete('/:id', asignaturaController.deleteAsignatura);
 router.put('/:id', asignaturaController.updateAsignatura);

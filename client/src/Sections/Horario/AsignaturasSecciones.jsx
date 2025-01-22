@@ -41,7 +41,7 @@ function AsignaturasSecciones() {
                     <h1>Detalles asignaturas</h1>
                     {asignaturaSeccion.length > 0 ? (
                         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
-                            <table className="w-full text-sm text-left rtl:text-right text-gray-200 dark:text-black  bg-black">
+                            <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black  bg-black">
                                 <thead>
                                     <tr>
                                         <th scope="col" className="px-6 py-3 text-amber-400">Nombre relación</th>

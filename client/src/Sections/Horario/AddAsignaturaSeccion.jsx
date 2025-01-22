@@ -18,7 +18,7 @@ function AddAsignaturaSeccion() {
     useEffect(() => {
         const fetchAsignaturas = async () => {
             try {
-                const response = await axios.get("http://localhost:8800/asignaturas");
+                const response = await axios.get("http://localhost:8800/asignaturas/2");
                 setAsignaturas(response.data); // Suponiendo que la respuesta es un array de días
             } catch (error) {
                 console.error("Error al obtener los días", error);

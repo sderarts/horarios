@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddBloque() {
 
+    const navigate = useNavigate();
     const [bloque, setBloque] = useState({
         id_bloque: "",
         nombreBloqueHora: ""
@@ -16,7 +18,9 @@ function AddBloque() {
         e.preventDefault();
         try {
             await axios.post("http://localhost:8800/bloques", bloque)
-            console.log(bloque);
+            //console.log(bloque);
+            navigate(0)
+
         } catch (error) {
             console.error("Error al hacer la solicitud:", error);
         }

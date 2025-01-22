@@ -15,6 +15,13 @@ const getAllAsignaturas = (callback) => {
     `;
     db.query(q, callback);
 };
+const getAllAsignaturas2 = (callback) => {
+    const q = ` SELECT id_asignatura, nombreAsignatura
+                FROM Asignatura;
+                ;
+    `;
+    db.query(q, callback);
+};
 
 const createAsignatura = (asignaturaData, callback) => {
     const q = "INSERT INTO asignatura(`id_asignatura`, `nombreAsignatura`) VALUES (?, ?)";
@@ -33,6 +40,7 @@ const updateAsignatura = (id, nombreAsignatura, callback) => {
 
 export default {
     getAllAsignaturas,
+    getAllAsignaturas2,
     createAsignatura,
     deleteAsignatura,
     updateAsignatura

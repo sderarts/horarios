@@ -7,6 +7,12 @@ const getAsignatura = (req, res) => {
         return res.status(200).json(data);
     });
 };
+const getAsignatura2 = (req, res) => {
+    Asignatura.getAllAsignaturas2((err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+    });
+};
 
 const addAsignatura = (req, res) => {
     const asignaturaData = req.body;
@@ -35,6 +41,7 @@ const updateAsignatura = (req, res) => {
 
 export {
     getAsignatura,
+    getAsignatura2,
     addAsignatura,
     deleteAsignatura,
     updateAsignatura
