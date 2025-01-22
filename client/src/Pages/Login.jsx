@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
+import { AuthContext } from '../Context/AuthContext'; // Asegúrate de que esto esté importado
 
 function Login({ onLoginSuccess }) {
-    const [user, setUser] = useState(null);
+    const { setUser } = useContext(AuthContext);  // Accede a setUser desde el contexto
     const navigate = useNavigate();
+
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            setUser(user);
+
+            // Actualiza el contexto de usuario global
+            setUser(user);  // Actualiza el contexto global con el nuevo usuario
 
             // Hacer la solicitud al servidor para verificar si el usuario existe
             const response = await fetch(`http://localhost:8800/auth/checkUser/${user.uid}`);
@@ -20,10 +24,8 @@ function Login({ onLoginSuccess }) {
                 throw new Error('Error en la respuesta del servidor');
             }
 
-            // Parsear la respuesta JSON
             const data = await response.json();
 
-            // Verificar si el usuario existe
             if (data.exists) {
                 console.log("Usuario encontrado, continuando...");
                 onLoginSuccess(); // Aquí haces lo que sea necesario, como redirigir al home
@@ -36,12 +38,9 @@ function Login({ onLoginSuccess }) {
         }
     };
 
-
-
     return (
         <div className='p-12 bg-amber-400 rounded-xl w-1/3'>
             <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl ">Iniciar sesión</h1>
-            {/* <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-700"> */}
             <button className="flex items-center bg-white dark:bg-gray-900 border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onClick={handleGoogleLogin}>
                 <svg className="h-6 w-6 mr-2" width="800px" height="800px" viewBox="-0.5 0 48 48" version="1.1">
                     <title>Google-color</title>
@@ -60,7 +59,6 @@ function Login({ onLoginSuccess }) {
                 </svg>
                 <span>Accede con tu cuenta de Google</span>
             </button>
-            {/* </div> */}
         </div>
     );
 }

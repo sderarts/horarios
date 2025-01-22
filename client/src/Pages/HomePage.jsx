@@ -14,7 +14,7 @@ const Home = () => {
                 <img src={Fondo} alt="" className='absolute z-0 w-full h-full' />
                 <Navbar />
                 <div className='relative p-12 z-100' >
-                    <p className="mb-4 text-5xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-amber-500 tracking-wide">
+                    <p className="mb-4 text-5xl font-extrabold leading-none  text-gray-900 md:text-5xl lg:text-6xl dark:text-amber-500 tracking-normal">
                         Bienvenido a la plataforma de usuarios
                     </p>
                     <div>

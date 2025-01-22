@@ -63,6 +63,7 @@ const FormularioRegistro = () => {
                         navigate('/');
                     } catch (error) {
                         console.error('Error al registrar el usuario académico:', error);
+                        navigate('/')
                     }
                 };
 
@@ -128,9 +129,11 @@ const FormularioRegistro = () => {
                 axios.post('http://localhost:8800/auth/register', dataToSend)
                     .then((response) => {
                         console.log('Usuario registrado con éxito:', response.data);
+                        navigate('/');
                     })
                     .catch((error) => {
                         console.error('Error al registrar el usuario:', error.response ? error.response.data : error.message);
+                        navigate('/');
                     });
             })
             .catch((error) => {
