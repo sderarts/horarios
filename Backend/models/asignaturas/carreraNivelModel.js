@@ -24,8 +24,8 @@ const getCarrera_NivelById = (id, callback) => {
 
 
 const createCarrera_Nivel = (Carrera_NivelData, callback) => {
-    const q = "INSERT INTO CarreraNivel(`id_carrera_nivel`,`fk_carrera`, `fk_nivel`, `relacionNombre`) VALUES (?, ?, ?, ?)";
-    db.query(q, [Carrera_NivelData.id_carrera_nivel, Carrera_NivelData.fk_carrera, Carrera_NivelData.fk_nivel, Carrera_NivelData.relacionNombre], callback);
+    const q = "INSERT INTO CarreraNivel(`fk_carrera`, `fk_nivel`, `relacionNombre`) VALUES (?, ?, ?)";
+    db.query(q, [Carrera_NivelData.fk_carrera, Carrera_NivelData.fk_nivel, Carrera_NivelData.relacionNombre], callback);
 };
 
 const deleteCarrera_Nivel = (id, callback) => {

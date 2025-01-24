@@ -4,7 +4,6 @@ import axios from 'axios';
 function AddDia() {
 
     const [dia, setDia] = useState({
-        id_dia: "",
         nombreDia: ""
     })
 
@@ -28,7 +27,6 @@ function AddDia() {
     };
     return (
         <div className='form'>
-            <input type="number" placeholder='0' onChange={handleChange} name='id_dia' />
             <input type="text" placeholder='Dia' onChange={handleChange} name='nombreDia' />
             <button onClick={handleClick}>Add Dia</button>
         </div>

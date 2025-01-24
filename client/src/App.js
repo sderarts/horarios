@@ -6,7 +6,7 @@ import Home from './Pages/HomePage'
 import Carreras from './Pages/Carreras';
 import Asignaturas from './Pages/Asignaturas';
 import BloquesHorarios from './Pages/BloquesHorarios';
-
+import AddNivel from './Sections/Nivel/AddNivel';
 import Edit from './Sections/Carrera/Edit';
 import AddAsignatura from './Sections/Asignatura/AddAsignatura';
 import AddSeccion from './Sections/Seccion/AddSeccion';
@@ -44,7 +44,8 @@ function App() {
             <Route path="/seccion" element={<AddSeccion />} />
             <Route path="/secciones" element={<VerSecciones />} />
             <Route path="/secciones/:id" element={<EditSeccion />} />
-            {/* <Route path="/dia" element={<AddDia />} /> */}
+            <Route path="/add_nivel" element={<AddNivel />} />
+            {/* <Route path="/add_dia" element={<AddDia />} /> */}
             <Route path="/bloques" element={<BloquesHorarios />} />
             <Route path="/bloques/:id" element={<EditBloque />} />
             <Route path="/add_dia_bloques" element={<AddDiaBloque />} />

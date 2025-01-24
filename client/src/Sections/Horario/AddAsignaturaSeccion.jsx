@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function AddAsignaturaSeccion() {
+    const navigate = useNavigate();
     const [asignaturaSeccion, setAsignaturaSeccion] = useState({
-        id_asignatura_seccion: "",
         nombreRelacion: "",
         nombreDocente: "",
         fk_asignatura: "",
@@ -47,6 +48,7 @@ function AddAsignaturaSeccion() {
         try {
             const response = await axios.post("http://localhost:8800/asignatura_secciones", asignaturaSeccion);
             console.log("Response:", response.data);
+            navigate(0)
         } catch (error) {
             if (error.response) {
                 console.error("Error en la respuesta:", error.response.data);
@@ -59,67 +61,7 @@ function AddAsignaturaSeccion() {
 
     return (
         <div className='bg-amber-400 w-1/3 p-20'>
-            {/* <input
-                type="number"
-                placeholder='ID AsignaturaSeccion'
-                onChange={handleChange}
-                name='id_asignatura_seccion'
-            />
-            <input
-                type="text"
-                placeholder='Nombre de la relación'
-                onChange={handleChange}
-                name='nombreRelacion'
-            />
-            <input
-                type="text"
-                placeholder='Nombre del docente'
-                onChange={handleChange}
-                name='nombreDocente'
-            />
-            <select
-                name="fk_asignatura"
-                onChange={handleChange}
-                value={asignaturaSeccion.fk_asignatura}
-            >
-                <option value="">Seleccionar sección</option>
-                {asignaturas.map(asignatura => (
-                    <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
-                        {asignatura.nombreAsignatura}
-                    </option>
-                ))}
-            </select>
-
-            <select
-                name="fk_seccion"
-                onChange={handleChange}
-                value={asignaturaSeccion.fk_seccion}
-            >
-                <option value="">Seleccionar día</option>
-                {secciones.map(seccion => (
-                    <option key={seccion.id_seccion} value={seccion.id_seccion}>
-                        {seccion.nombreSeccion} 
-                    </option>
-                ))}
-            </select>
-            <button onClick={handleClick}>Agregar Asignatura-Sección</button> */}
-
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
-                {/* Input para id_asignatura_seccion */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_asignatura_seccion">
-                        ID Asignatura Sección
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="number"
-                        placeholder="ID AsignaturaSeccion"
-                        onChange={handleChange}
-                        name="id_asignatura_seccion"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese un ID único para la asignatura sección</p>
-                </div>
-
                 {/* Input para nombreRelacion */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
@@ -173,7 +115,7 @@ function AddAsignaturaSeccion() {
                 {/* Lista desplegable para fk_seccion */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_seccion">
-                        Día
+                        Sección
                     </label>
                     <select
                         className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"

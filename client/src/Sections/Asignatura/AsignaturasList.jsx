@@ -45,23 +45,37 @@ function AsignaturasList() {
                         <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black  bg-black">
                             <thead>
                                 <tr>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Nombre de la Carrera</th>
                                     <th scope="col" className="px-6 py-3 text-amber-400">Asignatura</th>
+                                    <th scope="col" className="px-6 py-3 text-amber-400">Nombre sección</th>
+                                    <th scope="col" className="px-6 py-3 text-amber-400">Docente</th>
+                                    <th scope="col" className="px-6 py-3 text-amber-400">Status</th>
                                     <th scope="col" className="px-6 py-3 text-amber-400">Semestre</th>
+                                    <th scope="col" className="px-6 py-3 text-amber-400">Carrera</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {asignaturas.map((e) => (
                                     <tr key={e.id_asignatura} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                                         <td className="px-6 py-4">
-                                            {e.id_asignatura} - {e.nombreCarrera}
+                                            {e.id_asignatura} - {e.nombreAsignatura}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {e.nombreAsignatura}
+                                            {e.nombreSeccion}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {e.nombreDocente}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {e.inscripciones}/{e.capacidad}
                                         </td>
                                         <td className="px-6 py-4">
                                             {e.nombreNivel}
                                         </td>
+                                        <td className="px-6 py-4">
+                                            {e.nombreCarrera}
+                                        </td>
+
+
                                         {/* <td className="px-6 py-4 text-right">
                                                         <Link to={`/carreras/${e.id_asignatura}`}>
                                                             <button className="font-bold text-blue-600 dark:text-blue-500 hover:underline">

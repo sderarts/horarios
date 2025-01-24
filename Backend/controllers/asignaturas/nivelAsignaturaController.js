@@ -23,14 +23,14 @@ const getNivel_AsignaturaById = (req, res) => {
 };
 
 const addNivel_Asignatura = (req, res) => {
-    const { id_nivel_asignatura, fk_nivel, fk_asignatura, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_nivel, fk_asignatura, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_nivel_asignatura || !fk_nivel || !fk_asignatura || !relacionNombre) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_nivel_asignatura, fk_nivel, fk_asignatura,  relacionNombre)' });
+    if (!fk_nivel || !fk_asignatura || !relacionNombre) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_nivel, fk_asignatura,  relacionNombre)' });
     }
 
-    const carrera_NivelData = { id_nivel_asignatura, fk_nivel, fk_asignatura, relacionNombre };  // Creamos el objeto con los datos a insertar
+    const carrera_NivelData = { fk_nivel, fk_asignatura, relacionNombre };  // Creamos el objeto con los datos a insertar
 
     Nivel_Asignatura.createNivel_Asignatura(carrera_NivelData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });

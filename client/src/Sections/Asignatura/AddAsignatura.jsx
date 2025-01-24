@@ -6,7 +6,6 @@ function AddAsignatura() {
 
     const navigate = useNavigate();
     const [asignatura, setAsignatura] = useState({
-        id_asignatura: "",
         nombreAsignatura: ""
     })
 
@@ -28,18 +27,14 @@ function AddAsignatura() {
     return (
         <div className='p-12 w-1/3'>
             <h1>Agregar Asignatura</h1>
-            {/* <input type="number" placeholder='0' onChange={handleChange} name='id_asignatura' />
-            <input type="text" placeholder='asignatura' onChange={handleChange} name='nombreAsignatura' />
-            <button onClick={handleClick}>Add</button> */}
-
             <div class="flex flex-wrap -mx-3 mb-6 form w-full">
-                <div class="w-full px-3">
+                {/* <div class="w-full px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                         id asignatura
                     </label>
                     <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" placeholder='0' onChange={handleChange} name='id_asignatura' />
                     <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-                </div>
+                </div> */}
                 <div class="w-full px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                         Asignatura

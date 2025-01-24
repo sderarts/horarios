@@ -36,8 +36,8 @@ const getDia_BloqueById = (id, callback) => {
 
 
 const createDia_Bloque = (dia_BloqueData, callback) => {
-    const q = "INSERT INTO DiaBloque(`id_dia_bloque`, `fk_dia`, `fk_bloque`, `nombreRelacion`) VALUES (?, ?, ?, ?)";
-    db.query(q, [dia_BloqueData.id_dia_bloque, dia_BloqueData.fk_dia, dia_BloqueData.fk_bloque, dia_BloqueData.nombreRelacion], callback);
+    const q = "INSERT INTO DiaBloque(`fk_dia`, `fk_bloque`, `nombreRelacion`) VALUES (?, ?, ?)";
+    db.query(q, [dia_BloqueData.fk_dia, dia_BloqueData.fk_bloque, dia_BloqueData.nombreRelacion], callback);
 };
 
 const deleteDia_Bloque = (id, callback) => {

@@ -4,7 +4,6 @@ import axios from 'axios';
 function AddNivel() {
 
     const [nivel, setNivel] = useState({
-        id_nivel: "",
         nombreNivel: ""
     })
 
@@ -30,7 +29,6 @@ function AddNivel() {
 
     return (
         <div className='form'>
-            <input type="number" placeholder='0' onChange={handleChange} name='id_nivel' />
             <input type="text" placeholder='Nivel' onChange={handleChange} name='nombreNivel' />
             <button onClick={handleClick}>Add Nivel</button>
         </div>

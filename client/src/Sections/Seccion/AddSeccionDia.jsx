@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router';
 
 function AddSeccionDia() {
+
+    const navigate = useNavigate();
     const [seccionDia, setSeccionDia] = useState({
-        id_seccion_dia: "",
         nombreRelacion: "",
         fk_seccion: "",
         fk_dia: ""
@@ -47,6 +48,7 @@ function AddSeccionDia() {
         try {
             const response = await axios.post("http://localhost:8800/seccion_dias", seccionDia);
             console.log("Response:", response.data);
+            navigate(0)
         } catch (error) {
             if (error.response) {
                 console.error("Error en la respuesta:", error.response.data);
@@ -60,21 +62,6 @@ function AddSeccionDia() {
     return (
         <div className="p-12 bg-amber-400">
             <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
-                {/* Input para ID SeccionDia */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_seccion_dia">
-                        ID Sección Día
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="number"
-                        placeholder="ID Sección Día"
-                        onChange={handleChange}
-                        name="id_seccion_dia"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese un ID único para la sección día</p>
-                </div>
-
                 {/* Input para Nombre de la Relación */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Niveles from '../Nivel/Niveles';
+import { useNavigate } from 'react-router';
 
 
 function AddNivelAsignatura() {
+
+    const navigate = useNavigate();
     const [nivelAsignatura, setNivelAsignatura] = useState({
-        id_nivel_asignatura: "",
         relacionNombre: "",
         fk_nivel: "",
         fk_asignatura: ""
@@ -48,6 +50,7 @@ function AddNivelAsignatura() {
         try {
             const response = await axios.post("http://localhost:8800/nivel_asignaturas", nivelAsignatura);
             console.log("Response:", response.data);
+            navigate(0)
         } catch (error) {
             if (error.response) {
                 console.error("Error en la respuesta:", error.response.data);
@@ -64,21 +67,6 @@ function AddNivelAsignatura() {
                 <Niveles />
             </div>
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
-                {/* Input para id_nivel_asignatura */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_nivel_asignatura">
-                        ID Nivel Asignatura
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="number"
-                        placeholder="ID nivelAsignatura"
-                        onChange={handleChange}
-                        name="id_nivel_asignatura"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese un ID único para la asignatura</p>
-                </div>
-
                 {/* Input para relacionNombre */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionNombre">

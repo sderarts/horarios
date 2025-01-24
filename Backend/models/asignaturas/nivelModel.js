@@ -6,8 +6,8 @@ const getAllNiveles = (callback) => {
 };
 
 const createNivel = (nivelData, callback) => {
-    const q = "INSERT INTO Nivel(`id_nivel`, `nombreNivel`) VALUES (?, ?)";
-    db.query(q, [nivelData.id_nivel, nivelData.nombreNivel], callback);
+    const q = "INSERT INTO Nivel(`nombreNivel`) VALUES (?)";
+    db.query(q, [nivelData.nombreNivel], callback);
 };
 
 const deleteNivel = (id, callback) => {

@@ -24,8 +24,8 @@ const getBloqueById = (id, callback) => {
 
 
 const createBloque = (bloqueData, callback) => {
-    const q = "INSERT INTO BloqueHora(`id_bloque`, `nombreBloqueHora`) VALUES (?, ?)";
-    db.query(q, [bloqueData.id_bloque, bloqueData.nombreBloqueHora], callback);
+    const q = "INSERT INTO BloqueHora( `nombreBloqueHora`) VALUES (?)";
+    db.query(q, [bloqueData.nombreBloqueHora], callback);
 };
 
 const deleteBloque = (id, callback) => {

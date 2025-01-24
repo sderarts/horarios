@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function AddDiaBloque() {
-    // Estado para el formulario
+
+    const navigate = useNavigate();
     const [diaBloque, setDiaBloque] = useState({
-        id_dia_bloque: "",
         nombreRelacion: "",
         fk_dia: "",
         fk_bloque: ""
@@ -47,6 +48,7 @@ function AddDiaBloque() {
         try {
             const response = await axios.post("http://localhost:8800/dia_bloques", diaBloque);
             console.log("Response:", response.data);
+            navigate(0)
         } catch (error) {
             if (error.response) {
                 console.error("Error en la respuesta:", error.response.data);
@@ -59,63 +61,8 @@ function AddDiaBloque() {
 
     return (
         <div className='p-12 bg-amber-400'>
-            {/* <input
-                type="number"
-                placeholder='ID DiaBloque'
-                onChange={handleChange}
-                name='id_dia_bloque'
-            />
-            <input
-                type="text"
-                placeholder='Nombre de la relación'
-                onChange={handleChange}
-                name='nombreRelacion'
-            />
-
-            <select
-                name="fk_dia"
-                onChange={handleChange}
-                value={diaBloque.fk_dia}
-            >
-                <option value="">Seleccionar Día</option>
-                {dias.map(dia => (
-                    <option key={dia.id_dia} value={dia.id_dia}>
-                        {dia.nombreDia} 
-                    </option>
-                ))}
-            </select>
-
-            <select
-                name="fk_bloque"
-                onChange={handleChange}
-                value={diaBloque.fk_bloque}
-            >
-                <option value="">Seleccionar Bloque</option>
-                {bloques.map(bloque => (
-                    <option key={bloque.id_bloque} value={bloque.id_bloque}>
-                        {bloque.nombreBloqueHora}
-                    </option>
-                ))}
-            </select>
-
-            <button onClick={handleClick}>Agregar Día-Bloque</button> */}
 
             <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
-                {/* Input para ID DiaBloque */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="id_dia_bloque">
-                        ID Día Bloque
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="number"
-                        placeholder="ID Día Bloque"
-                        onChange={handleChange}
-                        name="id_dia_bloque"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese un ID único para el Día Bloque</p>
-                </div>
-
                 {/* Input para Nombre de la Relación */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">

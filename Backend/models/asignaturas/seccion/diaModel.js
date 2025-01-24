@@ -24,8 +24,8 @@ const getdiaById = (id, callback) => {
 
 
 const createDia = (diaData, callback) => {
-    const q = "INSERT INTO dia(`id_dia`, `nombreDia`) VALUES (?, ?)";
-    db.query(q, [diaData.id_dia, diaData.nombreDia], callback);
+    const q = "INSERT INTO dia(`nombreDia`) VALUES (?)";
+    db.query(q, [diaData.nombreDia], callback);
 };
 
 const deleteDia = (id, callback) => {

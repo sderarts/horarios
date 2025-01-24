@@ -24,8 +24,8 @@ const getSeccionById = (id, callback) => {
 
 
 const createSeccion = (seccionData, callback) => {
-    const q = "INSERT INTO seccion(`id_seccion`, `nombreSeccion`,`capacidad`,`inscripciones`) VALUES (?, ?, ?, ?)";
-    db.query(q, [seccionData.id_seccion, seccionData.nombreSeccion, seccionData.capacidad, seccionData.inscripciones], callback);
+    const q = "INSERT INTO seccion(`nombreSeccion`,`capacidad`,`inscripciones`) VALUES (?, ?, ?)";
+    db.query(q, [seccionData.nombreSeccion, seccionData.capacidad, seccionData.inscripciones], callback);
 };
 
 const deleteSeccion = (id, callback) => {

@@ -1,7 +1,15 @@
 import db from '../../config/db.js';
 
 const getAllAsignaturas = (callback) => {
-    const q = ` SELECT a.nombreAsignatura, a.id_asignatura, n.nombreNivel, c.nombreCarrera
+    const q = ` SELECT 
+                a.nombreAsignatura, 
+                a.id_asignatura, 
+                ac.nombreDocente, 
+                s.nombreSeccion, 
+                s.capacidad, 
+                s.inscripciones, 
+                n.nombreNivel, 
+                c.nombreCarrera
             FROM 
                 Asignatura a
             JOIN 
@@ -11,7 +19,11 @@ const getAllAsignaturas = (callback) => {
             JOIN 
                 CarreraNivel cn ON n.id_nivel = cn.fk_nivel
             JOIN 
-                Carrera c ON cn.fk_carrera = c.id_carrera;
+                Carrera c ON cn.fk_carrera = c.id_carrera
+            JOIN
+                AsignaturaSeccion ac ON a.id_asignatura = ac.fk_asignatura
+            JOIN
+                Seccion s ON ac.fk_seccion = s.id_seccion;
     `;
     db.query(q, callback);
 };
@@ -24,8 +36,8 @@ const getAllAsignaturas2 = (callback) => {
 };
 
 const createAsignatura = (asignaturaData, callback) => {
-    const q = "INSERT INTO asignatura(`id_asignatura`, `nombreAsignatura`) VALUES (?, ?)";
-    db.query(q, [asignaturaData.id_asignatura, asignaturaData.nombreAsignatura], callback);
+    const q = "INSERT INTO asignatura(`nombreAsignatura`) VALUES (?)";
+    db.query(q, [asignaturaData.nombreAsignatura], callback);
 };
 
 const deleteAsignatura = (id, callback) => {

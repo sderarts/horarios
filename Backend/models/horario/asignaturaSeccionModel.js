@@ -79,8 +79,8 @@ const getAsignatura_SeccionById = (id, callback) => {
 };
 
 const createAsignatura_Seccion = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO AsignaturaSeccion(`id_asignatura_seccion`, `fk_seccion`, `fk_asignatura`, `nombreRelacion`, `nombreDocente`) VALUES (?, ?, ?, ?, ?)";
-    db.query(q, [Nivel_AsignaturaData.id_asignatura_seccion, Nivel_AsignaturaData.fk_seccion, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.nombreRelacion, Nivel_AsignaturaData.nombreDocente], callback);
+    const q = "INSERT INTO AsignaturaSeccion(`fk_seccion`, `fk_asignatura`, `nombreRelacion`, `nombreDocente`) VALUES (?, ?, ?, ?)";
+    db.query(q, [Nivel_AsignaturaData.fk_seccion, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.nombreRelacion, Nivel_AsignaturaData.nombreDocente], callback);
 };
 
 const deleteAsignatura_Seccion = (id, callback) => {

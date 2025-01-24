@@ -7,8 +7,8 @@ const getAllCarreras = (callback) => {
 };
 
 const createCarrera = (carreraData, callback) => {
-    const q = "INSERT INTO carrera(`id_carrera`, `nombreCarrera`) VALUES (?, ?)";
-    db.query(q, [carreraData.id_carrera, carreraData.nombreCarrera], callback);
+    const q = "INSERT INTO carrera(`nombreCarrera`) VALUES (?)";
+    db.query(q, [carreraData.nombreCarrera], callback);
 };
 
 const deleteCarrera = (id, callback) => {

@@ -23,14 +23,14 @@ const getDia_BloqueById = (req, res) => {
 };
 
 const addDia_Bloque = (req, res) => {
-    const { id_dia_bloque, fk_dia, fk_bloque, nombreRelacion } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_dia, fk_bloque, nombreRelacion } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_dia_bloque || !fk_dia || !fk_bloque || !nombreRelacion) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_dia_bloque, fk_dia, fk_bloque, nombreRelacion)' });
+    if (!fk_dia || !fk_bloque || !nombreRelacion) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_dia, fk_bloque, nombreRelacion)' });
     }
 
-    const diaData = { id_dia_bloque, fk_dia, fk_bloque, nombreRelacion };  // Creamos el objeto con los datos a insertar
+    const diaData = { fk_dia, fk_bloque, nombreRelacion };  // Creamos el objeto con los datos a insertar
 
     DiaBloque.createDia_Bloque(diaData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });

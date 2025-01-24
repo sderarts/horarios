@@ -23,14 +23,14 @@ const getSeccion_DiaById = (req, res) => {
 };
 
 const addSeccion_Dia = (req, res) => {
-    const { id_seccion_dia, fk_seccion, fk_dia, nombreRelacion } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_seccion, fk_dia, nombreRelacion } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_seccion_dia || !fk_seccion || !fk_dia || !nombreRelacion) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_seccion_dia, fk_seccion, fk_dia, nombreRelacion)' });
+    if (!fk_seccion || !fk_dia || !nombreRelacion) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_seccion, fk_dia, nombreRelacion)' });
     }
 
-    const diaData = { id_seccion_dia, fk_seccion, fk_dia, nombreRelacion };  // Creamos el objeto con los datos a insertar
+    const diaData = { fk_seccion, fk_dia, nombreRelacion };  // Creamos el objeto con los datos a insertar
 
     SeccionDia.createSeccion_Dia(diaData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });

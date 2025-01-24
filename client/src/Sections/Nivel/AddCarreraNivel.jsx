@@ -4,7 +4,6 @@ import axios from 'axios';
 
 function AddCarreraNivel() {
     const [carreraNivel, setCarreraNivel] = useState({
-        id_carrera_nivel: "",
         relacionNombre: "",
         fk_carrera: "",
         fk_nivel: ""
@@ -59,12 +58,6 @@ function AddCarreraNivel() {
 
     return (
         <div className='form'>
-            <input
-                type="number"
-                placeholder='ID carreraNivel'
-                onChange={handleChange}
-                name='id_carrera_nivel'
-            />
             <input
                 type="text"
                 placeholder='Nombre de la relación'
