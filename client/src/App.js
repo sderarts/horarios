@@ -26,8 +26,11 @@ import AddNivelAsignatura from './Sections/Asignatura/AddNivelAsignatura';
 import AddAsignaturaSeccion from './Sections/Horario/AddAsignaturaSeccion';
 import AsignaturasSecciones from './Sections/Horario/AsignaturasSecciones';
 import EditAsignaturaSeccion from './Sections/Horario/EditAsignaturaSeccion';
+import AsignaturasList from './Sections/Asignatura/AsignaturasList';
+import AddEstadoSolicitud from './Sections/Solicitud/AddEstadoSolicitud';
 import Login2 from './Pages/Login2';
 import Register from './Pages/Register';
+import Alumno from './Pages/Alumno';
 
 function App() {
   return (
@@ -41,11 +44,12 @@ function App() {
             <Route path="/carreras" element={<Carreras />} />
             <Route path="/carreras/:id" element={<Edit />} />
             <Route path="/asignaturas" element={<Asignaturas />} />
+            <Route path="/asignaturas_list" element={<AsignaturasList />} />
             <Route path="/seccion" element={<AddSeccion />} />
             <Route path="/secciones" element={<VerSecciones />} />
             <Route path="/secciones/:id" element={<EditSeccion />} />
             <Route path="/add_nivel" element={<AddNivel />} />
-            {/* <Route path="/add_dia" element={<AddDia />} /> */}
+            <Route path="/alumno" element={<Alumno />} /> 
             <Route path="/bloques" element={<BloquesHorarios />} />
             <Route path="/bloques/:id" element={<EditBloque />} />
             <Route path="/add_dia_bloques" element={<AddDiaBloque />} />
@@ -58,6 +62,7 @@ function App() {
             <Route path="/add_asignatura_secciones" element={<AddAsignaturaSeccion />} />
             <Route path="/asignatura_secciones" element={<AsignaturasSecciones />} />
             <Route path="/asignatura_secciones/:id" element={<EditAsignaturaSeccion />} />
+            <Route path="/add_estado_solicitud" element={<AddEstadoSolicitud />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

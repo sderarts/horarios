@@ -25,7 +25,7 @@ function AddAsignatura() {
     };
 
     return (
-        <div className='p-12 w-1/3'>
+        <div className='p-12 w-1/3 bg-amber-400'>
             <h1>Agregar Asignatura</h1>
             <div class="flex flex-wrap -mx-3 mb-6 form w-full">
                 {/* <div class="w-full px-3">

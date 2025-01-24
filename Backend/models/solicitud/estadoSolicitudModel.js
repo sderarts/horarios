@@ -24,9 +24,8 @@ const getEstado_SolicitudById = (id, callback) => {
 
 
 const createEstado_Solicitud = (EstadoSolicitudData, callback) => {
-    const q = "INSERT INTO EstadoSolicitud(`id_estado_solicitud`, `fk_academico`,`nombreEstado`,`mensajeSolicitud`) VALUES (?, ?)";
-    db.query(q, [EstadoSolicitudData.id_estado_solicitud, EstadoSolicitudData.fk_academico,
-    EstadoSolicitudData.nombreEstado, EstadoSolicitudData.mensajeSolicitud], callback);
+    const q = "INSERT INTO EstadoSolicitud(`fk_academico`,`nombreEstado`,`mensajeSolicitud`) VALUES (?,?,?)";
+    db.query(q, [ EstadoSolicitudData.fk_academico, EstadoSolicitudData.nombreEstado, EstadoSolicitudData.mensajeSolicitud], callback);
 };
 
 const deleteEstado_Solicitud = (id, callback) => {

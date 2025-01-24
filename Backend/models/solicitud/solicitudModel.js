@@ -24,10 +24,8 @@ const getSolicitudById = (id, callback) => {
 
 
 const createSolicitud = (SolicitudData, callback) => {
-    const q = "INSERT INTO Solicitud(`id_solicitud`, `fk_alumno`, `fk_tipo_solicitud`, `fk_estado_solicitud`, `fk_seccion_asignatura`) VALUES (?, ?, ?, ?, ?)";
-    db.query(q, [SolicitudData.id_solicitud, SolicitudData.fk_alumno,
-    SolicitudData.fk_tipo_solicitud, SolicitudData.fk_estado_solicitud,
-    SolicitudData.fk_seccion_asignatura], callback);
+    const q = "INSERT INTO Solicitud(`fk_alumno`, `fk_tipo_solicitud`, `fk_estado_solicitud`, `fk_seccion_asignatura`) VALUES (?, ?, ?, ?)";
+    db.query(q, [SolicitudData.fk_alumno, SolicitudData.fk_tipo_solicitud, SolicitudData.fk_estado_solicitud, SolicitudData.fk_seccion_asignatura], callback);
 };
 
 const deleteSolicitud = (id, callback) => {

@@ -23,14 +23,14 @@ const getEstado_SolicitudById = (req, res) => {
 };
 
 const addEstado_Solicitud = (req, res) => {
-    const { id_estado_solicitud, fk_academico, nombreEstado, mensajeSolicitud } = req.body;  // Recibimos las claves foráneas y otros datos
+    const {  fk_academico, nombreEstado, mensajeSolicitud } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_estado_solicitud || !fk_academico || !nombreEstado || !mensajeSolicitud) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_estado_solicitud, fk_academico, nombreEstado, mensajeSolicitud)' });
+    if (!fk_academico || !nombreEstado || !mensajeSolicitud) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_academico, nombreEstado, mensajeSolicitud)' });
     }
 
-    const estado_SolicitudData = { id_estado_solicitud, fk_academico, nombreEstado, mensajeSolicitud };  // Creamos el objeto con los datos a insertar
+    const estado_SolicitudData = {  fk_academico, nombreEstado, mensajeSolicitud };  // Creamos el objeto con los datos a insertar
 
     EstadoSolicitud.createEstado_Solicitud(estado_SolicitudData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });

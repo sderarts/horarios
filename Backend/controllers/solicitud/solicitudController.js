@@ -23,14 +23,14 @@ const getSolicitudById = (req, res) => {
 };
 
 const addSolicitud = (req, res) => {
-    const { id_solicitud, fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
+    const {  fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_solicitud || !fk_tipo_solicitud || !fk_alumno || !fk_estado_solicitud || !fk_seccion_asignatura) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_solicitud, fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura)' });
+    if (!fk_tipo_solicitud || !fk_alumno || !fk_estado_solicitud || !fk_seccion_asignatura) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura)' });
     }
 
-    const carrera_NivelData = { id_solicitud, fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura };  // Creamos el objeto con los datos a insertar
+    const carrera_NivelData = {  fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura };  // Creamos el objeto con los datos a insertar
 
     Solicitud.createSolicitud(carrera_NivelData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
