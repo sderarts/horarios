@@ -6,6 +6,23 @@ const getAllCarreras = (callback) => {
     db.query(q, callback);
 };
 
+const getCarrera_ById = (id, callback) => {
+    const query = 'SELECT * FROM Carrera WHERE id_carrera = ?';
+
+    // Ejecutamos la consulta
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null); // Retorna el error si ocurre
+        }
+
+        if (result.length === 0) {
+            return callback(new Error('Carrera no encontrada'), null); // Error si no se encuentra la sección
+        }
+
+        return callback(null, result[0]); // Retorna el primer resultado
+    });
+};
+
 const createCarrera = (carreraData, callback) => {
     const q = "INSERT INTO carrera(`nombreCarrera`) VALUES (?)";
     db.query(q, [carreraData.nombreCarrera], callback);
@@ -23,6 +40,7 @@ const updateCarrera = (id, nombreCarrera, callback) => {
 
 export default {
     getAllCarreras,
+    getCarrera_ById,
     createCarrera,
     deleteCarrera,
     updateCarrera

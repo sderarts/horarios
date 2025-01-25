@@ -12,7 +12,7 @@ import nivelAsignaturaRoutes from './routes/asignaturas/nivelAsignaturaRoutes.js
 import asignaturaSeccionRoutes from './routes/horario/asignaturaSeccionRoutes.js';
 import horarioAlumnoRoutes from './routes/horario/horarioAlumnoRoutes.js';
 import solicitudRoutes from './routes/solicitud/solicitudRoutes.js';
-import estadoSolicitudRoutes from './routes/solicitud/estadoSolicitudModel.js';
+import solicitudAcademicoRoutes from './routes/solicitud/solicitudAcademicoRoutes.js';
 
 import cors from 'cors'
 import authRoutes from './routes/auth/authRoutes.js'
@@ -42,7 +42,7 @@ app.use('/nivel_asignaturas', nivelAsignaturaRoutes);
 app.use('/asignatura_secciones', asignaturaSeccionRoutes);
 app.use('/horario_alumnos', horarioAlumnoRoutes);
 app.use('/solicitudes', solicitudRoutes);
-app.use('/estado_solicitudes', estadoSolicitudRoutes);
+app.use('/academico_solicitudes', solicitudAcademicoRoutes);
 
 
 app.listen(8800, () => {

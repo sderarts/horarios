@@ -6,6 +6,9 @@ import * as carreraController from '../../controllers/asignaturas/carreraControl
 // Ruta para obtener todas las carreras
 router.get('/', carreraController.getCarreras);
 
+// Ruta para obtener una carrera por ID
+router.get('/:id', carreraController.getCarrera_ById);
+
 // Ruta para agregar una nueva carrera
 router.post('/', carreraController.addCarrera);
 

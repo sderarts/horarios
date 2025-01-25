@@ -5,14 +5,18 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);  // Estado para manejar la carga
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(setUser);  // Usa 'auth' directamente
+        const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+            setUser(firebaseUser);
+            setLoading(false);  // Después de que se cargue el usuario, dejamos de estar en "cargando"
+        });
         return () => unsubscribe();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, loading }}>
             {children}
         </AuthContext.Provider>
     );

@@ -3,38 +3,44 @@ import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 
-function AddEstadoSolicitud() {
+function AddSolicitudAcademico() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
     const [asignatura, setAsignatura] = useState({
         fk_academico: "",
-        nombreEstado: "",
-        mensajeSolicitud: ""
+        fk_estado: "",
+        mensaje: ""
     });
     const [errorMessage, setErrorMessage] = useState("");  // Estado para manejar el mensaje de error
 
     useEffect(() => {
         if (user && user.uid) {
+            console.log(user);
+
             // Recortar el UID a los primeros 28 caracteres
             const shortUid = user.uid.substring(0, 28);
 
             // Consulta a la API para obtener el id_academico por el UID recortado
             axios.get(`http://localhost:8800/auth/checkUser/${shortUid}`)
                 .then((response) => {
-                    if (response.data.id_academico) {
+                    if (response.data.exists && response.data.rol === 1) {
+                        // Solo asignar el id_academico si el usuario es de rol academico
                         setAsignatura(prev => ({
                             ...prev,
                             fk_academico: response.data.id_academico  // Asignar id_academico a fk_academico
                         }));
                     } else {
-                        setErrorMessage("Acceso denegado. No tienes permisos para agregar un estado de solicitud.");
+                        // Quitar esta parte temporalmente para probar el formulario sin bloqueos
+                        setErrorMessage("");  // Aquí puedes quitar el mensaje de error para hacer pruebas
                     }
                 })
                 .catch((error) => {
                     console.error("Error al obtener el id_academico:", error);
-                    setErrorMessage("Error al verificar los permisos del usuario.");
+                    // También podemos eliminar este setErrorMessage para hacer pruebas
+                    setErrorMessage("");  // Eliminar para probar el formulario sin bloqueos
                 });
         } else {
+            // Puedes dejar esta parte sin cambios si aún deseas verificar que el usuario esté autenticado
             setErrorMessage("No estás autenticado. Inicia sesión para continuar.");
         }
     }, [user]);
@@ -45,10 +51,12 @@ function AddEstadoSolicitud() {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        if (!user || !asignatura.fk_academico) {
-            setErrorMessage("Acceso denegado. No tienes permisos para agregar un estado de solicitud.");
-            return;
-        }
+        // Elimina esta validación temporalmente para probar
+        // if (!user || !asignatura.fk_academico) {
+        //     setErrorMessage("Acceso denegado. No tienes permisos para agregar un estado de solicitud.");
+        //     return;
+        // }
+
         try {
             await axios.post("http://localhost:8800/estado_solicitudes", asignatura);
             navigate(0);  // Recarga la página
@@ -59,12 +67,13 @@ function AddEstadoSolicitud() {
 
     return (
         <div className='p-12 w-1/3 bg-amber-400'>
-            <h1>Estado-Solicitud</h1>
-            {errorMessage && (
+            <h1>Solicitud Academico</h1>
+            {/* Elimina la comprobación de error temporalmente */}
+            {/* {errorMessage && (
                 <div className="bg-red-400 text-white p-3 rounded mb-4">
                     {errorMessage}
                 </div>
-            )}
+            )} */}
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
                 <div className="w-full px-3">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -72,38 +81,28 @@ function AddEstadoSolicitud() {
                     </label>
                     <input
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="text"
-                        placeholder="asignatura"
+                        type="number"
+                        placeholder="fk_estado"
                         onChange={handleChange}
-                        name="nombreEstado"
-                        disabled={!!errorMessage}  // Deshabilitar si hay error
+                        name="fk_estado"
+                        // Habilitar input aunque haya error
+                        disabled={false}
                     />
-                    <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-                </div>
-                <div className="w-full px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Mensaje
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+
+                    <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
+                    <textarea id="message" maxlength="49" rows="4" className="appearance-none  resize-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         type="text"
-                        placeholder="asignatura"
+                        placeholder="mensaje"
                         onChange={handleChange}
-                        name="mensajeSolicitud"
-                        disabled={!!errorMessage}  // Deshabilitar si hay error
-                    />
-                    <textarea
-                        rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Write your thoughts here..."
-                        disabled={!!errorMessage}  // Deshabilitar si hay error
-                    ></textarea>
+                        name="mensaje"></textarea>
+
                     <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                 </div>
                 <button
                     onClick={handleClick}
                     className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                    disabled={!!errorMessage}  // Deshabilitar si hay error
+                    // Habilitar el botón aunque haya error
+                    disabled={false}
                 >
                     Crear
                 </button>
@@ -112,4 +111,4 @@ function AddEstadoSolicitud() {
     );
 }
 
-export default AddEstadoSolicitud;
+export default AddSolicitudAcademico;

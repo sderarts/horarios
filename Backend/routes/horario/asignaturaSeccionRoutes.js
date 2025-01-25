@@ -6,6 +6,7 @@ import * as AsignaturaSeccionController from '../../controllers/horario/asignatu
 
 router.get('/', AsignaturaSeccionController.getAllAsignaturas_Secciones);
 router.get('/:id', AsignaturaSeccionController.getAsignatura_SeccionById);
+router.get('/alumno', AsignaturaSeccionController.getAsignatura_SeccionByAlumno);
 router.post('/', AsignaturaSeccionController.addAsignatura_Seccion);
 router.delete('/:id', AsignaturaSeccionController.deleteAsignatura_Seccion);
 router.put('/:id', AsignaturaSeccionController.updateAsignatura_Seccion);

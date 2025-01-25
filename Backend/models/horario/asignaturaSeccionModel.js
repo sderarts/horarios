@@ -78,6 +78,76 @@ const getAsignatura_SeccionById = (id, callback) => {
     });
 };
 
+const getAsignatura_SeccionByAlumno = (id, callback) => {
+    const query = `
+        SELECT
+            asigSec.id_asignatura_seccion,
+            asigSec.nombreRelacion,
+            asigSec.nombreDocente,
+            asignatura.nombreAsignatura AS nombre_asignatura,
+            seccion.nombreSeccion AS nombre_seccion,
+            asigSec.fk_Asignatura,
+            asigSec.fk_seccion
+        FROM
+            AsignaturaSeccion AS asigSec
+        JOIN
+            Asignatura AS asignatura ON asigSec.fk_asignatura = asignatura.id_asignatura
+        JOIN
+            Seccion AS seccion ON asigSec.fk_seccion = seccion.id_seccion
+        JOIN
+            NivelAsignatura AS nivAsig ON nivAsig.fk_asignatura = asignatura.id_asignatura
+        JOIN
+            Nivel AS nivel ON nivel.id_nivel = nivAsig.fk_nivel
+        JOIN
+            CarreraNivel AS carreraNivel ON carreraNivel.fk_nivel = nivel.id_nivel
+        JOIN
+            Carrera AS carrera ON carreraNivel.fk_carrera = carrera.id_carrera
+        JOIN
+            Alumno AS alumno ON alumno.fk_carrera = carrera.id_carrera
+        WHERE
+            alumno.id_alumno = ?;
+    `;
+
+    // Ejecutamos la consulta para obtener los detalles de la asignatura-sección
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null); // Retorna el error si ocurre
+        }
+
+        if (result.length === 0) {
+            return callback(new Error('Sección no encontrada'), null); // Error si no se encuentra la sección
+        }
+
+        // Si se encuentra la sección, obtenemos también todas las asignaturas y secciones disponibles
+        const queryAsignaturas = `
+            SELECT id_asignatura, nombreAsignatura FROM Asignatura;
+        `;
+        const querySecciones = `
+            SELECT id_seccion, nombreSeccion FROM Seccion;
+        `;
+
+        // Ejecutamos ambas consultas para obtener asignaturas y secciones
+        db.query(queryAsignaturas, (err1, asignaturas) => {
+            if (err1) {
+                return callback(err1, null);
+            }
+
+            db.query(querySecciones, (err2, secciones) => {
+                if (err2) {
+                    return callback(err2, null);
+                }
+
+                // Regresamos los datos de la asignatura-sección junto con las listas completas de asignaturas y secciones
+                return callback(null, {
+                    asignaturaSeccion: result[0], // La sección que se quiere editar
+                    asignaturas, // Todas las asignaturas
+                    secciones // Todas las secciones
+                });
+            });
+        });
+    });
+};
+
 const createAsignatura_Seccion = (Nivel_AsignaturaData, callback) => {
     const q = "INSERT INTO AsignaturaSeccion(`fk_seccion`, `fk_asignatura`, `nombreRelacion`, `nombreDocente`) VALUES (?, ?, ?, ?)";
     db.query(q, [Nivel_AsignaturaData.fk_seccion, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.nombreRelacion, Nivel_AsignaturaData.nombreDocente], callback);
@@ -96,6 +166,7 @@ const updateAsignatura_Seccion = (id, asignatura, fk_seccion, nombreRelacion, no
 export default {
     getAllAsignaturas_Secciones,
     getAsignatura_SeccionById,
+    getAsignatura_SeccionByAlumno,
     createAsignatura_Seccion,
     deleteAsignatura_Seccion,
     updateAsignatura_Seccion

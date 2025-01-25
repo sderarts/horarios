@@ -22,6 +22,21 @@ const getAsignatura_SeccionById = (req, res) => {
     });
 };
 
+const getAsignatura_SeccionByAlumno = (req, res) => {
+    const id = req.params.id;  // Obtener el ID desde los parámetros de la URL
+
+    Asignatura_Seccion.getAsignatura_SeccionByAlumno(id, (err, data) => {
+        if (err) {
+            if (err.message === 'Sección no encontrada') {
+                return res.status(404).json({ message: err.message });  // Si no se encuentra la sección
+            }
+            return res.status(500).json({ message: 'Error en la base de datos', error: err });
+        }
+
+        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+    });
+};
+
 const addAsignatura_Seccion = (req, res) => {
     const { fk_seccion, fk_asignatura, nombreRelacion, nombreDocente } = req.body;  // Recibimos las claves foráneas y otros datos
 
@@ -65,6 +80,7 @@ const updateAsignatura_Seccion = (req, res) => {
 export {
     getAllAsignaturas_Secciones,
     getAsignatura_SeccionById,
+    getAsignatura_SeccionByAlumno,
     addAsignatura_Seccion,
     deleteAsignatura_Seccion,
     updateAsignatura_Seccion

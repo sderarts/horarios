@@ -17,9 +17,10 @@ const Home = () => {
                     <p className="mb-4 text-5xl font-extrabold leading-none  text-gray-900 md:text-5xl lg:text-6xl dark:text-amber-500 tracking-normal">
                         Bienvenido a la plataforma de usuarios
                     </p>
-                    <div>
+                    <div className='w-full flex justify-center'>
                         <Login2 />
                     </div>
+
                 </div>
 
             </div>

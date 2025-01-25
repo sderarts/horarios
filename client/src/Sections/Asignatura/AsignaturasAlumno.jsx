@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 
 
 
-function AsignaturasAlumno () {
+function AsignaturasAlumno() {
 
     const navigate = useNavigate();
     const [asignaturas, setAsignaturas] = useState([])
@@ -100,19 +100,19 @@ function AsignaturasAlumno () {
             </div>
 
             <div className="grid grid-cols-4 gap-4 p-4">
-            {asignaturas.length > 0 ? (
-                asignaturas.map((e) => (
-                <div className="border p-4 items-center bg-white rounded-lg" key={e.id_asignatura}>
-                     <div className='p-4'><p className='font-bold'>{e.nombreAsignatura} - {e.nombreSeccion}</p>
-                    <p>{e.nombreDocente}</p>
-                    <p>{e.inscripciones}/{e.capacidad}</p>
-                    <p>{e.nombreCarrera} - {e.nombreNivel}</p></div>
-                    <div><button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Quiero inscribir esta sección</button></div>
-                </div>
-                ))
-            ) : (
-                <p>No hay asignaturas disponibles.</p>
-            )}
+                {asignaturas.length > 0 ? (
+                    asignaturas.map((e) => (
+                        <div className="border p-4 items-center bg-white rounded-lg" key={e.id_asignatura}>
+                            <div className='p-4'><p className='font-bold'>{e.nombreAsignatura} - {e.nombreSeccion}</p>
+                                <p>{e.nombreDocente}</p>
+                                <p>{e.inscripciones}/{e.capacidad}</p>
+                                <p>{e.nombreCarrera} - {e.nombreNivel}</p></div>
+                            <div><button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Quiero inscribir esta sección</button></div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No hay asignaturas disponibles.</p>
+                )}
             </div>
 
         </div>

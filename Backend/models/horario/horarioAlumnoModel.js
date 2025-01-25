@@ -6,7 +6,26 @@ const getAllHorarios_Alumnos = (callback) => {
 };
 
 const getHorario_AlumnoById = (id, callback) => {
-    const query = 'SELECT * FROM HorarioAlumno WHERE id_horario = ?';
+    const query = `SELECT *
+            FROM 
+                HorarioAlumno h
+            JOIN
+                AsignaturaSeccion a ON h.fk_seccion_asignatura = a.id_asignatura_seccion
+            JOIN
+                Seccion s ON a.fk_seccion = s.id_seccion
+            JOIN 
+                Asignatura ai ON a.fk_asignatura = ai.id_asignatura
+            JOIN
+                SeccionDia sd ON s.id_seccion = sd.fk_seccion
+            JOIN
+                Dia d ON sd.fk_dia = d.id_dia
+            JOIN
+                DiaBloque db ON d.id_dia = db.fk_dia
+            JOIN
+                BloqueHora bh ON db.fk_bloque = bh.id_bloque
+            WHERE 
+                h.fk_alumno = ?;
+            `;
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,8 +43,8 @@ const getHorario_AlumnoById = (id, callback) => {
 
 
 const createHorario_Alumno = (Horario_AlumnoData, callback) => {
-    const q = "INSERT INTO HorarioAlumno(`id_horario`, `fk_alumno`, `fk_seccion_asignatura`) VALUES (?, ?, ?)";
-    db.query(q, [Horario_AlumnoData.id_horario, Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
+    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES (?, ?, ?)";
+    db.query(q, [Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
 };
 
 const deleteHorario_Alumno = (id, callback) => {
