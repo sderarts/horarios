@@ -77,40 +77,30 @@ function HorarioAlumno() {
 
     return (
         <div className='p-12 bg-amber-400'>
+            <p className='text-lg font-semibold'>Tus asignaturas inscritas</p>
             {horario.length > 0 ? (
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black bg-black">
-                        <thead>
-                            <tr>
-                                <th scope="col" className="px-6 py-3 text-amber-400">Secciones</th>
-                                <th scope="col" className="px-6 py-3 text-amber-400">Asignaturas</th>
-                                <th scope="col" className="px-6 py-3 text-amber-400">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {horario.map((e) => (
-                                <tr key={e.id_horario} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                    <td className="px-6 py-4">
-                                        {e.id_horario} - {e.nombreRelacion} - {e.nombreSeccion}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {e.nombreAsignatura} - {e.nombreDocente}
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button
-                                            className="delete font-bold text-red-600 dark:text-red-500 hover:underline ml-2"
-                                            onClick={() => openModal(e.id_horario)}  // Llamamos a openModal para mostrar el modal
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="grid grid-cols-4 gap-4 p-4">
+                    {horario.map((e) => (
+                        <div className="border p-4 items-center bg-white rounded-lg" key={e.id_horario}>
+                            <div className='p-4'>
+                                <p className='font-bold'>{e.id_horario} - {e.nombreRelacion} - {e.nombreSeccion}</p>
+                                <p>{e.nombreAsignatura} </p>
+                                <p>{e.nombreDocente}</p>
+                            </div>
+                            <div className="flex justify-between">
+                                <button
+                                    className="font-bold text-red-600 dark:text-red-500 hover:underline ml-2"
+                                    onClick={() => openModal(e.id_horario)} // Llamamos a openModal para mostrar el modal
+                                >
+                                    Eliminar asignatura
+                                </button>
+                                {/* Si quieres agregar algo más como un botón de editar u otros detalles */}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
-                <p>No hay horario disponibles.</p>
+                <p>No hay horarios disponibles.</p>
             )}
 
             {/* Modal de confirmación */}

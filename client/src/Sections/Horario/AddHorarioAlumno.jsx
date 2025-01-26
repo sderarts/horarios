@@ -38,7 +38,6 @@ function AddHorarioAlumno() {
             const shortUid = user.uid.substring(0, 28);
             console.log(user);
 
-
             // Consulta a la API para obtener el id_alumno por el UID recortado
             axios
                 .get(`http://localhost:8800/auth/checkUser/${shortUid}`)
@@ -82,69 +81,46 @@ function AddHorarioAlumno() {
     }
 
     return (
-        <div className="flex flex-row bg-amber-400">
-            <div>
-                <div className="p-12">
-                    <h1>Detalles asignaturas</h1>
-                    {asignaturaSeccion.length > 0 ? (
-                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
-                            <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black bg-black">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Nombre relación
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Asignatura
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Sección
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Docente
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Actualizar
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-amber-400">
-                                            Eliminar
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {asignaturaSeccion.map((e) => (
-                                        <tr
-                                            key={e.id_asignatura_seccion}
-                                            className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100"
-                                        >
-                                            <td className="px-6 py-4">
-                                                {e.id_asignatura_seccion} - {e.nombreRelacion}
-                                            </td>
-                                            <td className="px-6 py-4">{e.nombre_asignatura}</td>
-                                            <td className="px-6 py-4">{e.nombre_seccion}</td>
-                                            <td className="px-6 py-4">{e.nombreDocente}</td>
-                                            <td className="px-6 py-4">
-                                                <Link to={`/asignatura_secciones/${e.id_asignatura_seccion}`}>
-                                                    <div className="w-full px-3 mb-4">
-                                                        <button
-                                                            onClick={handleClick}
-                                                            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                                                        >
-                                                            Inscribir
-                                                        </button>
-                                                    </div>
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+        <div className="flex flex-col bg-amber-400 p-12">
+            <h1>Detalles asignaturas</h1>
+            {errorMessage && <div className="error">{errorMessage}</div>}  {/* Mostrar error si existe */}
+
+            {/* Mostrar asignaturas en grid */}
+            {asignaturaSeccion.length > 0 ? (
+                <div className="grid grid-cols-4 gap-4 p-4">
+                    {asignaturaSeccion.map((e) => (
+                        <div className="border p-4 items-center bg-white rounded-lg" key={e.id_asignatura_seccion}>
+                            <div className='p-4'>
+                                <p className='font-bold'>{e.nombre_asignatura} - {e.nombre_seccion}</p>
+                                <p>{e.nombreDocente}</p>
+                                <p>{e.inscripciones}/{e.capacidad}</p>
+                            </div>
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={() => {
+                                        setHorario((prev) => ({
+                                            ...prev,
+                                            fk_alumno: idAlumno,
+                                            fk_seccion_asignatura: e.id_asignatura_seccion
+                                        }));
+                                        handleClick(e);
+                                    }}
+                                    className="bg-teal-500 text-white px-4 py-2 rounded"
+                                >
+                                    Inscribir
+                                </button>
+                                <Link to={`/asignatura_secciones/${e.id_asignatura_seccion}`}>
+                                    <button className="bg-teal-300 text-white px-4 py-2 rounded">
+                                        Ver detalles
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
-                    ) : (
-                        <p>No hay secciones disponibles.</p>
-                    )}
+                    ))}
                 </div>
-            </div>
+            ) : (
+                <p>No hay secciones disponibles.</p>
+            )}
         </div>
     );
 }
