@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { AuthContext } from '../Context/AuthContext'; // Asegúrate de que esto esté importado
+import { auth } from '../../firebase';
+import { AuthContext } from '../../Context/AuthContext'; // Asegúrate de que esto esté importado
 
 function Login({ onLoginSuccess }) {
     const { setUser } = useContext(AuthContext);  // Accede a setUser desde el contexto

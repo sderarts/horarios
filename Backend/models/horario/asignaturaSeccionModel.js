@@ -1,19 +1,30 @@
 import db from '../../config/db.js';
 
 const getAllAsignaturas_Secciones = (callback) => {
-    const q = `
-        SELECT
-            AsignaturaSeccion.id_asignatura_seccion,
-            AsignaturaSeccion.nombreRelacion,
-            AsignaturaSeccion.nombreDocente,
-            Asignatura.nombreAsignatura AS nombre_asignatura,
-            Seccion.nombreSeccion AS nombre_seccion
-        FROM
-            AsignaturaSeccion
-        JOIN
-            Asignatura ON AsignaturaSeccion.fk_Asignatura = Asignatura.id_asignatura
-        JOIN
-            Seccion ON AsignaturaSeccion.fk_seccion = Seccion.id_seccion;
+    const q = ` SELECT 
+                a.nombreAsignatura, 
+                a.id_asignatura,
+                ac.id_asignatura_seccion,
+                ac.nombreDocente, 
+                s.nombreSeccion, 
+                s.capacidad, 
+                s.inscripciones, 
+                n.nombreNivel, 
+                c.nombreCarrera
+            FROM 
+                Asignatura a
+            JOIN 
+                NivelAsignatura na ON a.id_asignatura = na.fk_asignatura
+            JOIN 
+                Nivel n ON na.fk_nivel = n.id_nivel
+            JOIN 
+                CarreraNivel cn ON n.id_nivel = cn.fk_nivel
+            JOIN 
+                Carrera c ON cn.fk_carrera = c.id_carrera
+            JOIN
+                AsignaturaSeccion ac ON a.id_asignatura = ac.fk_asignatura
+            JOIN
+                Seccion s ON ac.fk_seccion = s.id_seccion;
     `;
     db.query(q, callback);
 };

@@ -23,16 +23,16 @@ const getSolicitudById = (req, res) => {
 };
 
 const addSolicitud = (req, res) => {
-    const {  fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_tipo_solicitud, fk_alumno, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_tipo_solicitud || !fk_alumno || !fk_estado_solicitud || !fk_seccion_asignatura) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura)' });
+    if (!fk_tipo_solicitud || !fk_alumno || !fk_seccion_asignatura) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_tipo_solicitud, fk_alumno,  fk_seccion_asignatura)' });
     }
 
-    const carrera_NivelData = {  fk_tipo_solicitud, fk_alumno, fk_estado_solicitud, fk_seccion_asignatura };  // Creamos el objeto con los datos a insertar
+    const SolicitudData = { fk_tipo_solicitud, fk_alumno, fk_seccion_asignatura };  // Creamos el objeto con los datos a insertar
 
-    Solicitud.createSolicitud(carrera_NivelData, (err, data) => {
+    Solicitud.createSolicitud(SolicitudData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
         return res.status(201).json(data);  // Respondemos con el dato creado
     });
@@ -49,14 +49,14 @@ const deleteSolicitud = (req, res) => {
 
 const updateSolicitud = (req, res) => {
     const id = req.params.id;
-    const { fk_alumno, fk_tipo_solicitud, fk_estado_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_alumno, fk_tipo_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_alumno || !fk_tipo_solicitud || !fk_estado_solicitud || !fk_seccion_asignatura) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_tipo_solicitud, fk_estado_solicitud, fk_seccion_asignatura)' });
+    if (!fk_alumno || !fk_tipo_solicitud || !fk_seccion_asignatura) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_tipo_solicitud,  fk_seccion_asignatura)' });
     }
 
-    Solicitud.updateSolicitud(id, fk_alumno, fk_tipo_solicitud, fk_estado_solicitud, (err, data) => {
+    Solicitud.updateSolicitud(id, fk_alumno, fk_tipo_solicitud, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });

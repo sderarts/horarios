@@ -13,6 +13,8 @@ import asignaturaSeccionRoutes from './routes/horario/asignaturaSeccionRoutes.js
 import horarioAlumnoRoutes from './routes/horario/horarioAlumnoRoutes.js';
 import solicitudRoutes from './routes/solicitud/solicitudRoutes.js';
 import solicitudAcademicoRoutes from './routes/solicitud/solicitudAcademicoRoutes.js';
+import tipoSolicitudRoutes from './routes/solicitud/tipoSolicitudRoutes.js';
+import estadoSolicitudRoutes from './routes/solicitud/estadoSolicitudRoutes.js';
 
 import cors from 'cors'
 import authRoutes from './routes/auth/authRoutes.js'
@@ -43,6 +45,8 @@ app.use('/asignatura_secciones', asignaturaSeccionRoutes);
 app.use('/horario_alumnos', horarioAlumnoRoutes);
 app.use('/solicitudes', solicitudRoutes);
 app.use('/academico_solicitudes', solicitudAcademicoRoutes);
+app.use('/tipo_solicitudes', tipoSolicitudRoutes);
+app.use('/estado_solicitudes', estadoSolicitudRoutes);
 
 
 app.listen(8800, () => {

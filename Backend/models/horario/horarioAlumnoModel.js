@@ -13,16 +13,8 @@ const getHorario_AlumnoById = (id, callback) => {
                 AsignaturaSeccion a ON h.fk_seccion_asignatura = a.id_asignatura_seccion
             JOIN
                 Seccion s ON a.fk_seccion = s.id_seccion
-            JOIN 
+            JOIN
                 Asignatura ai ON a.fk_asignatura = ai.id_asignatura
-            JOIN
-                SeccionDia sd ON s.id_seccion = sd.fk_seccion
-            JOIN
-                Dia d ON sd.fk_dia = d.id_dia
-            JOIN
-                DiaBloque db ON d.id_dia = db.fk_dia
-            JOIN
-                BloqueHora bh ON db.fk_bloque = bh.id_bloque
             WHERE 
                 h.fk_alumno = ?;
             `;
@@ -34,16 +26,17 @@ const getHorario_AlumnoById = (id, callback) => {
         }
 
         if (result.length === 0) {
-            return callback(new Error('Sección no encontrada'), null); // Error si no se encuentra la sección
+            return callback(new Error('No se encontraron horarios para el alumno'), null); // Error si no se encuentra
         }
 
-        return callback(null, result[0]); // Retorna el primer resultado
+        return callback(null, result); // Devuelve todos los resultados
     });
 };
 
 
+
 const createHorario_Alumno = (Horario_AlumnoData, callback) => {
-    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES (?, ?, ?)";
+    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES (?, ?)";
     db.query(q, [Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
 };
 
@@ -52,9 +45,9 @@ const deleteHorario_Alumno = (id, callback) => {
     db.query(q, [id], callback);
 };
 
-const updateHorario_Alumno = (id, fk_asignatura, fk_alumno, callback) => {
-    const q = "UPDATE HorarioAlumno SET `fk_asignatura` = ?, `fk_alumno` = ? WHERE id_horario = ?";
-    db.query(q, [fk_asignatura, fk_alumno, id], callback);
+const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, callback) => {
+    const q = "UPDATE HorarioAlumno SET `fk_seccion_asignatura` = ?, `fk_alumno` = ? WHERE id_horario = ?";
+    db.query(q, [fk_seccion_asignatura, fk_alumno, id], callback);
 };
 
 export default {

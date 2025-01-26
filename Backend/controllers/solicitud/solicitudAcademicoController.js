@@ -23,14 +23,14 @@ const getSolicitud_AcademicoById = (req, res) => {
 };
 
 const addSolicitud_Academico = (req, res) => {
-    const { fk_academico, fk_estado, mensaje } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_academico, fk_estado, fk_solicitud, mensaje } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_academico || !fk_estado || !mensaje) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_academico, fk_estado, mensaje)' });
+    if (!fk_academico || !fk_estado || !fk_solicitud || !mensaje) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_academico, fk_estado, fk_solicitud, mensaje)' });
     }
 
-    const estado_SolicitudData = { fk_academico, fk_estado, mensaje };  // Creamos el objeto con los datos a insertar
+    const estado_SolicitudData = { fk_academico, fk_estado, fk_solicitud, mensaje };  // Creamos el objeto con los datos a insertar
 
     SolicitudAcademico.createSolicitud_Academico(estado_SolicitudData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
@@ -49,14 +49,14 @@ const deleteSolicitud_Academico = (req, res) => {
 
 const updateSolicitud_Academico = (req, res) => {
     const id = req.params.id;
-    const { fk_academico, fk_estado, mensaje } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_academico, fk_estado, fk_solicitud, mensaje } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_academico || !fk_estado || !mensaje) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios  fk_academico, fk_estado, mensaje)' });
+    if (!fk_academico || !fk_estado || !fk_solicitud || !mensaje) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios  fk_academico, fk_estado, fk_solicitud, mensaje)' });
     }
 
-    SolicitudAcademico.updateSolicitud_Academico(id, fk_academico, fk_estado, mensaje, (err, data) => {
+    SolicitudAcademico.updateSolicitud_Academico(id, fk_academico, fk_estado, fk_solicitud, mensaje, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });

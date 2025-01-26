@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router";
 import axios from 'axios';
 import Fondo from '../assets/img/net.png'
-import Login2 from './Login2';
+import Login2 from '../Sections/User/Login2';
 import Navbar from '../Layout/Navbar';
 
 const Home = () => {

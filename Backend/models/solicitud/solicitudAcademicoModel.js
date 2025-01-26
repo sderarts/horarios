@@ -24,8 +24,8 @@ const getSolicitud_AcademicoById = (id, callback) => {
 
 
 const createSolicitud_Academico = (SolicitudAcademicoData, callback) => {
-    const q = "INSERT INTO SolicitudAcademico(`fk_academico`,`fk_estado`, `mensaje`) VALUES (?,?,?)";
-    db.query(q, [SolicitudAcademicoData.fk_academico, SolicitudAcademicoData.fk_estado], callback);
+    const q = "INSERT INTO SolicitudAcademico(`fk_academico`,`fk_estado`, `fk_solicitud`, `mensaje`) VALUES (?,?,?,?)";
+    db.query(q, [SolicitudAcademicoData.fk_academico, SolicitudAcademicoData.fk_estado, SolicitudAcademicoData.fk_solicitud, SolicitudAcademicoData.mensaje], callback);
 };
 
 const deleteSolicitud_Academico = (id, callback) => {
@@ -33,9 +33,9 @@ const deleteSolicitud_Academico = (id, callback) => {
     db.query(q, [id], callback);
 };
 
-const updateSolicitud_Academico = (id, fk_academico, fk_estado, mensaje, callback) => {
-    const q = "UPDATE SolicitudAcademico SET `fk_academico` = ?, `fk_estado` = ?, `mensaje` = ? WHERE id_solicitud_academico = ?";
-    db.query(q, [fk_academico, fk_estado, mensaje, id], callback);
+const updateSolicitud_Academico = (id, fk_academico, fk_estado, fk_solicitud, mensaje, callback) => {
+    const q = "UPDATE SolicitudAcademico SET `fk_academico` = ?, `fk_estado` = ?, `fk_solicitud` = ?, `mensaje` = ? WHERE id_solicitud_academico = ?";
+    db.query(q, [fk_academico, fk_estado, fk_solicitud, mensaje, id], callback);
 };
 
 export default {

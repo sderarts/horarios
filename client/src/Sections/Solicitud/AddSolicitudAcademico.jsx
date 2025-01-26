@@ -9,9 +9,38 @@ function AddSolicitudAcademico() {
     const [asignatura, setAsignatura] = useState({
         fk_academico: "",
         fk_estado: "",
+        fk_solicitud: "",
         mensaje: ""
     });
-    const [errorMessage, setErrorMessage] = useState("");  // Estado para manejar el mensaje de error
+
+    const [estadoSolicitud, setEstadoSolicitud] = useState([]);
+    const [solicitud, setSolicitud] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // Cargar los tipos de solicitud y secciones de asignatura
+    useEffect(() => {
+        const fetchEstadoSolicitudes = async () => {
+            try {
+                const response = await axios.get("http://localhost:8800/estado_solicitudes");
+                setEstadoSolicitud(response.data);
+            } catch (error) {
+                console.error("Error al obtener los tipos de solicitud", error);
+            }
+        };
+
+        const fetchSolicitud = async () => {
+            try {
+                const response = await axios.get("http://localhost:8800/solicitudes");
+                setSolicitud(response.data);
+            } catch (error) {
+                console.error("Error al obtener las secciones de asignaturas", error);
+            }
+        };
+
+        fetchEstadoSolicitudes();
+        fetchSolicitud();
+    }, []);
+
 
     useEffect(() => {
         if (user && user.uid) {
@@ -58,7 +87,7 @@ function AddSolicitudAcademico() {
         // }
 
         try {
-            await axios.post("http://localhost:8800/estado_solicitudes", asignatura);
+            await axios.post("http://localhost:8800/academico_solicitudes", asignatura);
             navigate(0);  // Recarga la página
         } catch (error) {
             console.error("Error al hacer la solicitud:", error);

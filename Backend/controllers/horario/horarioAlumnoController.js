@@ -23,14 +23,14 @@ const getHorario_AlumnoById = (req, res) => {
 };
 
 const addHorario_Alumno = (req, res) => {
-    const { id_horario, fk_horario, fk_alumno } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_seccion_asignatura, fk_alumno } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!id_horario || !fk_horario || !fk_alumno) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (id_horario, fk_horario, fk_alumno)' });
+    if (!fk_seccion_asignatura || !fk_alumno) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_seccion_asignatura, fk_alumno)' });
     }
 
-    const carrera_NivelData = { id_horario, fk_horario, fk_alumno };  // Creamos el objeto con los datos a insertar
+    const carrera_NivelData = { fk_seccion_asignatura, fk_alumno };  // Creamos el objeto con los datos a insertar
 
     Horario_Alumno.createHorario_Alumno(carrera_NivelData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
@@ -49,14 +49,14 @@ const deleteHorario_Alumno = (req, res) => {
 
 const updateHorario_Alumno = (req, res) => {
     const id = req.params.id;
-    const { fk_alumno, fk_horario } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_alumno, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_alumno || !fk_horario) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_horario)' });
+    if (!fk_alumno || !fk_seccion_asignatura) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_seccion_asignatura)' });
     }
 
-    Horario_Alumno.updateHorario_Alumno(id, fk_alumno, fk_horario, (err, data) => {
+    Horario_Alumno.updateHorario_Alumno(id, fk_alumno, fk_seccion_asignatura, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });
