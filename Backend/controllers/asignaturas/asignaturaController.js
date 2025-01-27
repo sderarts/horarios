@@ -14,6 +14,21 @@ const getAsignatura2 = (req, res) => {
     });
 };
 
+const getAsignaturaById = (req, res) => {
+    const id = req.params.id;  // Obtener el ID desde los parámetros de la URL
+
+    Asignatura.getAsignaturaById(id, (err, data) => {
+        if (err) {
+            if (err.message === 'Sección no encontrada') {
+                return res.status(404).json({ message: err.message });  // Si no se encuentra la sección
+            }
+            return res.status(500).json({ message: 'Error en la base de datos', error: err });
+        }
+
+        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+    });
+};
+
 const addAsignatura = (req, res) => {
     const asignaturaData = req.body;
     Asignatura.createAsignatura(asignaturaData, (err, data) => {
@@ -42,6 +57,7 @@ const updateAsignatura = (req, res) => {
 export {
     getAsignatura,
     getAsignatura2,
+    getAsignaturaById,
     addAsignatura,
     deleteAsignatura,
     updateAsignatura

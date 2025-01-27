@@ -35,6 +35,24 @@ const getAllAsignaturas2 = (callback) => {
     db.query(q, callback);
 };
 
+const getAsignaturaById = (id, callback) => {
+    const query = 'SELECT * FROM Carrera WHERE id_asignatura = ?';
+
+    // Ejecutamos la consulta
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null); // Retorna el error si ocurre
+        }
+
+        if (result.length === 0) {
+            return callback(new Error('Asignatura no encontrada'), null); // Error si no se encuentra la sección
+        }
+
+        return callback(null, result[0]); // Retorna el primer resultado
+    });
+};
+
+
 const createAsignatura = (asignaturaData, callback) => {
     const q = "INSERT INTO asignatura(`nombreAsignatura`) VALUES (?)";
     db.query(q, [asignaturaData.nombreAsignatura], callback);
@@ -53,6 +71,7 @@ const updateAsignatura = (id, nombreAsignatura, callback) => {
 export default {
     getAllAsignaturas,
     getAllAsignaturas2,
+    getAsignaturaById,
     createAsignatura,
     deleteAsignatura,
     updateAsignatura

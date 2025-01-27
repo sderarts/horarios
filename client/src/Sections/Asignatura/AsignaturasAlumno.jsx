@@ -193,6 +193,9 @@ function AsignaturasAlumno() {
                 <div className="grid grid-cols-4 gap-4 p-4">
                     {asignaturas.length > 0 ? (
                         asignaturas.map((e) => {
+                            // Verificamos si las inscripciones han alcanzado la capacidad
+                            const isFull = e.inscripciones >= e.capacidad;
+
                             return (
                                 <div className="border p-4 items-center bg-white rounded-lg" key={e.id_asignatura_seccion}>
                                     <div className='p-4'>
@@ -204,9 +207,10 @@ function AsignaturasAlumno() {
                                     <div>
                                         <button
                                             onClick={(event) => handleClick(event, e.id_asignatura_seccion)}  // Cambié 'e' por 'asignatura'
-                                            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                                            className={`flex-shrink-0 ${isFull ? "bg-gray-500 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"} text-sm border-4 text-white py-1 px-2 rounded`}
+                                            disabled={isFull}  // Desactiva el botón si la sección está llena
                                         >
-                                            Quiero inscribir esta sección
+                                            {isFull ? "Sección llena" : "Quiero inscribir esta sección"}
                                         </button>
                                     </div>
                                 </div>
