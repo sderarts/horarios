@@ -62,36 +62,9 @@ function AddAsignaturaSeccion() {
     return (
         <div className='bg-amber-400 w-1/3 p-20'>
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
-                {/* Input para nombreRelacion */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
-                        Nombre de la Relación
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="text"
-                        placeholder="Nombre de la relación"
-                        onChange={handleChange}
-                        name="nombreRelacion"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre asignaturas y secciones</p>
+            <div className='w-full justify-center items-center p-4'>
+                    <p className='text-black font-semibold text-xl'>Crear Asignatura-Sección</p>
                 </div>
-
-                {/* Input para nombreDocente */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreDocente">
-                        Nombre del Docente
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="text"
-                        placeholder="Nombre del docente"
-                        onChange={handleChange}
-                        name="nombreDocente"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese el nombre del docente asignado</p>
-                </div>
-
                 {/* Lista desplegable para fk_asignatura */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_asignatura">
@@ -130,6 +103,36 @@ function AddAsignaturaSeccion() {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                 {/* Input para nombreRelacion */}
+                 <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
+                        Nombre de Relación
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text"
+                        placeholder="Nombre de la relación"
+                        onChange={handleChange}
+                        name="nombreRelacion"
+                    />
+                    <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre asignaturas y secciones</p>
+                </div>
+
+                {/* Input para nombreDocente */}
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreDocente">
+                        Nombre del Docente
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text"
+                        placeholder="Nombre del docente"
+                        onChange={handleChange}
+                        name="nombreDocente"
+                    />
+                    <p className="text-gray-600 text-xs italic">Ingrese el nombre del docente asignado</p>
                 </div>
 
                 {/* Botón para agregar asignatura-sección */}

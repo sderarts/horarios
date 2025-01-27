@@ -44,19 +44,30 @@ const Home = () => {
     }, [user]);
 
     return (
-        <div className='w-full h-screen flex'>
-            <div className='w-full h-screen bg-lime-50'>
+        <div className='w-full h-screen'>
+            <div className='w-full flex bg-lime-50  justify-center'>
                 <img src={Fondo} alt="" className='absolute z-0 w-full h-full' />
                 <Navbar />
-                <div className='relative p-12 z-100 w-full'>
-                    <p className="mb-4 text-5xl font-extrabold leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-amber-500 tracking-normal">
-                        Bienvenido a la plataforma de usuarios
-                    </p>
-                    <div className='w-full grid grid-cols-2 gap-4'>
+                {showOptions && <Options />} 
+                <div className='flex  flex-col relative p-12 z-100 w-1/2 h-3/5 items-center justify-center mt-24  '>
+                    <div className="w-2/3 bg-black">
+                        <p className="mb-4 text-5xl font-bold leading-none text-white md:text-5xl lg:text-7xl dark:text-amber-500 tracking-normal text-center">
+                            Bienvenido a la plataforma de usuarios
+                        </p>
+                    </div>
+                    
+                    <div className='w-full '>
                         <Login2 />
-                        {showOptions && <Options />}  {/* Muestra Options si showOptions es true */}
+                         {/* Muestra Options si showOptions es true */}
                     </div>
                 </div>
+
+                
+            </div>
+
+
+            <div class="bg-white lg:w-6/12 md:7/12 w-8/12 shadow-3xl rounded-xl">
+
             </div>
         </div>
     );

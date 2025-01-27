@@ -62,31 +62,20 @@ function AddNivelAsignatura() {
     };
 
     return (
-        <div className='flex p-24 bg-amber-400 w-full flex-row'>
-            <div className='w-1/3'>
+        <div className='flex p-24 bg-amber-400 w-full flex-row space-y-2'>
+            {/*<div className='w-1/3'>
                 <Niveles />
-            </div>
+            </div>*/}
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
-                {/* Input para relacionNombre */}
-                <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionNombre">
-                        Nombre de la Relación
-                    </label>
-                    <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        type="text"
-                        placeholder="Nombre de la relación"
-                        onChange={handleChange}
-                        name="relacionNombre"
-                    />
-                    <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre las asignaturas</p>
+                <div className='w-full justify-center items-center p-4'>
+                    <p className='text-black font-semibold text-xl'>Asigna a que semestre corresponde una asignatura</p>
                 </div>
 
                 {/* Lista desplegable para fk_nivel */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_nivel">
+                    {/* <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_nivel">
                         Semestre
-                    </label>
+                    </label>*/}
                     <select
                         className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name="fk_nivel"
@@ -104,9 +93,9 @@ function AddNivelAsignatura() {
 
                 {/* Lista desplegable para fk_asignatura */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_asignatura">
+                    {/*<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_asignatura">
                         Asignatura
-                    </label>
+                    </label>*/}
                     <select
                         className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name="fk_asignatura"
@@ -122,13 +111,27 @@ function AddNivelAsignatura() {
                     </select>
                 </div>
 
+                <div className="w-full px-3 mb-4">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionNombre">
+                        Nombre de la Relación
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text"
+                        placeholder="Nombre de la relación"
+                        onChange={handleChange}
+                        name="relacionNombre"
+                    />
+                    <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre las asignaturas</p>
+                </div>
+
                 {/* Botón para agregar */}
                 <div className="w-full px-3 mb-4">
                     <button
                         onClick={handleClick}
                         className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
                     >
-                        Agregar Semestre-Asignatura
+                        Agregar
                     </button>
                 </div>
             </div>

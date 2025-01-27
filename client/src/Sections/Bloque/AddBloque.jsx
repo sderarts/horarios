@@ -39,8 +39,10 @@ function AddBloque() {
                     <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder='Nombre Bloque' onChange={handleChange} name='nombreBloqueHora' />
                     <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                 </div>
-                <button onClick={handleClick} className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Agregar</button>
-            </div>
+                <div className="w-full px-3 mb-4">
+                     <button onClick={handleClick} className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Agregar</button>
+                </div>
+                </div>
         </div>
     )
 }

@@ -79,7 +79,7 @@ function VerBloques() {
                             <tbody>
                                 {bloques.map((e) => (
                                     <tr key={e.id_bloque} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold bg-black text-white">
                                             {e.id_bloque} - {e.nombreBloqueHora}
                                         </td>
                                         <td className="px-6 py-4">

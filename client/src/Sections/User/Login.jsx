@@ -39,7 +39,8 @@ function Login({ onLoginSuccess }) {
     };
 
     return (
-        <div className='p-12 bg-amber-400 rounded-xl w-1/3'>
+        <div className='bg-amber-400  w-full p-12 rounded-xl flex-row'>
+            <div className="flex  justify-center items-center flex-row">
             <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl ">Iniciar sesión</h1>
             <button className="flex items-center bg-white dark:bg-gray-900 border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onClick={handleGoogleLogin}>
                 <svg className="h-6 w-6 mr-2" width="800px" height="800px" viewBox="-0.5 0 48 48" version="1.1">
@@ -59,6 +60,7 @@ function Login({ onLoginSuccess }) {
                 </svg>
                 <span>Accede con tu cuenta de Google</span>
             </button>
+            </div>
         </div>
     );
 }

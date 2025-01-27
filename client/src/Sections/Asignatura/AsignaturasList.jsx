@@ -38,7 +38,9 @@ function AsignaturasList() {
     return (
         <div className='flex w-full flex-row bg-amber-400'>
             <div className="p-12">
-                <h1> Asingaturas por carrera</h1>
+            <div className='w-full justify-center items-center py-4'>
+                    <p className='text-black font-semibold text-xl'>Asignaturas</p>
+                </div>
 
                 {asignaturas.length > 0 ? (
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -56,22 +58,22 @@ function AsignaturasList() {
                             <tbody>
                                 {asignaturas.map((e) => (
                                     <tr key={e.id_asignatura} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold bg-black text-white">
                                             {e.id_asignatura} - {e.nombreAsignatura}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreSeccion}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreDocente}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.inscripciones}/{e.capacidad}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreNivel}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreCarrera}
                                         </td>
 

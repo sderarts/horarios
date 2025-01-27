@@ -81,7 +81,7 @@ function Login2() {
                 !user ? (
                     <Login onLoginSuccess={handleLoginSuccess} />
                 ) : (
-                    <div className='p-12 bg-amber-400 rounded-xl w-1/3'>
+                    <div className='p-12 bg-amber-400 rounded-xl'>
                         <p className='className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl "'>
                             Bienvenido, {user.displayName}</p>
                         <p className='className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl "'>
@@ -90,6 +90,8 @@ function Login2() {
                     </div>
                 )
             )}
+
+            
         </div>
     );
 }

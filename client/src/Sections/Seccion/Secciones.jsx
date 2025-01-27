@@ -70,7 +70,9 @@ function VerSecciones() {
   return (
     <div className='flex flex-row w-full bg-amber-400'>
       <div className="p-12">
-        <h1>Listado de Secciones</h1>
+      <div className='w-full justify-center items-center p-4'>
+                    <p className='text-black font-semibold text-xl'>Listado de secciones</p>
+                </div>
 
         {secciones.length > 0 ? (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -86,10 +88,10 @@ function VerSecciones() {
               <tbody>
                 {secciones.map((e) => (
                   <tr key={e.id_seccion} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 font-semibold bg-black text-white">
                       {e.id_seccion} - {e.nombreSeccion}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 font-semibold">
                       {e.inscripciones}/{e.capacidad}
                     </td>
                     <td className="px-6 py-4">

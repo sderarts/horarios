@@ -67,7 +67,7 @@ function CarrerasList() {
         <div className='flex w-full h-full flex-row bg-amber-400'>
             <div className='p-24 '>
                 <div className='w-full justify-center items-center'>
-                    <p className='text-black font-semibold text-xl'>Carreras</p>
+                    <p className='text-black font-semibold text-xl'>Lista de Carreras</p>
                 </div>
                 {carreras.length > 0 ? (
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

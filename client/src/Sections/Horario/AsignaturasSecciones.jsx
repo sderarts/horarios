@@ -93,7 +93,9 @@ function AsignaturasSecciones() {
     return (
         <div className='flex flex-row bg-amber-400'>
             <div className="p-12 ">
-                <h1>Detalles asignaturas</h1>
+            <div className='w-full justify-center items-center p-4'>
+                    <p className='text-black font-semibold text-xl'>Editar Asignatura-Sección</p>
+                </div>
                 {asignaturaSeccion.length > 0 ? (
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black bg-black">
@@ -110,16 +112,16 @@ function AsignaturasSecciones() {
                             <tbody>
                                 {asignaturaSeccion.map((e) => (
                                     <tr key={e.id_asignatura_seccion} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold bg-black text-white" >
                                             {e.id_asignatura_seccion} - {e.nombreRelacion}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreAsignatura}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreSeccion}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold">
                                             {e.nombreDocente}
                                         </td>
                                         <td className="px-6 py-4">
