@@ -1,4 +1,5 @@
-import Horario_Alumno from '../../models/horario/horarioAlumnoModel.js'
+import Horario_Alumno from '../../models/horario/horarioAlumnoModel.js';
+import db from '../../config/db.js'
 
 const getAllHorarios_Alumnos = (req, res) => {
     Horario_Alumno.getAllHorarios_Alumnos((err, data) => {
@@ -30,11 +31,27 @@ const addHorario_Alumno = (req, res) => {
         return res.status(400).json({ message: 'Faltan datos obligatorios (fk_seccion_asignatura, fk_alumno)' });
     }
 
-    const carrera_NivelData = { fk_seccion_asignatura, fk_alumno };  // Creamos el objeto con los datos a insertar
+    // Primero, verificamos si ya existe la inscripción
+    const checkQuery = "SELECT * FROM horarioalumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?";
+    db.query(checkQuery, [fk_alumno, fk_seccion_asignatura], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error en la verificación de inscripción.', error: err });
+        }
 
-    Horario_Alumno.createHorario_Alumno(carrera_NivelData, (err, data) => {
-        if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
-        return res.status(201).json(data);  // Respondemos con el dato creado
+        // Si ya existe un registro, devolvemos un mensaje de error
+        if (results.length > 0) {
+            return res.status(400).json({ message: 'Ya estás inscrito en esta sección.' });
+        }
+
+        // Si no existe, creamos la relación
+        const carrera_NivelData = { fk_seccion_asignatura, fk_alumno };  // Creamos el objeto con los datos a insertar
+
+        Horario_Alumno.createHorario_Alumno(carrera_NivelData, (createErr, data) => {
+            if (createErr) {
+                return res.status(500).json({ message: 'Error al crear la relación', error: createErr });
+            }
+            return res.status(201).json(data);  // Respondemos con el dato creado
+        });
     });
 };
 

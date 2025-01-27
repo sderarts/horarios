@@ -13,7 +13,6 @@ function Alumno() {
             <AsignaturasAlumno />
             {/* <AddHorarioAlumno /> */}
             <HorarioAlumno />
-            <Options />
         </div>
     )
 }

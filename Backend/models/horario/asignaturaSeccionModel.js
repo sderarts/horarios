@@ -3,6 +3,8 @@ import db from '../../config/db.js';
 const getAllAsignaturas_Secciones = (callback) => {
     const q = ` SELECT 
                 a.nombreAsignatura, 
+                ac.fk_seccion,
+                ac.nombreRelacion,
                 a.id_asignatura,
                 ac.id_asignatura_seccion,
                 ac.nombreDocente, 

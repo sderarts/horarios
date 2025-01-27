@@ -10,6 +10,7 @@ function AsignaturasAlumno() {
     const [successMessage, setSuccessMessage] = useState(""); // Estado para el mensaje de éxito
     const navigate = useNavigate();
     const [asignaturas, setAsignaturas] = useState([]);
+    const [seccion, setSeccion] = useState([]);
     const [inscribirAsignatura, setInscribirAsignatura] = useState({
         fk_seccion_asignatura: "",
         fk_alumno: ""
@@ -27,6 +28,19 @@ function AsignaturasAlumno() {
                 console.error("Error al obtener las asignaturas:", error);
             });
     }, []);
+
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8800/secciones/${id_seccion}`)
+    //         .then((response) => {
+    //             console.log('Datos recibidos:', response.data);
+    //             setSeccion(response.data);  // Guardamos los datos de asignaturas en el estado
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error al obtener las asignaturas:", error);
+    //         });
+    // }, []);
+
+
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -56,23 +70,26 @@ function AsignaturasAlumno() {
     const handleClick = (event, idAsignaturaSeccion) => {
         event.preventDefault();
 
-        // Verifica si ya tienes un alumno autenticado
-        if (!inscribirAsignatura.fk_alumno) {
-            setErrorMessage("Debes estar autenticado como alumno.");
-            setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
-            return;
+        // Encontrar el fk_seccion usando el id_asignatura_seccion
+        const asignatura = asignaturas.find(asignatura => asignatura.id_asignatura_seccion === idAsignaturaSeccion);
+        const fk_seccion = asignatura ? asignatura.fk_seccion : null;
+
+        if (fk_seccion) {
+            console.log("fk_seccion seleccionado: ", fk_seccion);
+
+            // En vez de guardar fk_seccion, guarda el id_asignatura_seccion
+            setSelectedAsignatura(idAsignaturaSeccion);  // Guardar el id_asignatura_seccion en el estado
+            setShowModal(true); // Mostrar el modal
+        } else {
+            setErrorMessage("No se pudo encontrar la sección de la asignatura.");
+            setSuccessMessage(""); // Limpiar el mensaje de éxito
         }
-
-        console.log("id_asignatura_seccion seleccionado: ", idAsignaturaSeccion);
-
-        // Muestra el modal de confirmación y guarda la asignatura seleccionada
-        setSelectedAsignatura(idAsignaturaSeccion);
-        setShowModal(true);
     };
+
 
     // Función para confirmar la inscripción
     const handleConfirm = async () => {
-        // Verifica si ya tienes un alumno autenticado
+        // Verifica que el usuario esté autenticado
         if (!inscribirAsignatura.fk_alumno) {
             setErrorMessage("Debes estar autenticado como alumno.");
             setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
@@ -85,35 +102,69 @@ function AsignaturasAlumno() {
             return;
         }
 
-        // Actualizamos el estado con el id_seccion_asignatura seleccionado
-        const updatedInscribirAsignatura = {
-            ...inscribirAsignatura,
-            fk_seccion_asignatura: selectedAsignatura,  // Usamos el id de la asignatura seleccionada
-        };
-
-        setInscribirAsignatura(updatedInscribirAsignatura);
-
-        setShowModal(false); // Cerrar el modal
-
-        // Enviar la solicitud POST con el estado actualizado
         try {
-            const response = await axios.post("http://localhost:8800/horario_alumnos", updatedInscribirAsignatura);
-            console.log("Solicitud enviada:", response.data);
+            // Primero obtener los datos de la asignatura seleccionada
+            const asignatura = asignaturas.find(asignatura => asignatura.id_asignatura_seccion === selectedAsignatura);
+            const fk_seccion = asignatura ? asignatura.fk_seccion : null;
 
-            setSuccessMessage("¡Inscripción realizada con éxito!"); // Mensaje de éxito
-            setErrorMessage(""); // Limpiar mensaje de error si la inscripción fue exitosa
-        } catch (error) {
-            if (error.response) {
-                console.error("Error en la respuesta:", error.response.data);
-                setErrorMessage(error.response.data.message || "Error al enviar la solicitud.");
-                setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
-            } else {
-                console.error("Error al hacer la solicitud:", error.message);
-                setErrorMessage("Error al procesar la solicitud.");
-                setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
+            // Verificar que la asignatura y fk_seccion sean válidos
+            if (!fk_seccion) {
+                setErrorMessage("No se pudo encontrar la sección de la asignatura.");
+                return;
             }
+
+            // Obtener los datos de la sección para la inscripción
+            const responseSeccion = await axios.get(`http://localhost:8800/secciones/${fk_seccion}`);
+            const seccionData = responseSeccion.data;
+
+            // Verificar si la sección tiene capacidad
+            if (seccionData.inscripciones >= seccionData.capacidad) {
+                setErrorMessage("No hay suficiente capacidad para inscribir más estudiantes.");
+                setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
+                return;
+            }
+
+            // Si la inscripción es posible, actualizar el número de inscripciones
+            const updatedInscribirAsignatura = {
+                fk_seccion_asignatura: selectedAsignatura,  // Usamos el id_asignatura_seccion
+                fk_alumno: inscribirAsignatura.fk_alumno,   // Asegúrate de tener el fk_alumno
+            };
+
+            // Realizar el POST para la inscripción
+            const postResponse = await axios.post("http://localhost:8800/horario_alumnos", updatedInscribirAsignatura);
+            console.log("Inscripción realizada con éxito:", postResponse.data);
+
+            // Ahora actualizar las inscripciones de la sección
+            const updatedInscripciones = seccionData.inscripciones + 1;
+
+            // Realizar el PUT para actualizar las inscripciones en la base de datos
+            await axios.put(`http://localhost:8800/secciones/inscripciones/${fk_seccion}`, {
+                inscripciones: updatedInscripciones,
+                nombreSeccion: seccionData.nombreSeccion,
+                capacidad: seccionData.capacidad,
+            });
+
+            // Mostrar mensaje de éxito
+            setSuccessMessage("¡Inscripción realizada con éxito!");
+            setErrorMessage("");
+            setShowModal(false);
+            // Limpiar mensaje de error
+
+        } catch (error) {
+            console.error("Error al realizar la inscripción:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+                setShowModal(false);  // Mostrar mensaje de backend
+            } else {
+                setErrorMessage("Error al registrar la inscripción.");
+                setShowModal(false);
+            }
+            setSuccessMessage("");
+            setShowModal(false); // Limpiar mensaje de éxito si hay error
         }
     };
+
+
 
 
     // Función para cancelar la inscripción
@@ -128,12 +179,12 @@ function AsignaturasAlumno() {
 
                 {/* Mostrar mensajes de éxito o error */}
                 {successMessage && (
-                    <div className="bg-green-500 text-white p-3 rounded-md mb-4">
+                    <div className="bg-green-500 text-white p-3 rounded-md mb-4 w-1/5">
                         {successMessage}
                     </div>
                 )}
                 {errorMessage && (
-                    <div className="bg-red-500 text-white p-3 rounded-md mb-4">
+                    <div className="bg-red-500 text-white p-3 rounded-md mb-4 w-1/5">
                         {errorMessage}
                     </div>
                 )}

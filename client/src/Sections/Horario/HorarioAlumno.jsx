@@ -53,15 +53,45 @@ function HorarioAlumno() {
     const handleDelete = async () => {
         try {
             if (horarioToDelete) {
+                // Obtener la asignatura que se va a eliminar
+                const asignaturaToDelete = horario.find((e) => e.id_horario === horarioToDelete);
+                if (!asignaturaToDelete) {
+                    console.log("No se encontró la asignatura a eliminar.");
+                    return;
+                }
+
+                const { fk_asignatura_seccion, fk_seccion } = asignaturaToDelete;
+
+                // Eliminar el horario del alumno
                 await axios.delete(`http://localhost:8800/horario_alumnos/${horarioToDelete}`);
-                // Actualizar el estado local para reflejar la eliminación sin recargar la página
-                setHorario(horario.filter(e => e.id_horario !== horarioToDelete));
+                // Actualizar el estado local para reflejar la eliminación
+                setHorario(horario.filter((e) => e.id_horario !== horarioToDelete));
+
+                // Actualizar la cantidad de inscripciones en la tabla seccion
+                const response = await axios.get(`http://localhost:8800/secciones/${fk_seccion}`);
+                const seccionData = response.data;
+
+                if (seccionData) {
+                    // Reducir en 1 la cantidad de inscripciones
+                    const updatedInscripciones = seccionData.inscripciones - 1;
+
+                    // Realizar el PUT para actualizar las inscripciones en la tabla seccion
+                    await axios.put(`http://localhost:8800/secciones/${fk_seccion}`, {
+                        inscripciones: updatedInscripciones,
+                        nombreSeccion: seccionData.nombreSeccion,
+                        capacidad: seccionData.capacidad
+                    });
+
+                    console.log("Inscripciones actualizadas en la sección.");
+                }
+
                 setShowModal(false);  // Cerrar el modal después de eliminar
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error al eliminar la asignatura o actualizar las inscripciones:", error);
         }
     };
+
 
     // Función para abrir el modal y pasarle el id_horario
     const openModal = (id) => {
