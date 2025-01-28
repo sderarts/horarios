@@ -8,7 +8,7 @@ import Options from '../Sections/User/Options';
 
 function Alumno() {
     return (
-        <div>
+        <div >
             <Navbar />
 
             <AsignaturasAlumno />

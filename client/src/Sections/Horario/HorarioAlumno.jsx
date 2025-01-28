@@ -106,7 +106,7 @@ function HorarioAlumno() {
     };
 
     return (
-        <div className='p-12 bg-amber-400'>
+        <div className='p-12 bg-amber-400 h-screen'>
             <p className='text-lg font-semibold'>Tus asignaturas inscritas</p>
             {horario.length > 0 ? (
                 <div className="grid grid-cols-4 gap-4 p-4">
