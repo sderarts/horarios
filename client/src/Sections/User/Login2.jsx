@@ -81,17 +81,17 @@ function Login2() {
                 !user ? (
                     <Login onLoginSuccess={handleLoginSuccess} />
                 ) : (
-                    <div className='p-12 bg-amber-400 rounded-xl'>
+                    <div className='p-12 bg-amber-400 rounded-r-lg'>
                         <p className='className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl "'>
                             Bienvenido, {user.displayName}</p>
                         <p className='className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl "'>
                             Email: {user.email}</p>
-                        <button onClick={handleLogout} className='className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-2 px-4 rounded"'>Cerrar sesión</button>
+                        <button onClick={handleLogout} className='className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-2 px-4 rounded mt-4'>Cerrar sesión</button>
                     </div>
                 )
             )}
 
-            
+
         </div>
     );
 }

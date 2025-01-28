@@ -6,6 +6,12 @@ const getAllSolicitudes = (req, res) => {
         return res.status(200).json(data);
     });
 };
+const getAllSolicitudes2 = (req, res) => {
+    Solicitud.getAllSolicitudes2((err, data) => {
+        if (err) return res.status(500).json({ message: 'Error en la base de datos', error: err });
+        return res.status(200).json(data);
+    });
+};
 
 const getSolicitudById = (req, res) => {
     const id = req.params.id;  // Obtener el ID desde los parámetros de la URL
@@ -49,14 +55,20 @@ const deleteSolicitud = (req, res) => {
 
 const updateSolicitud = (req, res) => {
     const id = req.params.id;
-    const { fk_alumno, fk_tipo_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_alumno || !fk_tipo_solicitud || !fk_seccion_asignatura) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_tipo_solicitud,  fk_seccion_asignatura)' });
+    if (!fk_alumno || !fk_alumno_b || !fk_tipo_solicitud || !fk_seccion_asignatura) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura)' });
     }
 
-    Solicitud.updateSolicitud(id, fk_alumno, fk_tipo_solicitud, (err, data) => {
+    // Si fk_alumno_b no está presente, lo asignamos a null
+    if (!fk_alumno_b) {
+        fk_alumno_b = null;  // Esto es importante si el campo es opcional
+    }
+
+    // Llamamos al modelo para actualizar la solicitud
+    Solicitud.updateSolicitud(id, fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });
@@ -64,6 +76,7 @@ const updateSolicitud = (req, res) => {
 
 export {
     getAllSolicitudes,
+    getAllSolicitudes2,
     getSolicitudById,
     addSolicitud,
     deleteSolicitud,

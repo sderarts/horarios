@@ -62,7 +62,7 @@ function AddNivelAsignatura() {
     };
 
     return (
-        <div className='flex p-24 bg-amber-400 w-full flex-row space-y-2'>
+        <div className='flex px-12 bg-amber-400 w-2/4 flex-row space-y-2'>
             {/*<div className='w-1/3'>
                 <Niveles />
             </div>*/}

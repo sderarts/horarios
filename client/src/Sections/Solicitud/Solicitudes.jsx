@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
+import Navbar from '../../Layout/Navbar';
 
 function Solicitudes() {
     const { user, loading } = useContext(AuthContext);
     const [solicitudes, setSolicitud] = useState([]); // Solicitudes generales
-    const [academicoSolicitud, setAcademicoSolicitud] = useState([]); // Solicitudes académicas
-    const [mensaje, setMensaje] = useState("");  // Mensaje que se actualizará
-    const [estado, setEstado] = useState(3);  // Estado inicial de las solicitudes (en progreso)
-    const [fkAcademico, setFkAcademico] = useState(null); // Estado para el fk_academico
+    const [mensaje, setMensaje] = useState("");
+    const [estado, setEstado] = useState(3);  // Estado inicial "En progreso"
+    const [fkAlumno, setFkAlumno] = useState(null); // Almacenar el id del alumno
     const [errorMessage, setErrorMessage] = useState(""); // Mensajes de error
 
     // Cargar solicitudes generales
@@ -23,45 +23,32 @@ function Solicitudes() {
             });
     }, []);
 
-    // Cargar solicitudes académicas
-    useEffect(() => {
-        axios.get("http://localhost:8800/academico_solicitudes")
-            .then((response) => {
-                console.log('Datos recibidos de academico_solicitudes:', response.data);
-                setAcademicoSolicitud(response.data);
-            })
-            .catch((error) => {
-                console.error("Error al obtener las solicitudes académicas:", error);
-            });
-    }, []);
-
-    // Verificación del usuario y obtener fk_academico
+    // Verificación del usuario y obtener fk_alumno
     useEffect(() => {
         const fetchUserData = async () => {
             if (user) {
                 try {
-                    // Recortamos el UID a los primeros 28 caracteres para coincidir con lo almacenado en la base de datos
-                    const shortUid = user.uid.substring(0, 28);
-
-                    // Verificamos si el usuario existe en la base de datos
+                    const shortUid = user.uid.substring(0, 28); // Recorta el UID para coincidir con la base de datos
                     const response = await fetch(`http://localhost:8800/auth/checkUser/${shortUid}`);
                     const data = await response.json();
 
                     if (data.exists) {
                         console.log("Datos del usuario:", data);  // Verifica qué datos llegan
-
-                        // Verificamos si el usuario es académico
-                        if (data.rol == 1) {  // Rol académico
-                            setFkAcademico(data.id_academico); // Guardamos el fk_academico en el estado
-                            console.log('Usuario es académico, fk_academico:', data.id_academico);
+                        if (data.rol === 2) {  // Si el rol es "alumno"
+                            setFkAlumno(data.id_alumno);  // Asignar correctamente id_alumno
+                            console.log('Usuario es alumno, fk_alumno:', data.id_alumno);  // Verifica que id_alumno se esté recibiendo
                         } else {
-                            setErrorMessage("El usuario no tiene permisos de académico.");
-                            console.log('Usuario no tiene rol de académico');
+                            setErrorMessage("El usuario no tiene permisos de alumno.");
+                            console.log('Usuario no tiene rol de alumno');
                         }
+
                     } else {
                         setErrorMessage("Usuario no encontrado en la base de datos.");
                         console.log('User does not exist in the database');
                     }
+                    console.log("Respuesta de API:", data);
+                    console.log("id_alumno:", data.id_alumno);
+
                 } catch (error) {
                     console.error('Error fetching user data:', error);
                     setErrorMessage("Error al verificar el usuario.");
@@ -73,65 +60,70 @@ function Solicitudes() {
     }, [user]);
 
 
-    // Función para manejar la actualización de estado y mensaje
-    const handleChangeEstado = async (idSolicitud, nuevoEstado, nuevoMensaje) => {
-        console.log('Iniciando actualización de solicitud académica');
-        console.log(`ID de Solicitud: ${idSolicitud}, Estado: ${nuevoEstado}, Mensaje: ${nuevoMensaje}`);
+
+
+    // Función para manejar la postulación a una solicitud
+    const handlePostularse = async (idSolicitud) => {
+        if (!fkAlumno) {
+            alert("No estás autenticado como alumno.");
+            return;
+        }
 
         try {
-            // Paso 1: Obtener la solicitud académica que corresponde al id_solicitud
-            const response = await axios.get(`http://localhost:8800/academico_solicitudes?fk_solicitud=${idSolicitud}`);
-            const solicitudAcademica = response.data[0];  // Suponemos que solo hay una solicitud académica con ese fk_solicitud
+            // 1. Verificar si ya existe un alumno en fk_alumno_b (no en fk_alumno)
+            const solicitudExistente = solicitudes.find((sol) => sol.id_solicitud === idSolicitud);
 
-            console.log('Solicitud académica obtenida:', solicitudAcademica);
-
-            if (!solicitudAcademica) {
-                console.error("No se encontró la solicitud académica correspondiente");
+            // Si ya tiene un alumno en fk_alumno_b, evitar la postulación
+            if (solicitudExistente && solicitudExistente.fk_alumno_b) {
+                alert("Ya existe un alumno en esta solicitud.");
                 return;
             }
 
-            // Paso 2: Realizar la actualización usando el id_solicitud_academico
-            const responseUpdate = await axios.put(`http://localhost:8800/academico_solicitudes/${solicitudAcademica.id_solicitud_academico}`, {
-                fk_estado: nuevoEstado || solicitudAcademica.fk_estado,  // Usar el estado actual si no hay nuevo estado
-                mensaje: nuevoMensaje || solicitudAcademica.mensaje,    // Usar el mensaje actual si no hay nuevo mensaje
-                fk_academico: fkAcademico,  // Asegúrate de que fkAcademico esté disponible
-                fk_solicitud: idSolicitud   // Pasamos el id_solicitud para mantener la relación
+            // 2. Realizar la actualización de la solicitud
+            const response = await axios.put(`http://localhost:8800/solicitudes/${idSolicitud}`, {
+                fk_alumno: solicitudExistente.fk_alumno,  // Mantener el fk_alumno original
+                fk_alumno_b: fkAlumno,  // ID del alumno que está aplicando
+                fk_tipo_solicitud: solicitudExistente.fk_tipo_solicitud,  // Mantener fk_tipo_solicitud
+                fk_seccion_asignatura: solicitudExistente.fk_seccion_asignatura,  // Mantener fk_seccion_asignatura
             });
 
-            console.log("Respuesta del servidor:", responseUpdate.data);
-
-            // Actualizamos el estado en el frontend
-            setAcademicoSolicitud(academicoSolicitud.map((asolicitud) =>
-                asolicitud.id_solicitud_academico === solicitudAcademica.id_solicitud_academico
-                    ? { ...asolicitud, mensaje: nuevoMensaje, fk_estado: nuevoEstado }
-                    : asolicitud
-            ));
-
-            console.log("Solicitud académica actualizada en el frontend");
-
+            if (response.status === 200) {
+                alert("Solicitud actualizada con éxito.");
+                // Actualizar el estado o redirigir a otra vista si es necesario
+            } else {
+                alert("Hubo un problema al actualizar la solicitud.");
+            }
         } catch (error) {
-            console.error("Error al actualizar la solicitud académica:", error);
+            console.error("Error al postularse:", error);
+            alert("Error al postularse a la solicitud.");
         }
     };
 
 
+
+
+
     return (
-        <div className='flex flex-row w-full bg-amber-400'>
+        <div className="flex justify-center bg-amber-400 h-screen">
+            <Navbar />
             <div className="p-12">
+                {user ? (
+                    <p className='font-bold italic'>Hola {user.displayName}</p>
+                ) : (
+                    <p className='font-bold italic'>Cargando información del usuario...</p>
+                )}
+
                 <h1>Listado de Solicitudes</h1>
                 {solicitudes.length > 0 ? (
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black bg-black">
                             <thead>
                                 <tr>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Solicitud</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Id Alumno</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Correo</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Solicitud</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Sección</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Docente</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Cupos</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Acciones</th>
+                                    <th className="px-6 py-3 text-amber-400">Solicitud</th>
+                                    <th className="px-6 py-3 text-amber-400">Id Alumno</th>
+                                    <th className="px-6 py-3 text-amber-400">Correo</th>
+                                    <th className="px-6 py-3 text-amber-400">Sección</th>
+                                    <th className="px-6 py-3 text-amber-400">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,28 +132,13 @@ function Solicitudes() {
                                         <td className="px-6 py-4">{e.id_solicitud}</td>
                                         <td className="px-6 py-4">{e.id_alumno}</td>
                                         <td className="px-6 py-4">{e.correoAlumno}</td>
-                                        <td className="px-6 py-4">{e.nombreTipoSolicitud}</td>
                                         <td className="px-6 py-4">{e.nombreRelacion} {e.nombreSeccion}</td>
-                                        <td className="px-6 py-4">{e.nombreDocente}</td>
-                                        <td className="px-6 py-4">{e.inscripciones}/{e.capacidad}</td>
                                         <td className="px-6 py-4">
                                             <button
-                                                onClick={() => handleChangeEstado(e.id_solicitud, 1, "Solicitud Aceptada")}
-                                                className="text-green-600 hover:text-green-800"
+                                                onClick={() => handlePostularse(e.id_solicitud)}
+                                                className="text-blue-600 hover:text-blue-800"
                                             >
-                                                Aceptar
-                                            </button>
-                                            <button
-                                                onClick={() => handleChangeEstado(e.id_solicitud, 2, "Solicitud Denegada")}
-                                                className="ml-4 text-red-600 hover:text-red-800"
-                                            >
-                                                Denegar
-                                            </button>
-                                            <button
-                                                onClick={() => setMensaje(prompt("Ingresa un mensaje"))}
-                                                className="ml-4 text-blue-600 hover:text-blue-800"
-                                            >
-                                                Modificar Mensaje
+                                                Aplicar
                                             </button>
                                         </td>
                                     </tr>

@@ -42,54 +42,6 @@ router.post('/auth/register', async (req, res) => {
 });
 
 
-
-// router.get('/auth/checkUser/:uid', async (req, res) => {
-//     let { uid } = req.params;
-
-//     // Limitar la UID a los primeros 200 caracteres
-//     uid = uid.substring(0, 200);  // Recorta la UID a 200 caracteres
-
-//     if (!uid) {
-//         return res.status(400).json({ message: 'UID no proporcionado' });
-//     }
-
-//     try {
-//         const queryAlumno = `SELECT * FROM alumno WHERE id_alumno = ?`;
-//         const queryAcademico = `SELECT * FROM academico WHERE id_academico = ?`;
-
-//         // Consultar si la UID recortada ya existe en alumno o academico
-//         db.query(queryAlumno, [uid], (err, alumnoResult) => {
-//             if (err) {
-//                 console.error('Error al verificar el usuario (alumno):', err);
-//                 return res.status(500).json({ message: 'Error interno', error: err.message });
-//             }
-
-//             if (alumnoResult.length > 0) {
-//                 return res.status(200).json({ exists: true, rol: 2 });
-//             }
-
-//             // Si no se encontró en la tabla alumno, consultar en academico
-//             db.query(queryAcademico, [uid], (err, academicoResult) => {
-//                 if (err) {
-//                     console.error('Error al verificar el usuario (academico):', err);
-//                     return res.status(500).json({ message: 'Error interno', error: err.message });
-//                 }
-
-//                 if (academicoResult.length > 0) {
-//                     return res.status(200).json({ exists: true, rol: 1 });
-//                 }
-
-//                 // Si no se encuentra en ninguna tabla
-//                 return res.status(200).json({ exists: false });
-//             });
-//         });
-//     } catch (error) {
-//         console.error('Error al verificar el usuario:', error);
-//         return res.status(500).json({ message: 'Error interno', error: error.message });
-//     }
-// });
-
-// //
 router.get('/auth/checkUser/:uid', async (req, res) => {
     let { uid } = req.params;
 
@@ -112,7 +64,12 @@ router.get('/auth/checkUser/:uid', async (req, res) => {
             }
 
             if (alumnoResult.length > 0) {
-                return res.status(200).json({ exists: true, rol: 2 });  // Rol 2 para alumno
+                // Si es alumno, enviar también su id_alumno
+                return res.status(200).json({
+                    exists: true,
+                    rol: 2,  // Rol 2 para alumno
+                    id_alumno: alumnoResult[0].id_alumno  // Devolver el id_alumno
+                });
             }
 
             // Si no se encontró en la tabla alumno, consultar en academico
@@ -123,7 +80,11 @@ router.get('/auth/checkUser/:uid', async (req, res) => {
                 }
 
                 if (academicoResult.length > 0) {
-                    return res.status(200).json({ exists: true, rol: 1, id_academico: academicoResult[0].id_academico });  // Rol 1 para academico
+                    return res.status(200).json({
+                        exists: true,
+                        rol: 1,  // Rol 1 para academico
+                        id_academico: academicoResult[0].id_academico  // Devolver id_academico
+                    });
                 }
 
                 // Si no se encuentra en ninguna tabla
@@ -135,6 +96,7 @@ router.get('/auth/checkUser/:uid', async (req, res) => {
         return res.status(500).json({ message: 'Error interno', error: error.message });
     }
 });
+
 
 
 

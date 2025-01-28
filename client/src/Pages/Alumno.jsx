@@ -10,6 +10,7 @@ function Alumno() {
     return (
         <div>
             <Navbar />
+
             <AsignaturasAlumno />
             {/* <AddHorarioAlumno /> */}
             <HorarioAlumno />

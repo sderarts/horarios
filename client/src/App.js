@@ -34,6 +34,7 @@ import Solicitudes from './Sections/Solicitud/Solicitudes';
 import Login2 from './Sections/User/Login2';
 import Register from './Sections/User/Register';
 import Alumno from './Pages/Alumno';
+import SolicitudesAcademico from './Sections/Solicitud/SolicitudesAcademico';
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
             <Route path="/inscribir_asignaturas/alumno/:id" element={<AddHorarioAlumno />} />
             <Route path="/add_solicitud" element={<AddSolicitud />} />
             <Route path="/solicitudes" element={<Solicitudes />} />
+            <Route path="/solicitudes_academico" element={<SolicitudesAcademico />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

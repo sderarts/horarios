@@ -5,6 +5,7 @@ import * as solicitudController from '../../controllers/solicitud/solicitudContr
 
 
 router.get('/', solicitudController.getAllSolicitudes);
+router.get('/2', solicitudController.getAllSolicitudes2);
 router.get('/:id', solicitudController.getSolicitudById);
 router.post('/', solicitudController.addSolicitud);
 router.delete('/:id', solicitudController.deleteSolicitud);

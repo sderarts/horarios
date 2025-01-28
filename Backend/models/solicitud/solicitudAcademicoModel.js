@@ -38,10 +38,84 @@ const updateSolicitud_Academico = (id, fk_academico, fk_estado, fk_solicitud, me
     db.query(q, [fk_academico, fk_estado, fk_solicitud, mensaje, id], callback);
 };
 
+
+const obtenerDatosDeSolicitud = (id_solicitud) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT s.fk_alumno, s.fk_seccion_asignatura, s.fk_alumno_b 
+            FROM solicitud s
+            WHERE s.id_solicitud = ?`;
+        db.query(query, [id_solicitud], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result[0]);
+        });
+    });
+};
+
+const obtenerSeccionesDeAlumnos = (id_alumno_1, id_alumno_2) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT h.fk_seccion_asignatura, a.id_alumno
+            FROM horarioalumno h
+            JOIN alumno a ON a.id_alumno = h.fk_alumno
+            WHERE a.id_alumno IN (?, ?)`;
+        db.query(query, [id_alumno_1, id_alumno_2], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+};
+
+const intercambiarSecciones = async (id_solicitud, new_seccion_alumno_b) => {
+    try {
+        // 1. Obtener la solicitud y los datos de los alumnos
+        const solicitud = await obtenerDatosDeSolicitud(id_solicitud);
+        const { fk_alumno, fk_alumno_b, fk_seccion_asignatura } = solicitud;
+
+        // 2. Obtener las secciones actuales de ambos alumnos
+        const secciones = await obtenerSeccionesDeAlumnos(fk_alumno, fk_alumno_b);
+        const seccionAlumno = secciones.find(seccion => seccion.id_alumno === fk_alumno);
+        const seccionAlumnoB = secciones.find(seccion => seccion.id_alumno === fk_alumno_b);
+
+        // Asegurarse de que las secciones se hayan encontrado correctamente
+        if (!seccionAlumno || !seccionAlumnoB) {
+            throw new Error('No se encontraron las secciones de los alumnos');
+        }
+
+        // 3. Realizar el intercambio de secciones
+        const query1 = `
+            UPDATE horarioalumno
+            SET fk_seccion_asignatura = ?
+            WHERE fk_alumno = ?`;
+
+        const query2 = `
+            UPDATE horarioalumno
+            SET fk_seccion_asignatura = ?
+            WHERE fk_alumno = ?`;
+
+        db.query(query1, [seccionAlumnoB.fk_seccion_asignatura, fk_alumno], (err) => {
+            if (err) throw err;
+            db.query(query2, [new_seccion_alumno_b, fk_alumno_b], (err) => {
+                if (err) throw err;
+            });
+        });
+    } catch (error) {
+        console.error("Error al intercambiar las secciones:", error);
+        throw error;  // Lanza el error para manejarlo en el controlador
+    }
+};
+
 export default {
     getAllAcademico_Solicitudes,
     getSolicitud_AcademicoById,
     createSolicitud_Academico,
     deleteSolicitud_Academico,
-    updateSolicitud_Academico
+    updateSolicitud_Academico,
+    obtenerDatosDeSolicitud,
+    obtenerSeccionesDeAlumnos,
+    intercambiarSecciones,
 };

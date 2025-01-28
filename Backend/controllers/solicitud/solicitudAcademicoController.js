@@ -1,4 +1,5 @@
 import SolicitudAcademico from '../../models/solicitud/solicitudAcademicoModel.js'
+import db from '../../config/db.js'
 
 const getAllAcademico_Solicitudes = (req, res) => {
     SolicitudAcademico.getAllAcademico_Solicitudes((err, data) => {
@@ -62,10 +63,27 @@ const updateSolicitud_Academico = (req, res) => {
     });
 };
 
+const intercambiarSecciones = async (req, res) => {
+    const id_solicitud = req.params.id; // Verificar que esté llegando correctamente
+    console.log("ID Solicitud:", id_solicitud);
+    const { new_seccion_alumno_b } = req.body; // Verificar la nueva sección
+    console.log("Nueva sección para Alumno B:", new_seccion_alumno_b);
+
+    try {
+        await intercambiarSeccionesDeAlumno(id_solicitud, new_seccion_alumno_b);
+        res.status(200).json({ message: 'Intercambio realizado con éxito.' });
+    } catch (error) {
+        console.error("Error al intercambiar secciones:", error);
+        res.status(500).json({ message: 'Hubo un problema al realizar el intercambio', error });
+    }
+};
+
+
 export {
     getAllAcademico_Solicitudes,
     getSolicitud_AcademicoById,
     addSolicitud_Academico,
     deleteSolicitud_Academico,
-    updateSolicitud_Academico
+    updateSolicitud_Academico,
+    intercambiarSecciones
 };

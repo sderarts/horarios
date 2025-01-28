@@ -62,21 +62,18 @@ function AddAsignaturaSeccion() {
     return (
         <div className='bg-amber-400 w-1/3 p-20'>
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
-            <div className='w-full justify-center items-center p-4'>
+                <div className='w-full justify-center items-center p-4'>
                     <p className='text-black font-semibold text-xl'>Crear Asignatura-Sección</p>
                 </div>
                 {/* Lista desplegable para fk_asignatura */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_asignatura">
-                        Asignatura
-                    </label>
                     <select
                         className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name="fk_asignatura"
                         onChange={handleChange}
                         value={asignaturaSeccion.fk_asignatura}
                     >
-                        <option value="">Seleccionar asignatura</option>
+                        <option value="">Asignatura</option>
                         {asignaturas.map((asignatura) => (
                             <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
                                 {asignatura.nombreAsignatura}
@@ -87,16 +84,13 @@ function AddAsignaturaSeccion() {
 
                 {/* Lista desplegable para fk_seccion */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_seccion">
-                        Sección
-                    </label>
                     <select
                         className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name="fk_seccion"
                         onChange={handleChange}
                         value={asignaturaSeccion.fk_seccion}
                     >
-                        <option value="">Seleccionar día</option>
+                        <option value="">Sección</option>
                         {secciones.map((seccion) => (
                             <option key={seccion.id_seccion} value={seccion.id_seccion}>
                                 {seccion.nombreSeccion}
@@ -105,8 +99,8 @@ function AddAsignaturaSeccion() {
                     </select>
                 </div>
 
-                 {/* Input para nombreRelacion */}
-                 <div className="w-full px-3 mb-4">
+                {/* Input para nombreRelacion */}
+                <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
                         Nombre de Relación
                     </label>

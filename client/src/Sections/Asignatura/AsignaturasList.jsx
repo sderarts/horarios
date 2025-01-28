@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import axios from 'axios';
 import AddAsignatura from './AddAsignatura';
 import { useNavigate } from 'react-router';
+import AddNivelAsignatura from './AddNivelAsignatura';
 
 
 
@@ -36,49 +37,54 @@ function AsignaturasList() {
     }
 
     return (
-        <div className='flex w-full flex-row bg-amber-400'>
-            <div className="p-12">
-            <div className='w-full justify-center items-center py-4'>
-                    <p className='text-black font-semibold text-xl'>Asignaturas</p>
-                </div>
+        <div className='flex flex-col bg-amber-400'>
+            <div className='flex flex-col'>
+                <AddAsignatura />
+                <AddNivelAsignatura />
+            </div>
+            <div className='flex w-full '>
+                <div className="px-12">
+                    <div className='w-full justify-center items-center py-4'>
+                        <p className='text-black font-semibold text-xl'>Asignaturas</p>
+                    </div>
 
-                {asignaturas.length > 0 ? (
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black  bg-black">
-                            <thead>
-                                <tr>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Asignatura</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Nombre sección</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Docente</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Status</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Semestre</th>
-                                    <th scope="col" className="px-6 py-3 text-amber-400">Carrera</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {asignaturas.map((e) => (
-                                    <tr key={e.id_asignatura} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                        <td className="px-6 py-4 font-semibold bg-black text-white">
-                                            {e.id_asignatura} - {e.nombreAsignatura}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold">
-                                            {e.nombreSeccion}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold">
-                                            {e.nombreDocente}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold">
-                                            {e.inscripciones}/{e.capacidad}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold">
-                                            {e.nombreNivel}
-                                        </td>
-                                        <td className="px-6 py-4 font-semibold">
-                                            {e.nombreCarrera}
-                                        </td>
+                    {asignaturas.length > 0 ? (
+                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black  bg-black">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Asignatura</th>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Nombre sección</th>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Docente</th>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Status</th>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Semestre</th>
+                                        <th scope="col" className="px-6 py-3 text-amber-400">Carrera</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {asignaturas.map((e) => (
+                                        <tr key={e.id_asignatura} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
+                                            <td className="px-6 py-4 font-semibold bg-black text-white">
+                                                {e.id_asignatura} - {e.nombreAsignatura}
+                                            </td>
+                                            <td className="px-6 py-4 font-semibold">
+                                                {e.nombreSeccion}
+                                            </td>
+                                            <td className="px-6 py-4 font-semibold">
+                                                {e.nombreDocente}
+                                            </td>
+                                            <td className="px-6 py-4 font-semibold">
+                                                {e.inscripciones}/{e.capacidad}
+                                            </td>
+                                            <td className="px-6 py-4 font-semibold">
+                                                {e.nombreNivel}
+                                            </td>
+                                            <td className="px-6 py-4 font-semibold">
+                                                {e.nombreCarrera}
+                                            </td>
 
 
-                                        {/* <td className="px-6 py-4 text-right">
+                                            {/* <td className="px-6 py-4 text-right">
                                                         <Link to={`/carreras/${e.id_asignatura}`}>
                                                             <button className="font-bold text-blue-600 dark:text-blue-500 hover:underline">
                                                                 Update
@@ -91,17 +97,19 @@ function AsignaturasList() {
                                                             Delete
                                                         </button>
                                                     </td> */}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                    <p>No hay asignaturas disponibles.</p>
-                )}
-            </div>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <p>No hay asignaturas disponibles.</p>
+                    )}
+                </div>
 
-            <AddAsignatura />
+
+
+            </div>
 
         </div>
     );

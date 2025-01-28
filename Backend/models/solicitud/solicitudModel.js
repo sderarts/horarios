@@ -17,6 +17,13 @@ const getAllSolicitudes = (callback) => {
     `;
     db.query(q, callback);
 };
+const getAllSolicitudes2 = (callback) => {
+    const q = ` SELECT *
+            FROM 
+                Solicitud ;
+    `;
+    db.query(q, callback);
+};
 
 const getSolicitudById = (id, callback) => {
     const query = 'SELECT * FROM Solicitud WHERE id_solicitud = ?';
@@ -57,13 +64,15 @@ const deleteSolicitud = (id, callback) => {
     db.query(q, [id], callback);
 };
 
-const updateSolicitud = (id, fk_alumno, fk_tipo_solicitud, fk_seccion_asignatura, callback) => {
-    const q = "UPDATE Solicitud SET `fk_asignatura` = ?, `fk_alumno` = ?, `fk_tipo_solicitud` = ? ,  `fk_seccion_asignatura`  = ?, `fk_seccion_asignatura` = ? WHERE id_solicitud = ?";
-    db.query(q, [fk_alumno, fk_tipo_solicitud, fk_seccion_asignatura, id], callback);
+const updateSolicitud = (id, fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, callback) => {
+    const q = "UPDATE Solicitud SET `fk_alumno` = ?, `fk_alumno_b` = ?, `fk_tipo_solicitud` = ?,  `fk_seccion_asignatura` = ? WHERE id_solicitud = ?";
+    db.query(q, [fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, id], callback);
 };
+
 
 export default {
     getAllSolicitudes,
+    getAllSolicitudes2,
     getSolicitudById,
     createSolicitud,
     deleteSolicitud,

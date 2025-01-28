@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext'; // Importamos el contexto de autenticación
+import Navbar from '../../Layout/Navbar';
 
 function AddSolicitud() {
     const navigate = useNavigate();
@@ -120,7 +121,8 @@ function AddSolicitud() {
 
     return (
         <div>
-            <div className='p-12 bg-amber-400'>
+            <Navbar />
+            <div className='p-12 bg-amber-400 w-full h-screen'>
                 {user ? (
                     <p className='font-bold italic'>
                         {user.displayName} Con la nueva plataforma de solicitudes, puedes gestionar tu inscripción fácilmente.

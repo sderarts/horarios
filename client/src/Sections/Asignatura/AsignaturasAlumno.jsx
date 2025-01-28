@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from "react-router-dom";
+import Red from '../../assets/img/netpeople.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
@@ -174,8 +175,9 @@ function AsignaturasAlumno() {
 
     return (
         <div className='flex w-full flex-col bg-amber-400'>
+
             <div className="p-12">
-                <h1>Asignaturas por carrera</h1>
+                <p className=' text-lg font-semibold'>Asignaturas por carrera</p>
 
                 {/* Mostrar mensajes de éxito o error */}
                 {successMessage && (
@@ -197,7 +199,7 @@ function AsignaturasAlumno() {
                             const isFull = e.inscripciones >= e.capacidad;
 
                             return (
-                                <div className="border p-4 items-center bg-white rounded-lg" key={e.id_asignatura_seccion}>
+                                <div className="border p-4 items-center bg-white rounded-lg z-100" key={e.id_asignatura_seccion}>
                                     <div className='p-4'>
                                         <p className='font-bold'>{e.nombreAsignatura} - {e.nombreSeccion}</p>
                                         <p>{e.nombreDocente}</p>
@@ -210,6 +212,7 @@ function AsignaturasAlumno() {
                                             className={`flex-shrink-0 ${isFull ? "bg-gray-500 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700"} text-sm border-4 text-white py-1 px-2 rounded`}
                                             disabled={isFull}  // Desactiva el botón si la sección está llena
                                         >
+
                                             {isFull ? "Sección llena" : "Quiero inscribir esta sección"}
                                         </button>
                                     </div>
