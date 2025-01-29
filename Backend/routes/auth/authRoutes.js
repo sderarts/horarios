@@ -10,7 +10,7 @@ router.post('/auth/register', async (req, res) => {
         const { uid, email, displayName } = decodedToken;
 
         const limitedUid = uid.substring(0, 200);  // Limitar la UID
-        const isAcademico = email && email.endsWith('@duocuc.cl'); // Verificar si el correo termina con '@duocuc.cl'
+        const isAcademico = email && (email && (email.endsWith('@duocuc.cl') || email.endsWith('@duoc.cl') || email.endsWith('@profesor.duoc.cl'))); // Verificar si el correo termina con '@duocuc.cl'
         const [firstName, lastName] = displayName ? displayName.split(' ') : ['Desconocido', 'Desconocido'];
 
         let query;

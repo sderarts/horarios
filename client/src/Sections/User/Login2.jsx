@@ -18,7 +18,7 @@ function Login2() {
                     // Asignamos el rol por defecto
                     const userEmail = user.email || '';
                     let userRole = 2;  // Rol por defecto es alumno
-                    if (userEmail.includes('@duocuc.cl')) {
+                    if (userEmail.includes('@duocuc.cl') || userEmail.includes('@duoc.cl') || userEmail.includes('@profesor.duoc.cl')) {
                         userRole = 1;  // Si el correo termina en @duocuc.cl, asignamos rol académico
                     }
 

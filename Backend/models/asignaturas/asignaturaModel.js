@@ -36,7 +36,7 @@ const getAllAsignaturas2 = (callback) => {
 };
 
 const getAsignaturaById = (id, callback) => {
-    const query = 'SELECT * FROM Carrera WHERE id_asignatura = ?';
+    const query = 'SELECT * FROM Asignatura WHERE id_asignatura = ?';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {

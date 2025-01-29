@@ -18,6 +18,7 @@ import estadoSolicitudRoutes from './routes/solicitud/estadoSolicitudRoutes.js';
 
 import cors from 'cors'
 import authRoutes from './routes/auth/authRoutes.js'
+import usuarioRoutes from './routes/usuarios/usuarioRoutes.js'
 
 const app = express()
 app.use(cors());
@@ -47,6 +48,7 @@ app.use('/solicitudes', solicitudRoutes);
 app.use('/academico_solicitudes', solicitudAcademicoRoutes);
 app.use('/tipo_solicitudes', tipoSolicitudRoutes);
 app.use('/estado_solicitudes', estadoSolicitudRoutes);
+app.use('/usuarios', usuarioRoutes);
 
 
 app.listen(8800, () => {

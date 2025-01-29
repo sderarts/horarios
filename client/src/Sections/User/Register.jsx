@@ -39,7 +39,7 @@ const FormularioRegistro = () => {
 
         if (currentUser) {
             // Verificar el dominio del correo y redirigir si es el dominio académico
-            if (currentUser.email.includes('@duocuc.cl')) {
+            if (currentUser.userEmail.includes('@duocuc.cl') || currentUser.userEmail.includes('@duoc.cl') || currentUser.userEmail.includes('@profesor.duoc.cl')) {
                 // Si el correo tiene el dominio académico, hacer el POST y redirigir
                 const registerAcademicUser = async () => {
                     try {
