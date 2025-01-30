@@ -13,7 +13,7 @@ const Home = () => {
 
 
     return (
-        <div className='w-full h-screen'>
+        <div className='w-full h-screen overflow-hidden'>
             <div className='w-full flex bg-lime-50  justify-center'>
                 <img src={Fondo} alt="" className='absolute z-0 w-full h-full' />
                 <img src={Red} alt="" className='absolute z-0 w-full h-full opacity-20' />
@@ -35,11 +35,6 @@ const Home = () => {
                     </div>
                 </div>
 
-
-            </div>
-
-
-            <div class="bg-white lg:w-6/12 md:7/12 w-8/12 shadow-3xl rounded-xl">
 
             </div>
         </div>

@@ -63,20 +63,27 @@ const updateSolicitud_Academico = (req, res) => {
     });
 };
 
-const intercambiarSecciones = async (req, res) => {
-    const id_solicitud = req.params.id; // Verificar que esté llegando correctamente
-    console.log("ID Solicitud:", id_solicitud);
-    const { new_seccion_alumno_b } = req.body; // Verificar la nueva sección
-    console.log("Nueva sección para Alumno B:", new_seccion_alumno_b);
+// Controlador para obtener el id_horario
+const obtenerIdHorario = (req, res) => {
+    const { fk_alumno, fk_seccion_asignatura } = req.params;
 
-    try {
-        await intercambiarSeccionesDeAlumno(id_solicitud, new_seccion_alumno_b);
-        res.status(200).json({ message: 'Intercambio realizado con éxito.' });
-    } catch (error) {
-        console.error("Error al intercambiar secciones:", error);
-        res.status(500).json({ message: 'Hubo un problema al realizar el intercambio', error });
-    }
+    SolicitudAcademico.obtenerIdHorario(fk_alumno, fk_seccion_asignatura, (err, result) => {
+        if (err) {
+            console.error('Error al obtener el id_horario:', err);
+            return res.status(500).json({ message: 'Error al obtener el id_horario', error: err });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'No se encontró el horario' });
+        }
+
+        const id_horario = result[0].id_horario;
+        res.status(200).json({ id_horario });
+    });
 };
+
+
+
 
 
 export {
@@ -85,5 +92,5 @@ export {
     addSolicitud_Academico,
     deleteSolicitud_Academico,
     updateSolicitud_Academico,
-    intercambiarSecciones
+    obtenerIdHorario
 };

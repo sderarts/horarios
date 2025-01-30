@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddAsignaturaSeccion from './AddAsignaturaSeccion';
+import VerSecciones from '../Seccion/Secciones';
 
 function AsignaturasSecciones() {
     const [asignaturaSeccion, setAsignaturaSeccion] = useState([]);
@@ -93,7 +94,7 @@ function AsignaturasSecciones() {
     return (
         <div className='flex flex-row bg-amber-400'>
             <div className="p-12 ">
-            <div className='w-full justify-center items-center p-4'>
+                <div className='w-full justify-center items-center p-4'>
                     <p className='text-black font-semibold text-xl'>Editar Asignatura-Sección</p>
                 </div>
                 {asignaturaSeccion.length > 0 ? (
@@ -244,8 +245,7 @@ function AsignaturasSecciones() {
                     </div>
                 </div>
             )}
-
-            <AddAsignaturaSeccion />
+            <VerSecciones />
         </div>
     );
 }

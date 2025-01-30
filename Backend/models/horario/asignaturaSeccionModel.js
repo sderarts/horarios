@@ -91,6 +91,23 @@ const getAsignatura_SeccionById = (id, callback) => {
     });
 };
 
+const getAsignatura_SeccionById2 = (id, callback) => {
+    const query = 'SELECT * FROM AsignaturaSeccion WHERE id_asignatura_seccion = ?';
+
+    // Ejecutamos la consulta
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return callback(err, null); // Retorna el error si ocurre
+        }
+
+        if (result.length === 0) {
+            return callback(new Error('No se encontraron horarios para la asignatura-seccion'), null); // Error si no se encuentra
+        }
+
+        return callback(null, result); // Devuelve todos los resultados
+    });
+};
+
 const getAsignatura_SeccionByAlumno = (id, callback) => {
     const query = `
         SELECT
@@ -179,6 +196,7 @@ const updateAsignatura_Seccion = (id, asignatura, fk_seccion, nombreRelacion, no
 export default {
     getAllAsignaturas_Secciones,
     getAsignatura_SeccionById,
+    getAsignatura_SeccionById2,
     getAsignatura_SeccionByAlumno,
     createAsignatura_Seccion,
     deleteAsignatura_Seccion,

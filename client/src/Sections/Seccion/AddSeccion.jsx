@@ -41,8 +41,8 @@ function AddSeccion() {
             <input type="number" placeholder='Inscripciones' onChange={handleChange} name='inscripciones' />
             <button onClick={handleClick}>Add Nivel</button> */}
 
-            <div className='p-12 bg-amber-400'>
-                <div className='w-full justify-center items-center p-4'>
+            <div className='px-12 bg-amber-400'>
+                <div className='w-full justify-center items-center py-4'>
                     <p className='text-black font-semibold text-xl'>Crear una Sección</p>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6 form w-1/2">

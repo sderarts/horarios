@@ -60,7 +60,7 @@ function AddSeccionDia() {
     };
 
     return (
-        <div className="p-12 bg-amber-400">
+        <div className="px-12 bg-amber-400 h-96">
             <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
                 {/* Input para Nombre de la Relación */}
                 <div className="w-full px-3 mb-4">

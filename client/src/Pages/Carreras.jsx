@@ -4,6 +4,7 @@ import AddNivelAsignatura from '../Sections/Asignatura/AddNivelAsignatura';
 import AsignaturasList from '../Sections/Asignatura/AsignaturasList';
 import Navbar from '../Layout/Navbar';
 import AddCarreraNivel from '../Sections/Nivel/AddCarreraNivel';
+import Footer from '../Layout/Footer';
 
 
 function Carreras() {
@@ -12,7 +13,7 @@ function Carreras() {
             <Navbar />
             <CarrerasList />
             <AddCarreraNivel />
-
+            <Footer />
         </div>
     )
 }

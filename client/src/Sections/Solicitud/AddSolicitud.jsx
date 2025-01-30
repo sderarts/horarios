@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext'; // Importamos el contexto de autenticación
 import Navbar from '../../Layout/Navbar';
+import Footer from '../../Layout/Footer';
 
 function AddSolicitud() {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ function AddSolicitud() {
     const [seccionAsignatura, setSeccionAsignatura] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
 
-    // Cargar los tipos de solicitud y secciones de asignatura
+    // Cargar los tipos de solicitud
     useEffect(() => {
         const fetchTipoSolicitudes = async () => {
             try {
@@ -28,17 +29,7 @@ function AddSolicitud() {
             }
         };
 
-        const fetchSeccionAsignatura = async () => {
-            try {
-                const response = await axios.get("http://localhost:8800/asignatura_secciones");
-                setSeccionAsignatura(response.data);
-            } catch (error) {
-                console.error("Error al obtener las secciones de asignaturas", error);
-            }
-        };
-
         fetchTipoSolicitudes();
-        fetchSeccionAsignatura();
     }, []);
 
     // Asegurar que el id_alumno esté presente en el estado antes de enviar la solicitud
@@ -46,7 +37,6 @@ function AddSolicitud() {
         const fetchUserData = async () => {
             if (user) {
                 try {
-                    // Recortamos el UID a los primeros 28 caracteres para coincidir con lo almacenado en la base de datos
                     const shortUid = user.uid.substring(0, 28);
 
                     // Verificamos si el usuario existe en la base de datos
@@ -54,7 +44,6 @@ function AddSolicitud() {
                     const data = await response.json();
 
                     if (data.exists) {
-                        // Si el usuario existe, lo asignamos como fk_alumno
                         setSolicitud((prev) => ({ ...prev, fk_alumno: shortUid }));
                         console.log('User is valid');
                     } else {
@@ -71,6 +60,24 @@ function AddSolicitud() {
         fetchUserData();
     }, [user]);
 
+    // Cargar las secciones de asignaturas
+    useEffect(() => {
+        const fetchSecciones = async () => {
+            const shortUid = solicitud.fk_alumno;  // Ahora fk_alumno está disponible
+            if (shortUid) {
+                try {
+                    const response = await axios.get(`http://localhost:8800/horario_alumnos/${shortUid}`);
+                    console.log('Datos de secciones:', response.data);
+                    setSeccionAsignatura(response.data);
+                } catch (error) {
+                    console.error("Error al obtener las secciones de asignaturas:", error);
+                }
+            }
+        };
+
+        fetchSecciones();
+    }, [solicitud.fk_alumno]);
+
     const handleChange = (e) => {
         setSolicitud((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
@@ -85,27 +92,24 @@ function AddSolicitud() {
         }
 
         try {
-            // 1. Enviar la solicitud con el id_alumno establecido
+            // Enviar la solicitud
             const response = await axios.post("http://localhost:8800/solicitudes", solicitud);
-            console.log("Solicitud enviada:", response.data); // Aquí tienes el id_solicitud
+            console.log("Solicitud enviada:", response.data);
 
             const academicoData = {
-                fk_solicitud: response.data.id_solicitud, // Ahora debería estar disponible
+                fk_solicitud: response.data.id_solicitud,
                 fk_estado: 3, // Estado "En progreso"
                 mensaje: "Solicitud creada y en progreso",
                 fk_academico: "DSxAX4ANbTOCHgGiNwocYlIvtiN2" // ID del académico (esto debería venir dinámicamente)
             };
 
-            // Verifica los datos antes de enviarlos al backend
             console.log("Datos enviados a academico_solicitudes:", academicoData);
 
             const academicoResponse = await axios.post("http://localhost:8800/academico_solicitudes", academicoData);
-
-            // Si todo fue bien, puedes proceder a hacer algo con la respuesta, como recargar la página o dar un mensaje de éxito
             console.log("Solicitud académica registrada:", academicoResponse.data);
 
-            // Recargar la página después de enviar la solicitud
-            navigate(0);
+            // Navegar a otra página (en lugar de recargar)
+            navigate('/solicitudes');  // Asumiendo que tienes una ruta para ver solicitudes
 
         } catch (error) {
             if (error.response) {
@@ -117,7 +121,6 @@ function AddSolicitud() {
             }
         }
     };
-
 
     return (
         <div>
@@ -178,6 +181,7 @@ function AddSolicitud() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

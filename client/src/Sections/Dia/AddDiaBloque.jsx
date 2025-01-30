@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import AddBloque from '../Bloque/AddBloque';
 
 function AddDiaBloque() {
 
@@ -60,9 +61,11 @@ function AddDiaBloque() {
     };
 
     return (
-        <div className='p-12 bg-amber-400'>
-
-            <div className="flex flex-wrap -mx-3 mb-6 form w-1/2">
+        <div className=' bg-amber-400 h-full py-1'>
+            <div className='w-1/2'>
+                <AddBloque />
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6 form w-1/2 p-12">
                 {/* Input para Nombre de la Relación */}
                 <div className="w-full px-3 mb-4">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">

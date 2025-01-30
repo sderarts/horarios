@@ -23,6 +23,21 @@ const getHorario_AlumnoById = (req, res) => {
     });
 };
 
+const getHorarioById = (req, res) => {
+    const id = req.params.id;  // Obtener el ID desde los parámetros de la URL
+
+    Horario_Alumno.getHorarioById(id, (err, data) => {
+        if (err) {
+            if (err.message === 'Sección no encontrada') {
+                return res.status(404).json({ message: err.message });  // Si no se encuentra la sección
+            }
+            return res.status(500).json({ message: 'Error en la base de datos', error: err });
+        }
+
+        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+    });
+};
+
 const addHorario_Alumno = (req, res) => {
     const { fk_seccion_asignatura, fk_alumno } = req.body;  // Recibimos las claves foráneas y otros datos
 
@@ -66,23 +81,112 @@ const deleteHorario_Alumno = (req, res) => {
 
 const updateHorario_Alumno = (req, res) => {
     const id = req.params.id;
-    const { fk_alumno, fk_seccion_asignatura } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_alumno, fk_seccion_asignatura, id_horario } = req.body;
+    console.log(req.body);
+    // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_alumno || !fk_seccion_asignatura) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_seccion_asignatura)' });
+    if (!fk_alumno || !fk_seccion_asignatura || !id_horario) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_alumno, fk_seccion_asignatura, id_horario)' });
     }
 
-    Horario_Alumno.updateHorario_Alumno(id, fk_alumno, fk_seccion_asignatura, (err, data) => {
+    Horario_Alumno.updateHorario_Alumno(id, fk_alumno, fk_seccion_asignatura, id_horario, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });
 };
 
+
+
+// const intercambiarSecciones = async (req, res) => {
+//     console.log("Cuerpo de la solicitud:", req.body);
+
+//     const {
+//         fk_seccion_asignatura_a,
+//         fk_seccion_asignatura_b,
+//         fk_alumno_a,
+//         fk_alumno_b,
+//         id_horario_a,
+//         id_horario_b,
+//     } = req.body;
+
+//     console.log("Datos recibidos en el backend:", {
+//         fk_seccion_asignatura_a,
+//         fk_seccion_asignatura_b,
+//         fk_alumno_a,
+//         fk_alumno_b,
+//         id_horario_a,
+//         id_horario_b,
+//     });
+
+//     // Validación de datos
+//     if (
+//         !fk_seccion_asignatura_a ||
+//         !fk_seccion_asignatura_b ||
+//         !fk_alumno_a ||
+//         !fk_alumno_b ||
+//         !id_horario_a ||
+//         !id_horario_b
+//     ) {
+//         return res.status(400).json({ message: 'Faltan datos obligatorios para el intercambio.' });
+//     }
+
+//     let connection;
+//     try {
+//         // Obtener una conexión del pool (usa promesas, no callbacks)
+//         connection = await db.getConnection();
+
+//         await connection.beginTransaction();
+
+//         // Verificar si el Alumno A ya está en la sección de destino
+//         const [resultA] = await connection.query(
+//             "SELECT * FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
+//             [fk_alumno_a, fk_seccion_asignatura_b]
+//         );
+//         if (resultA.length > 0) {
+//             throw new Error('El Alumno A ya está asignado a la sección de destino.');
+//         }
+
+//         // Verificar si el Alumno B ya está en la sección de destino
+//         const [resultB] = await connection.query(
+//             "SELECT * FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
+//             [fk_alumno_b, fk_seccion_asignatura_a]
+//         );
+//         if (resultB.length > 0) {
+//             throw new Error('El Alumno B ya está asignado a la sección de destino.');
+//         }
+
+//         // Actualizar la sección de Alumno A
+//         await connection.query(
+//             "UPDATE HorarioAlumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
+//             [fk_seccion_asignatura_b, fk_alumno_a, id_horario_a]
+//         );
+
+//         // Actualizar la sección de Alumno B
+//         await connection.query(
+//             "UPDATE HorarioAlumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
+//             [fk_seccion_asignatura_a, fk_alumno_b, id_horario_b]
+//         );
+
+//         await connection.commit();
+//         res.status(200).json({ message: 'Intercambio realizado con éxito.' });
+//     } catch (error) {
+//         if (connection) await connection.rollback(); // Revertir la transacción en caso de error
+//         console.error("Error al intercambiar secciones:", error);
+//         res.status(500).json({ message: 'Hubo un problema al realizar el intercambio', error: error.message });
+//     } finally {
+//         if (connection) connection.release(); // Liberar la conexión al pool
+//     }
+// };
+
+
 export {
     getAllHorarios_Alumnos,
     getHorario_AlumnoById,
+    getHorarioById,
     addHorario_Alumno,
     deleteHorario_Alumno,
     updateHorario_Alumno
+    // updateHorario_Alumnob,
+
 };

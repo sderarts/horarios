@@ -56,7 +56,7 @@ function AddCarreraNivel() {
     };
 
     return (
-        <div className="px-24 pb-24  w-3/4 h-screen">
+        <div className="px-24 pb-24  w-3/4 h-5/6">
             <div className="w-full justify-center items-center p-4">
                 <p className='text-black font-semibold text-xl'>Agrega los niveles por carrera</p>
             </div>

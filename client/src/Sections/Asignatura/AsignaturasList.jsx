@@ -4,6 +4,8 @@ import axios from 'axios';
 import AddAsignatura from './AddAsignatura';
 import { useNavigate } from 'react-router';
 import AddNivelAsignatura from './AddNivelAsignatura';
+import AddSeccion from '../Seccion/AddSeccion';
+import AddAsignaturaSeccion from '../Horario/AddAsignaturaSeccion';
 
 
 
@@ -38,12 +40,9 @@ function AsignaturasList() {
 
     return (
         <div className='flex flex-col bg-amber-400'>
-            <div className='flex flex-col'>
-                <AddAsignatura />
-                <AddNivelAsignatura />
-            </div>
+
             <div className='flex w-full '>
-                <div className="px-12">
+                <div className="px-12 mt-10">
                     <div className='w-full justify-center items-center py-4'>
                         <p className='text-black font-semibold text-xl'>Asignaturas</p>
                     </div>
@@ -110,7 +109,12 @@ function AsignaturasList() {
 
 
             </div>
-
+            <div className='flex flex-col w-full'>
+                <AddAsignatura />
+                <AddNivelAsignatura />
+                <AddSeccion />
+                <AddAsignaturaSeccion />
+            </div>
         </div>
     );
 }

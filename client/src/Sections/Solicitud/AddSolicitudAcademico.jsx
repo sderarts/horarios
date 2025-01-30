@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import Footer from '../../Layout/Footer';
 
 function AddSolicitudAcademico() {
     const navigate = useNavigate();
@@ -136,6 +137,7 @@ function AddSolicitudAcademico() {
                     Crear
                 </button>
             </div>
+            <Footer />
         </div>
     );
 }

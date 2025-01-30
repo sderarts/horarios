@@ -70,44 +70,14 @@ const obtenerSeccionesDeAlumnos = (id_alumno_1, id_alumno_2) => {
     });
 };
 
-const intercambiarSecciones = async (id_solicitud, new_seccion_alumno_b) => {
-    try {
-        // 1. Obtener la solicitud y los datos de los alumnos
-        const solicitud = await obtenerDatosDeSolicitud(id_solicitud);
-        const { fk_alumno, fk_alumno_b, fk_seccion_asignatura } = solicitud;
-
-        // 2. Obtener las secciones actuales de ambos alumnos
-        const secciones = await obtenerSeccionesDeAlumnos(fk_alumno, fk_alumno_b);
-        const seccionAlumno = secciones.find(seccion => seccion.id_alumno === fk_alumno);
-        const seccionAlumnoB = secciones.find(seccion => seccion.id_alumno === fk_alumno_b);
-
-        // Asegurarse de que las secciones se hayan encontrado correctamente
-        if (!seccionAlumno || !seccionAlumnoB) {
-            throw new Error('No se encontraron las secciones de los alumnos');
-        }
-
-        // 3. Realizar el intercambio de secciones
-        const query1 = `
-            UPDATE horarioalumno
-            SET fk_seccion_asignatura = ?
-            WHERE fk_alumno = ?`;
-
-        const query2 = `
-            UPDATE horarioalumno
-            SET fk_seccion_asignatura = ?
-            WHERE fk_alumno = ?`;
-
-        db.query(query1, [seccionAlumnoB.fk_seccion_asignatura, fk_alumno], (err) => {
-            if (err) throw err;
-            db.query(query2, [new_seccion_alumno_b, fk_alumno_b], (err) => {
-                if (err) throw err;
-            });
-        });
-    } catch (error) {
-        console.error("Error al intercambiar las secciones:", error);
-        throw error;  // Lanza el error para manejarlo en el controlador
-    }
+const obtenerIdHorario = (fk_alumno, fk_seccion_asignatura, callback) => {
+    const query = "SELECT id_horario FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?";
+    db.query(query, [fk_alumno, fk_seccion_asignatura], callback);
 };
+
+
+
+
 
 export default {
     getAllAcademico_Solicitudes,
@@ -117,5 +87,5 @@ export default {
     updateSolicitud_Academico,
     obtenerDatosDeSolicitud,
     obtenerSeccionesDeAlumnos,
-    intercambiarSecciones,
+    obtenerIdHorario,
 };

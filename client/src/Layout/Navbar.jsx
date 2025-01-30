@@ -37,7 +37,7 @@ function Navbar() {
     return (
 
 
-        <nav class="bg-white dark:bg-gray-900 fixed w-1/2 z-20 top-0 start-2 border-b border-gray-200 dark:border-gray-600 rounded-xl">
+        <nav class="bg-white dark:bg-gray-900 fixed w-1/3 z-20 top-0 start-2 border-b border-gray-200 dark:border-gray-600 rounded-xl px-4">
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
 
                 {/* Aquí agregamos una opción diferente si el rol es alumno o académico */}

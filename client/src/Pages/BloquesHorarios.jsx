@@ -6,6 +6,7 @@ import VerSecciones from '../Sections/Seccion/Secciones';
 import AddSeccion from '../Sections/Seccion/AddSeccion';
 import AddSeccionDia from '../Sections/Seccion/AddSeccionDia';
 import Navbar from '../Layout/Navbar';
+import Footer from '../Layout/Footer';
 
 function BloquesHorarios() {
     return (
@@ -14,9 +15,8 @@ function BloquesHorarios() {
             <VerBloques />
             {/* <AddBloque /> */}
             <AddDiaBloque />
-            <VerSecciones />
-            {/* <AddSeccion /> */}
             <AddSeccionDia />
+            <Footer />
         </div>
     )
 }

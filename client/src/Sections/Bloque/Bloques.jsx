@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router";
 import axios from 'axios';
 import AddBloque from './AddBloque';
+import VerSecciones from '../Seccion/Secciones';
 
 function VerBloques() {
 
@@ -62,9 +63,11 @@ function VerBloques() {
     };
 
     return (
-        <div className='flex flex-row bg-amber-400'>
+        <div className='flex flex-row bg-amber-400 w-full'>
             <div className='p-12'>
-                <h1>Listado de Bloques</h1>
+                <div className='w-full justify-center items-center p-4'>
+                    <p className='text-black font-semibold text-xl'>Bloques de horarios</p>
+                </div>
 
                 {bloques.length > 0 ? (
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
@@ -108,7 +111,7 @@ function VerBloques() {
                 )}
             </div>
             <div>
-                <AddBloque />
+                <VerSecciones />
             </div>
 
             {/* Modal de eliminación */}

@@ -68,11 +68,11 @@ function VerSecciones() {
   };
 
   return (
-    <div className='flex flex-row w-full bg-amber-400'>
+    <div className='flex flex-row w-1/2 bg-amber-400'>
       <div className="p-12">
-      <div className='w-full justify-center items-center p-4'>
-                    <p className='text-black font-semibold text-xl'>Listado de secciones</p>
-                </div>
+        <div className='w-full justify-center items-center p-4'>
+          <p className='text-black font-semibold text-xl'>Listado de secciones</p>
+        </div>
 
         {secciones.length > 0 ? (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -209,7 +209,6 @@ function VerSecciones() {
       )}
 
       {/* Componente para agregar una nueva sección */}
-      <AddSeccion />
     </div>
   );
 }

@@ -60,7 +60,7 @@ function AddAsignaturaSeccion() {
     };
 
     return (
-        <div className='bg-amber-400 w-1/3 p-20'>
+        <div className='bg-amber-400 w-1/3 px-12'>
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
                 <div className='w-full justify-center items-center p-4'>
                     <p className='text-black font-semibold text-xl'>Crear Asignatura-Sección</p>

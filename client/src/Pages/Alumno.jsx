@@ -5,6 +5,7 @@ import AsignaturasAlumno from '../Sections/Asignatura/AsignaturasAlumno';
 import AddHorarioAlumno from '../Sections/Horario/AddHorarioAlumno';
 import HorarioAlumno from '../Sections/Horario/HorarioAlumno';
 import Options from '../Sections/User/Options';
+import Footer from '../Layout/Footer';
 
 function Alumno() {
     return (
@@ -14,6 +15,7 @@ function Alumno() {
             <AsignaturasAlumno />
             {/* <AddHorarioAlumno /> */}
             <HorarioAlumno />
+            <Footer />
         </div>
     )
 }

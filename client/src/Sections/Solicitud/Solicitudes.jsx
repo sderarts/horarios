@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
 import Navbar from '../../Layout/Navbar';
+import Footer from '../../Layout/Footer';
 
 function Solicitudes() {
     const { user, loading } = useContext(AuthContext);
@@ -104,9 +105,9 @@ function Solicitudes() {
 
 
     return (
-        <div className="flex justify-center bg-amber-400 h-screen">
+        <div className=" bg-amber-400 h-screen">
             <Navbar />
-            <div className="p-12">
+            <div className="py-32 px-12">
                 {user ? (
                     <p className='font-bold italic'>Hola {user.displayName}</p>
                 ) : (
@@ -115,7 +116,7 @@ function Solicitudes() {
 
                 <h1>Listado de Solicitudes</h1>
                 {solicitudes.length > 0 ? (
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-black bg-black">
                             <thead>
                                 <tr>
@@ -150,6 +151,8 @@ function Solicitudes() {
                     <p>No hay solicitudes disponibles.</p>
                 )}
             </div>
+            <Footer />
+            <div className='bg-black h-1/4'></div>
         </div>
     );
 }

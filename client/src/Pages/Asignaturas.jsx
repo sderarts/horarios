@@ -5,16 +5,17 @@ import AddSeccion from '../Sections/Seccion/AddSeccion';
 import AsignaturasSecciones from '../Sections/Horario/AsignaturasSecciones';
 import AddAsignaturaSeccion from '../Sections/Horario/AddAsignaturaSeccion';
 import Navbar from '../Layout/Navbar';
+import Footer from '../Layout/Footer';
 
 function Asignaturas() {
     return (
         <div>
             <Navbar />
+
             <AsignaturasList />
-            <AsignaturasSecciones />
-            <VerSecciones />
             {/* <AddSeccion /> */}
-            {/* <AddAsignaturaSeccion /> */}
+            <AsignaturasSecciones />
+            <Footer />
         </div>
     )
 }

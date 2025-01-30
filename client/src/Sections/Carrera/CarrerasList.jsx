@@ -81,7 +81,7 @@ function CarrerasList() {
                             <tbody>
                                 {carreras.map((e) => (
                                     <tr key={e.id_carrera} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 font-semibold bg-black text-white">
                                             {e.id_carrera} - {e.nombreCarrera}
                                         </td>
                                         <td className="px-6 py-4 text-right">

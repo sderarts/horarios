@@ -23,6 +23,7 @@ import usuarioRoutes from './routes/usuarios/usuarioRoutes.js'
 const app = express()
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.get("/", (req, res) => {
     res.json("hello this is the backend")
 })
