@@ -1,14 +1,14 @@
-![image](https://github.com/user-attachments/assets/e2e92c46-83c1-4cd9-ade9-507abe415c13)el proyecto utiliza node 18
+![image](https://github.com/user-attachments/assets/e2e92c46-83c1-4cd9-ade9-507abe415c13)
+Proyecto en progreso
+Consiste en una plataforma auxiliar al proceso de toma de ramos, permitiendo el intercambio de asignaturas entre alumnos, se basa en el sistema de asignaturas Duoc UC.
+
+
+el proyecto utiliza node 18
 si hay errores con npm i:
 -nvm install 18
 -nvm use 18
 
 Se debe aplicar un env. con las credenciales de la bd
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=Informatica.2024
-DB_DATABASE=horarios2
-
 se utiliza MySQL pero si da error se tiene que especificar en db.js
 import mysql from 'mysql2';
 
