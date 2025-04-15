@@ -10,8 +10,7 @@ yarn-error.log
 .env
 
 # Archivos de bases de datos locales
-*.sqlite
-*.db
+
 
 # Otros archivos temporales o de sistema
 .DS_Store

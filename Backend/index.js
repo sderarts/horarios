@@ -53,5 +53,6 @@ app.use('/usuarios', usuarioRoutes);
 
 
 app.listen(8800, () => {
-    console.log("Conectado en 8800!4");
-})
+    console.log("🚀 Servidor backend corriendo en http://localhost:8800");
+    console.log("🛢️ Conectado a la base de datos PostgreSQL en el puerto 5432");
+});

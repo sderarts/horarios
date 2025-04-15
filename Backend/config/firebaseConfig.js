@@ -1,5 +1,5 @@
 import admin from 'firebase-admin'
-import serviceAccount from '../horarios-56eb1-firebase-adminsdk-fbsvc-3893677fa6.json' assert { type: 'json' };
+import serviceAccount from '../../horarios-56eb1-firebase-adminsdk-fbsvc-3893677fa6.json' with { type: 'json' };
 import cors from 'cors'
 import express from 'express'
 
