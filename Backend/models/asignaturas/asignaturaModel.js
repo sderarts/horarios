@@ -36,7 +36,7 @@ const getAllAsignaturas2 = (callback) => {
 };
 
 const getAsignaturaById = (id, callback) => {
-    const query = 'SELECT * FROM Asignatura WHERE id_asignatura = ?';
+    const query = 'SELECT * FROM Asignatura WHERE id_asignatura = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -54,17 +54,17 @@ const getAsignaturaById = (id, callback) => {
 
 
 const createAsignatura = (asignaturaData, callback) => {
-    const q = "INSERT INTO asignatura(`nombreAsignatura`) VALUES (?)";
+    const q = "INSERT INTO asignatura(`nombreAsignatura`) VALUES ($1)";
     db.query(q, [asignaturaData.nombreAsignatura], callback);
 };
 
 const deleteAsignatura = (id, callback) => {
-    const q = "DELETE FROM asignatura WHERE id_asignatura = ?";
+    const q = "DELETE FROM asignatura WHERE id_asignatura = $1";
     db.query(q, [id], callback);
 };
 
 const updateAsignatura = (id, nombreAsignatura, callback) => {
-    const q = "UPDATE asignatura SET `nombreAsignatura` = ? WHERE id_asignatura = ?";
+    const q = "UPDATE asignatura SET `nombreAsignatura` = $1 WHERE id_asignatura = $2";
     db.query(q, [nombreAsignatura, id], callback);
 };
 

@@ -7,7 +7,7 @@ const getAllCarreras = (callback) => {
 };
 
 const getCarrera_ById = (id, callback) => {
-    const query = 'SELECT * FROM Carrera WHERE id_carrera = ?';
+    const query = 'SELECT * FROM Carrera WHERE id_carrera = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,17 +24,17 @@ const getCarrera_ById = (id, callback) => {
 };
 
 const createCarrera = (carreraData, callback) => {
-    const q = "INSERT INTO carrera(`nombreCarrera`) VALUES (?)";
+    const q = "INSERT INTO carrera(`nombreCarrera`) VALUES ($1)";
     db.query(q, [carreraData.nombreCarrera], callback);
 };
 
 const deleteCarrera = (id, callback) => {
-    const q = "DELETE FROM carrera WHERE id_carrera = ?";
+    const q = "DELETE FROM carrera WHERE id_carrera = $1";
     db.query(q, [id], callback);
 };
 
 const updateCarrera = (id, nombreCarrera, callback) => {
-    const q = "UPDATE carrera SET `nombreCarrera` = ? WHERE id_carrera = ?";
+    const q = "UPDATE carrera SET `nombreCarrera` = $1 WHERE id_carrera = $2";
     db.query(q, [nombreCarrera, id], callback);
 };
 

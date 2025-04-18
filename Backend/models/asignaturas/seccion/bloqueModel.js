@@ -6,7 +6,7 @@ const getAllBloques = (callback) => {
 };
 
 const getBloqueById = (id, callback) => {
-    const query = 'SELECT * FROM BloqueHora WHERE id_bloque = ?';
+    const query = 'SELECT * FROM BloqueHora WHERE id_bloque = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,17 +24,17 @@ const getBloqueById = (id, callback) => {
 
 
 const createBloque = (bloqueData, callback) => {
-    const q = "INSERT INTO BloqueHora( `nombreBloqueHora`) VALUES (?)";
+    const q = "INSERT INTO BloqueHora( `nombreBloqueHora`) VALUES ($1)";
     db.query(q, [bloqueData.nombreBloqueHora], callback);
 };
 
 const deleteBloque = (id, callback) => {
-    const q = "DELETE FROM BloqueHora WHERE id_bloque = ?";
+    const q = "DELETE FROM BloqueHora WHERE id_bloque = $1";
     db.query(q, [id], callback);
 };
 
 const updateBloque = (id, nombreBloqueHora, callback) => {
-    const q = "UPDATE BloqueHora SET `nombreBloqueHora` = ? WHERE id_bloque = ?";
+    const q = "UPDATE BloqueHora SET `nombreBloqueHora` = $1 WHERE id_bloque = $2";
     db.query(q, [nombreBloqueHora, id], callback);
 };
 

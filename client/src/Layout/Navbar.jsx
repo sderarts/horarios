@@ -10,7 +10,7 @@ function Navbar() {
         const fetchUserData = async () => {
             if (user) {
                 try {
-                    const uid = user.uid.substring(0, 28); // Asegurándonos de que el UID esté en el formato correcto
+                    const uid = user.uid.length > 28 ? user.uid.substring(0, 28) : user.uid;
 
                     // Suponemos que el backend responde con el rol del usuario
                     const response = await fetch(`http://localhost:8800/auth/checkUser/${uid}`);
@@ -19,7 +19,7 @@ function Navbar() {
                     if (data.exists) {
                         setUserRole(data.rol); // Guardamos el rol del usuario
                     } else {
-                        console.log("Usuario no encontrado.");
+                        console.log("Usuario no encontrado.", data);
                     }
                 } catch (error) {
                     console.error('Error al obtener los datos del usuario', error);

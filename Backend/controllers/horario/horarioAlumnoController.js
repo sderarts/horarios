@@ -47,7 +47,7 @@ const addHorario_Alumno = (req, res) => {
     }
 
     // Primero, verificamos si ya existe la inscripción
-    const checkQuery = "SELECT * FROM horarioalumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?";
+    const checkQuery = "SELECT * FROM horarioalumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2";
     db.query(checkQuery, [fk_alumno, fk_seccion_asignatura], (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Error en la verificación de inscripción.', error: err });

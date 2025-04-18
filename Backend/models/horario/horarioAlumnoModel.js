@@ -16,7 +16,7 @@ const getHorario_AlumnoById = (id, callback) => {
             JOIN
                 Asignatura ai ON a.fk_asignatura = ai.id_asignatura
             WHERE 
-                h.fk_alumno = ?;
+                h.fk_alumno = $1;
             `;
 
     // Ejecutamos la consulta
@@ -37,7 +37,7 @@ const getHorarioById = (id, callback) => {
             FROM 
                 HorarioAlumno 
             WHERE 
-                id_horario = ?;
+                id_horario = $1;
             `;
 
     // Ejecutamos la consulta
@@ -57,17 +57,17 @@ const getHorarioById = (id, callback) => {
 
 
 const createHorario_Alumno = (Horario_AlumnoData, callback) => {
-    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES (?, ?)";
+    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES ($1, $2)";
     db.query(q, [Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
 };
 
 const deleteHorario_Alumno = (id, callback) => {
-    const q = "DELETE FROM HorarioAlumno WHERE id_horario = ?";
+    const q = "DELETE FROM HorarioAlumno WHERE id_horario = $1";
     db.query(q, [id], callback);
 };
 
 const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, callback) => {
-    const q = "UPDATE HorarioAlumno SET `fk_seccion_asignatura` = ?, `fk_alumno` = ?, `id_horario` = ? WHERE id_horario = ? ";
+    const q = "UPDATE HorarioAlumno SET `fk_seccion_asignatura` = $1, `fk_alumno` = $2, `id_horario` = $3 WHERE id_horario = $4 ";
     db.query(q, [fk_seccion_asignatura, fk_alumno, id_horario, id], callback);
 };
 
@@ -135,7 +135,7 @@ const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, 
 // };
 const verificarSeccionDestino = async (connection, fk_alumno, fk_seccion_asignatura_destino) => {
     const [result] = await connection.query(
-        "SELECT * FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
+        "SELECT * FROM HorarioAlumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2",
         [fk_alumno, fk_seccion_asignatura_destino]
     );
     if (result.length > 0) {

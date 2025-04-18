@@ -6,7 +6,7 @@ const getAllNiveles_Asignaturas = (callback) => {
 };
 
 const getNivel_AsignaturaById = (id, callback) => {
-    const query = 'SELECT * FROM NivelAsignatura WHERE id_nivel_asignatura = ?';
+    const query = 'SELECT * FROM NivelAsignatura WHERE id_nivel_asignatura = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,17 +24,17 @@ const getNivel_AsignaturaById = (id, callback) => {
 
 
 const createNivel_Asignatura = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO NivelAsignatura( `fk_nivel`, `fk_asignatura`, `relacionNombre`) VALUES (?, ?, ?)";
+    const q = "INSERT INTO NivelAsignatura( `fk_nivel`, `fk_asignatura`, `relacionNombre`) VALUES ($1, $2, $3)";
     db.query(q, [Nivel_AsignaturaData.fk_nivel, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.relacionNombre], callback);
 };
 
 const deleteNivel_Asignatura = (id, callback) => {
-    const q = "DELETE FROM NivelAsignatura WHERE id_nivel_asignatura = ?";
+    const q = "DELETE FROM NivelAsignatura WHERE id_nivel_asignatura = $1";
     db.query(q, [id], callback);
 };
 
 const updateNivel_Asignatura = (id, fk_asignatura, fk_nivel, relacionNombre, callback) => {
-    const q = "UPDATE NivelAsignatura SET `fk_asignatura` = ?, `fk_nivel` = ?, `relacionNombre` = ? WHERE id_nivel_asignatura = ?";
+    const q = "UPDATE NivelAsignatura SET `fk_asignatura` = $1, `fk_nivel` = $2, `relacionNombre` = $3 WHERE id_nivel_asignatura = $4";
     db.query(q, [fk_asignatura, fk_nivel, relacionNombre, id], callback);
 };
 

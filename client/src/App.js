@@ -32,9 +32,11 @@ import AddHorarioAlumno from './Sections/Horario/AddHorarioAlumno';
 import AddSolicitud from './Sections/Solicitud/AddSolicitud';
 import Solicitudes from './Sections/Solicitud/Solicitudes';
 import Login2 from './Sections/User/Login2';
-import Register from './Sections/User/Register';
+import FormularioAlumno from './Sections/User/RegisterAlumno';
+import FormularioAcademico from './Sections/User/RegisterAcademico';
 import Alumno from './Pages/Alumno';
 import SolicitudesAcademico from './Sections/Solicitud/SolicitudesAcademico';
+import Selector from './Sections/User/RouteSelector';
 
 function App() {
   return (
@@ -44,7 +46,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login2" element={<Login2 />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/handleuser" element={<Selector />} />
+            <Route path="/register1" element={<FormularioAcademico />} />
+            <Route path="/register2" element={<FormularioAlumno />} />
             <Route path="/carreras" element={<Carreras />} />
             <Route path="/carreras/:id" element={<Edit />} />
             <Route path="/asignaturas" element={<Asignaturas />} />

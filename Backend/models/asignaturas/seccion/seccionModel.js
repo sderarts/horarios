@@ -6,7 +6,7 @@ const getAllSecciones = (callback) => {
 };
 
 const getSeccionById = (id, callback) => {
-    const query = 'SELECT * FROM seccion WHERE id_seccion = ?';
+    const query = 'SELECT * FROM seccion WHERE id_seccion = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,17 +24,17 @@ const getSeccionById = (id, callback) => {
 
 
 const createSeccion = (seccionData, callback) => {
-    const q = "INSERT INTO seccion(`nombreSeccion`,`capacidad`,`inscripciones`) VALUES (?, ?, ?)";
+    const q = "INSERT INTO seccion(`nombreSeccion`,`capacidad`,`inscripciones`) VALUES ($1, $2, $3)";
     db.query(q, [seccionData.nombreSeccion, seccionData.capacidad, seccionData.inscripciones], callback);
 };
 
 const deleteSeccion = (id, callback) => {
-    const q = "DELETE FROM seccion WHERE id_seccion = ?";
+    const q = "DELETE FROM seccion WHERE id_seccion = $1";
     db.query(q, [id], callback);
 };
 
 const updateSeccion = (id, nombreSeccion, capacidad, inscripciones, callback) => {
-    const q = "UPDATE seccion SET `nombreSeccion` = ?,`capacidad` = ?, `inscripciones` = ? WHERE id_seccion = ?";
+    const q = "UPDATE seccion SET `nombreSeccion` = $1,`capacidad` = $2, `inscripciones` = $3 WHERE id_seccion = $4";
     db.query(q, [nombreSeccion, capacidad, inscripciones, id], callback);
 };
 

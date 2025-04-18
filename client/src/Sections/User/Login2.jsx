@@ -12,19 +12,26 @@ function Login2() {
 
     useEffect(() => {
         const checkUserStatus = async () => {
-            if (user) {
+            if (!user) {
+                setIsLoading(false);
+                return;
+            } else {
                 setIsLoading(true);
                 try {
                     // Asignamos el rol por defecto
+                    console.log(user);
+                    
                     const userEmail = user.email || '';
                     let userRole = 2;  // Rol por defecto es alumno
                     if (userEmail.includes('@duocuc.cl') || userEmail.includes('@duoc.cl') || userEmail.includes('@profesor.duoc.cl')) {
                         userRole = 1;  // Si el correo termina en @duocuc.cl, asignamos rol académico
                     }
-
+                    const uid = user.uid.length > 28 ? user.uid.substring(0, 28) : user.uid;
                     // Verificamos si el usuario ya existe en la base de datos
-                    const response = await fetch(`http://localhost:8800/auth/checkUser/${user.uid}`);
+                    const response = await fetch(`http://localhost:8800/auth/checkUser/${uid}`);
                     const data = await response.json();
+                    console.log(data);
+                    
 
                     // Si el usuario existe
                     if (data.exists) {
@@ -36,15 +43,13 @@ function Login2() {
                         }
                     } else {
                         // Si el usuario no existe, redirigir al registro
-                        navigate('/register');
+                        navigate('/handleuser');
                     }
                 } catch (error) {
                     console.error('Error al verificar el usuario:', error);
                 } finally {
                     setIsLoading(false); // Termina el estado de carga
-                }
-            } else {
-                setIsLoading(false); // Si no hay usuario, termina el estado de carga
+                } // Si no hay usuario, termina el estado de carga
             }
         };
 

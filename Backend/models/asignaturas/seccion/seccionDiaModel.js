@@ -19,7 +19,7 @@ const getAllSecciones_Dias = (callback) => {
 };
 
 const getSeccion_DiaById = (id, callback) => {
-    const query = 'SELECT * FROM SeccionDia WHERE id_seccion_dia = ?';
+    const query = 'SELECT * FROM SeccionDia WHERE id_seccion_dia = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -37,17 +37,17 @@ const getSeccion_DiaById = (id, callback) => {
 
 
 const createSeccion_Dia = (dia_BloqueData, callback) => {
-    const q = "INSERT INTO SeccionDia(`fk_seccion`, `fk_dia`, `nombreRelacion`) VALUES (?, ?, ?)";
+    const q = "INSERT INTO SeccionDia(`fk_seccion`, `fk_dia`, `nombreRelacion`) VALUES ($1, $2, $3)";
     db.query(q, [dia_BloqueData.fk_seccion, dia_BloqueData.fk_dia, dia_BloqueData.nombreRelacion], callback);
 };
 
 const deleteSeccion_Dia = (id, callback) => {
-    const q = "DELETE FROM SeccionDia WHERE id_seccion_dia = ?";
+    const q = "DELETE FROM SeccionDia WHERE id_seccion_dia = $1";
     db.query(q, [id], callback);
 };
 
 const updateSeccion_Dia = (id, fk_seccion, fk_dia, nombreRelacion, callback) => {
-    const q = "UPDATE SeccionDia SET `fk_seccion` = ?, `fk_dia` = ?, `nombreRelacion` = ? WHERE id_seccion_dia = ?";
+    const q = "UPDATE SeccionDia SET `fk_seccion` = $1, `fk_dia` = $2, `nombreRelacion` = $3 WHERE id_seccion_dia = $4";
     db.query(q, [fk_seccion, fk_dia, nombreRelacion, id], callback);
 };
 

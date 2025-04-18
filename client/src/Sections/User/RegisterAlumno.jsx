@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { auth } from '../../firebase';
+import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
 
-const FormularioRegistro = () => {
+const FormularioAlumno = () => {
     const [uid, setUid] = useState('');
     const [email, setEmail] = useState('');
+    const { user, setUser } = useContext(AuthContext);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [rol, setRol] = useState(2);  // Rol de usuario (2 para alumno)
@@ -39,7 +42,7 @@ const FormularioRegistro = () => {
 
         if (currentUser) {
             // Verificar el dominio del correo y redirigir si es el dominio académico
-            if (currentUser.userEmail.includes('@duocuc.cl') || currentUser.userEmail.includes('@duoc.cl') || currentUser.userEmail.includes('@profesor.duoc.cl')) {
+            if (currentUser && currentUser.mail && currentUser.email.includes('@duocuc.cl') || currentUser.email.includes('@duoc.cl') || currentUser.email.includes('@profesor.duoc.cl')) {
                 // Si el correo tiene el dominio académico, hacer el POST y redirigir
                 const registerAcademicUser = async () => {
                     try {
@@ -73,23 +76,46 @@ const FormularioRegistro = () => {
         }
     }, [navigate]);
 
+    const handleLogout = () => {
+    if (user) {
+        signOut(auth)
+            .then(() => {
+                setUser(null); // <-- Muy importante para limpiar el contexto
+                localStorage.clear();
+                sessionStorage.clear();
+                navigate('/'); // Redirige a login (o a donde prefieras)
+            })
+            .catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+            });
+    } else {
+        console.warn("No hay usuario activo para cerrar sesión.");
+        navigate('/');
+    }
+};
+
+
     // Cargar las carreras y niveles
     useEffect(() => {
         const fetchCarreras = async () => {
             try {
                 const response = await axios.get('http://localhost:8800/carreras');
-                setCarreras(response.data);
+                const data = Array.isArray(response.data) ? response.data : []; // Protege contra respuesta inesperada
+                setCarreras(data);
             } catch (error) {
                 console.error("Error al cargar las carreras:", error);
+                setCarreras([]); // Asegura que sea un array aunque haya error
             }
         };
 
         const fetchNiveles = async () => {
             try {
                 const response = await axios.get('http://localhost:8800/carrera_niveles');
-                setNiveles(response.data);
+                const data = Array.isArray(response.data) ? response.data : []; 
+                setNiveles(data);
             } catch (error) {
                 console.error("Error al cargar los niveles:", error);
+                setCarreras([]);
             }
         };
 
@@ -239,10 +265,17 @@ const FormularioRegistro = () => {
                         Registrar
                     </button>
                 </div>
+
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                >
+                    Salir
+                </button>
             </form>
 
         </div>
     );
 };
 
-export default FormularioRegistro;
+export default FormularioAlumno;

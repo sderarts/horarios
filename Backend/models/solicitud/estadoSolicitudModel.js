@@ -6,7 +6,7 @@ const getEstados_Solicitudes = (callback) => {
 };
 
 const getEstado_SolicitudById = (id, callback) => {
-    const query = 'SELECT * FROM EstadoSolicitud WHERE id_estado = ?';
+    const query = 'SELECT * FROM EstadoSolicitud WHERE id_estado =$1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {

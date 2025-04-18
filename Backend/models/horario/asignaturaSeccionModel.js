@@ -48,7 +48,7 @@ const getAsignatura_SeccionById = (id, callback) => {
         JOIN
             Seccion ON AsignaturaSeccion.fk_seccion = Seccion.id_seccion
         WHERE
-            AsignaturaSeccion.id_asignatura_seccion = ?;
+            AsignaturaSeccion.id_asignatura_seccion = $1;
     `;
 
     // Ejecutamos la consulta para obtener los detalles de la asignatura-sección
@@ -92,7 +92,7 @@ const getAsignatura_SeccionById = (id, callback) => {
 };
 
 const getAsignatura_SeccionById2 = (id, callback) => {
-    const query = 'SELECT * FROM AsignaturaSeccion WHERE id_asignatura_seccion = ?';
+    const query = 'SELECT * FROM AsignaturaSeccion WHERE id_asignatura_seccion = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -135,7 +135,7 @@ const getAsignatura_SeccionByAlumno = (id, callback) => {
         JOIN
             Alumno AS alumno ON alumno.fk_carrera = carrera.id_carrera
         WHERE
-            alumno.id_alumno = ?;
+            alumno.id_alumno = $1;
     `;
 
     // Ejecutamos la consulta para obtener los detalles de la asignatura-sección
@@ -179,17 +179,17 @@ const getAsignatura_SeccionByAlumno = (id, callback) => {
 };
 
 const createAsignatura_Seccion = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO AsignaturaSeccion(`fk_seccion`, `fk_asignatura`, `nombreRelacion`, `nombreDocente`) VALUES (?, ?, ?, ?)";
+    const q = "INSERT INTO AsignaturaSeccion(`fk_seccion`, `fk_asignatura`, `nombreRelacion`, `nombreDocente`) VALUES ($1, $2, $3, $4)";
     db.query(q, [Nivel_AsignaturaData.fk_seccion, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.nombreRelacion, Nivel_AsignaturaData.nombreDocente], callback);
 };
 
 const deleteAsignatura_Seccion = (id, callback) => {
-    const q = "DELETE FROM AsignaturaSeccion WHERE id_asignatura_seccion = ?";
+    const q = "DELETE FROM AsignaturaSeccion WHERE id_asignatura_seccion = $1";
     db.query(q, [id], callback);
 };
 
 const updateAsignatura_Seccion = (id, asignatura, fk_seccion, nombreRelacion, nombreDocente, callback) => {
-    const q = "UPDATE AsignaturaSeccion SET `fk_asignatura` = ?, `fk_seccion` = ?, `nombreRelacion` = ? , `nombreDocente` = ? WHERE id_asignatura_seccion = ?";
+    const q = "UPDATE AsignaturaSeccion SET `fk_asignatura` = $1, `fk_seccion` = $2, `nombreRelacion` = $3 , `nombreDocente` = $4 WHERE id_asignatura_seccion = $5";
     db.query(q, [asignatura, fk_seccion, nombreRelacion, nombreDocente, id], callback);
 };
 

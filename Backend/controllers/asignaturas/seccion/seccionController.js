@@ -54,7 +54,7 @@ const updateInscripcion = (req, res) => {
     const { nombreSeccion, capacidad } = req.body;
 
     // 1. Primero obtenemos el valor actual de 'inscripciones' y 'capacidad' de la base de datos
-    db.query('SELECT inscripciones, capacidad FROM seccion WHERE id_seccion = ?', [id], (err, result) => {
+    db.query('SELECT inscripciones, capacidad FROM seccion WHERE id_seccion = $1', [id], (err, result) => {
         if (err) return res.status(500).json(err);
 
         // Si no se encuentra la sección, retornamos un error

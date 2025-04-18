@@ -28,10 +28,11 @@ function Login({ onLoginSuccess }) {
 
             if (data.exists) {
                 console.log("Usuario encontrado, continuando...");
-                onLoginSuccess(); // Aquí haces lo que sea necesario, como redirigir al home
+                onLoginSuccess();
+                navigate('/'); // Aquí haces lo que sea necesario, como redirigir al home
             } else {
                 console.log("Usuario no encontrado, redirigiendo al registro");
-                navigate('/register'); // Redirige a la página de registro si no existe
+                navigate('/'); // Redirige a la página de registro si no existe
             }
         } catch (error) {
             console.error('Error al iniciar sesión:', error);

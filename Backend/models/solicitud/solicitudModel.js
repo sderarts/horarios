@@ -26,7 +26,7 @@ const getAllSolicitudes2 = (callback) => {
 };
 
 const getSolicitudById = (id, callback) => {
-    const query = 'SELECT * FROM Solicitud WHERE id_solicitud = ?';
+    const query = 'SELECT * FROM Solicitud WHERE id_solicitud = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -44,7 +44,7 @@ const getSolicitudById = (id, callback) => {
 
 
 const createSolicitud = (SolicitudData, callback) => {
-    const q = "INSERT INTO Solicitud(`fk_alumno`, `fk_tipo_solicitud`, `fk_seccion_asignatura`) VALUES (?, ?, ?)";
+    const q = "INSERT INTO Solicitud(`fk_alumno`, `fk_tipo_solicitud`, `fk_seccion_asignatura`) VALUES ($1, $2, $3)";
 
     // Ejecutamos el query para insertar la solicitud
     db.query(q, [SolicitudData.fk_alumno, SolicitudData.fk_tipo_solicitud, SolicitudData.fk_seccion_asignatura], (err, result) => {
@@ -60,12 +60,12 @@ const createSolicitud = (SolicitudData, callback) => {
 
 
 const deleteSolicitud = (id, callback) => {
-    const q = "DELETE FROM Solicitud WHERE id_solicitud = ?";
+    const q = "DELETE FROM Solicitud WHERE id_solicitud = $1";
     db.query(q, [id], callback);
 };
 
 const updateSolicitud = (id, fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, callback) => {
-    const q = "UPDATE Solicitud SET `fk_alumno` = ?, `fk_alumno_b` = ?, `fk_tipo_solicitud` = ?,  `fk_seccion_asignatura` = ? WHERE id_solicitud = ?";
+    const q = "UPDATE Solicitud SET `fk_alumno` = $1, `fk_alumno_b` = $2, `fk_tipo_solicitud` = $3,  `fk_seccion_asignatura` = $4 WHERE id_solicitud = $5";
     db.query(q, [fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, id], callback);
 };
 
