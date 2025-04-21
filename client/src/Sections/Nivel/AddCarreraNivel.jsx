@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function AddCarreraNivel() {
     const [carreraNivel, setCarreraNivel] = useState({
-        relacionNombre: "",
+        relacionnombre: "",
         fk_carrera: "",
         fk_nivel: ""
     });
@@ -17,18 +17,35 @@ function AddCarreraNivel() {
         const fetchcarreras = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/carreras");
-                setCarreras(response.data); // Suponiendo que la respuesta es un array de días
+                const data = response.data;
+    
+                // Verificar que sea un array antes de setearlo
+                if (Array.isArray(data)) {
+                    setCarreras(data);
+                } else {
+                    console.warn("La respuesta no es un array:", data);
+                    setCarreras([]); // fallback
+                }
             } catch (error) {
                 console.error("Error al obtener las carreras", error);
+                setCarreras([]); // fallback en caso de error
             }
         };
-
         const fetchniveles = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/niveles");
-                setNiveles(response.data); // Suponiendo que la respuesta es un array de niveles
+                const data = response.data;
+    
+                // Verificar que sea un array antes de setearlo
+                if (Array.isArray(data)) {
+                    setNiveles(data);
+                } else {
+                    console.warn("La respuesta no es un array:", data);
+                    setNiveles([]); // fallback
+                }
             } catch (error) {
-                console.error("Error al obtener los niveles", error);
+                console.error("Error al obtener las carreras", error);
+                setNiveles([]); // fallback en caso de error
             }
         };
 
@@ -72,7 +89,7 @@ function AddCarreraNivel() {
                         <option value="">Carrera</option>
                         {carreras.map(carrera => (
                             <option key={carrera.id_carrera} value={carrera.id_carrera}>
-                                {carrera.nombreCarrera}
+                                {carrera.nombrecarrera}
                             </option>
                         ))}
                     </select>
@@ -89,14 +106,14 @@ function AddCarreraNivel() {
                         <option value="">Nivel</option>
                         {niveles.map(nivel => (
                             <option key={nivel.id_nivel} value={nivel.id_nivel}>
-                                {nivel.nombreNivel}
+                                {nivel.nombrenivel}
                             </option>
                         ))}
                     </select>
                 </div>
                 {/* Campo de texto para 'relacionNombre' */}
                 <div className="w-full mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionNombre">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionnombre">
                         Nombre de la relación
                     </label>
                     <input
@@ -104,7 +121,7 @@ function AddCarreraNivel() {
                         type="text"
                         placeholder="Nombre de la relación"
                         onChange={handleChange}
-                        name="relacionNombre"
+                        name="relacionnombre"
                     />
                 </div>
 

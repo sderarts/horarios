@@ -1,12 +1,12 @@
 import db from '../../config/db.js';
 
 const getAllCarreras_Niveles = (callback) => {
-    const q = "SELECT * FROM CarreraNivel";
+    const q = "SELECT * FROM carreranivel";
     db.query(q, callback);
 };
 
 const getCarrera_NivelById = (id, callback) => {
-    const query = 'SELECT * FROM CarreraNivel WHERE id_carrera_nivel = $1';
+    const query = 'SELECT * FROM carreranivel WHERE id_carrera_nivel = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,18 +24,18 @@ const getCarrera_NivelById = (id, callback) => {
 
 
 const createCarrera_Nivel = (Carrera_NivelData, callback) => {
-    const q = "INSERT INTO CarreraNivel(`fk_carrera`, `fk_nivel`, `relacionNombre`) VALUES ($1, $2, $3)";
-    db.query(q, [Carrera_NivelData.fk_carrera, Carrera_NivelData.fk_nivel, Carrera_NivelData.relacionNombre], callback);
+    const q = "INSERT INTO carreranivel(fk_carrera, fk_nivel, relacionnombre) VALUES ($1, $2, $3)";
+    db.query(q, [Carrera_NivelData.fk_carrera, Carrera_NivelData.fk_nivel, Carrera_NivelData.relacionnombre], callback);
 };
 
 const deleteCarrera_Nivel = (id, callback) => {
-    const q = "DELETE FROM CarreraNivel WHERE id_carrera_nivel = $1";
+    const q = "DELETE FROM carreranivel WHERE id_carrera_nivel = $1";
     db.query(q, [id], callback);
 };
 
-const updateCarrera_Nivel = (id, fk_carrera, fk_nivel, relacionNombre, callback) => {
-    const q = "UPDATE CarreraNivel SET SET `fk_carrera` = $1, `fk_nivel` = $2, `relacionNombre` = $3 WHERE id_carrera_nivel = $4";
-    db.query(q, [fk_carrera, fk_nivel, relacionNombre, id], callback);
+const updateCarrera_Nivel = (id, fk_carrera, fk_nivel, relacionnombre, callback) => {
+    const q = "UPDATE carreranivel SET SET `fk_carrera` = $1, `fk_nivel` = $2, `relacionnombre` = $3 WHERE id_carrera_nivel = $4";
+    db.query(q, [fk_carrera, fk_nivel, relacionnombre, id], callback);
 };
 
 export default {

@@ -33,9 +33,9 @@ function CarrerasList() {
     };
 
     // Abrir el modal para editar
-    const openEditModal = (id, nombreCarrera) => {
+    const openEditModal = (id, nombrecarrera) => {
         setIdCarreraToEdit(id);
-        setCarreraToEdit({ nombreCarrera });
+        setCarreraToEdit({ nombrecarrera });
         setShowEditModal(true);
     };
 
@@ -82,12 +82,12 @@ function CarrerasList() {
                                 {carreras.map((e) => (
                                     <tr key={e.id_carrera} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                                         <td className="px-6 py-4 font-semibold bg-black text-white">
-                                            {e.id_carrera} - {e.nombreCarrera}
+                                            {e.id_carrera} - {e.nombrecarrera}
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 className="font-bold text-blue-600 dark:text-blue-500 hover:underline"
-                                                onClick={() => openEditModal(e.id_carrera, e.nombreCarrera)}
+                                                onClick={() => openEditModal(e.id_carrera, e.nombrecarrera)}
                                             >
                                                 Editar
                                             </button>
@@ -149,8 +149,8 @@ function CarrerasList() {
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
                                     name="nombreCarrera"
-                                    value={carreraToEdit.nombreCarrera}
-                                    onChange={(e) => setCarreraToEdit({ ...carreraToEdit, nombreCarrera: e.target.value })}
+                                    value={carreraToEdit.nombrecarrera}
+                                    onChange={(e) => setCarreraToEdit({ ...carreraToEdit, nombrecarrera: e.target.value })}
                                 />
                             </div>
                             <div className="mt-4 flex justify-end space-x-4">

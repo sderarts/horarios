@@ -1,12 +1,12 @@
 import db from '../../config/db.js';
 
 const getAllAcademico_Solicitudes = (callback) => {
-    const q = "SELECT * FROM SolicitudAcademico";
+    const q = "SELECT * FROM solicitudacademico";
     db.query(q, callback);
 };
 
 const getSolicitud_AcademicoById = (id, callback) => {
-    const query = 'SELECT * FROM SolicitudAcademico WHERE id_solicitud_academico = $1';
+    const query = 'SELECT * FROM solicitudacademico WHERE id_solicitud_academico = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,17 +24,17 @@ const getSolicitud_AcademicoById = (id, callback) => {
 
 
 const createSolicitud_Academico = (SolicitudAcademicoData, callback) => {
-    const q = "INSERT INTO SolicitudAcademico(`fk_academico`,`fk_estado`, `fk_solicitud`, `mensaje`) VALUES ($1,$2,$3,$4)";
+    const q = "INSERT INTO solicitudacademico(`fk_academico`,`fk_estado`, `fk_solicitud`, `mensaje`) VALUES ($1,$2,$3,$4)";
     db.query(q, [SolicitudAcademicoData.fk_academico, SolicitudAcademicoData.fk_estado, SolicitudAcademicoData.fk_solicitud, SolicitudAcademicoData.mensaje], callback);
 };
 
 const deleteSolicitud_Academico = (id, callback) => {
-    const q = "DELETE FROM SolicitudAcademico WHERE id_solicitud_academico = $1";
+    const q = "DELETE FROM solicitudacademico WHERE id_solicitud_academico = $1";
     db.query(q, [id], callback);
 };
 
 const updateSolicitud_Academico = (id, fk_academico, fk_estado, fk_solicitud, mensaje, callback) => {
-    const q = "UPDATE SolicitudAcademico SET `fk_academico` = $1, `fk_estado` = $2, `fk_solicitud` = $3, `mensaje` = $4 WHERE id_solicitud_academico = $5";
+    const q = "UPDATE solicitudacademico SET `fk_academico` = $1, `fk_estado` = $2, `fk_solicitud` = $3, `mensaje` = $4 WHERE id_solicitud_academico = $5";
     db.query(q, [fk_academico, fk_estado, fk_solicitud, mensaje, id], callback);
 };
 
@@ -71,7 +71,7 @@ const obtenerSeccionesDeAlumnos = (id_alumno_1, id_alumno_2) => {
 };
 
 const obtenerIdHorario = (fk_alumno, fk_seccion_asignatura, callback) => {
-    const query = "SELECT id_horario FROM HorarioAlumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2";
+    const query = "SELECT id_horario FROM horarioalumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2";
     db.query(query, [fk_alumno, fk_seccion_asignatura], callback);
 };
 

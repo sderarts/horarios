@@ -4,7 +4,7 @@ import Carrera from '../../models/asignaturas/carreraModel.js';
 const getCarreras = (req, res) => {
     Carrera.getAllCarreras((err, data) => {
         if (err) return res.status(500).json(err);
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 
@@ -19,7 +19,7 @@ const getCarrera_ById = (req, res) => {
             return res.status(500).json({ message: 'Error en la base de datos', error: err });
         }
 
-        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+        return res.status(200).json(data.rows);  // Devolvemos los datos de la sección encontrada
     });
 };
 
@@ -41,8 +41,8 @@ const deleteCarrera = (req, res) => {
 
 const updateCarrera = (req, res) => {
     const id = req.params.id;
-    const { nombreCarrera } = req.body;
-    Carrera.updateCarrera(id, nombreCarrera, (err, data) => {
+    const { nombrecarrera } = req.body;
+    Carrera.updateCarrera(id, nombrecarrera, (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json("Se ha actualizado exitosamente.");
     });

@@ -23,14 +23,14 @@ const getCarrera_NivelById = (req, res) => {
 };
 
 const addCarrera_Nivel = (req, res) => {
-    const { fk_carrera, fk_nivel, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_carrera, fk_nivel, relacionnombre } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_carrera || !fk_nivel || !relacionNombre) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_carrera, fk_nivel, relacionNombre)' });
+    if (!fk_carrera || !fk_nivel || !relacionnombre) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_carrera, fk_nivel, relacionnombre)' });
     }
 
-    const carrera_NivelData = { fk_carrera, fk_nivel, relacionNombre };  // Creamos el objeto con los datos a insertar
+    const carrera_NivelData = { fk_carrera, fk_nivel, relacionnombre };  // Creamos el objeto con los datos a insertar
 
     Carrera_Nivel.createCarrera_Nivel(carrera_NivelData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
@@ -49,14 +49,14 @@ const deleteCarrera_Nivel = (req, res) => {
 
 const updateCarrera_Nivel = (req, res) => {
     const id = req.params.id;
-    const { fk_carrera, fk_nivel, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_carrera, fk_nivel, relacionnombre } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_carrera || !fk_nivel || !relacionNombre) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_carrera, fk_nivel, relacionNombre)' });
+    if (!fk_carrera || !fk_nivel || !relacionnombre) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_carrera, fk_nivel, relacionnombre)' });
     }
 
-    Carrera_Nivel.updateCarrera_Nivel(id, fk_carrera, fk_nivel, relacionNombre, (err, data) => {
+    Carrera_Nivel.updateCarrera_Nivel(id, fk_carrera, fk_nivel, relacionnombre, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });

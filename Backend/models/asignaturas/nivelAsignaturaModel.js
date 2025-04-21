@@ -1,12 +1,12 @@
 import db from '../../config/db.js';
 
 const getAllNiveles_Asignaturas = (callback) => {
-    const q = "SELECT * FROM NivelAsignatura";
+    const q = "SELECT * FROM nivelasignatura";
     db.query(q, callback);
 };
 
 const getNivel_AsignaturaById = (id, callback) => {
-    const query = 'SELECT * FROM NivelAsignatura WHERE id_nivel_asignatura = $1';
+    const query = 'SELECT * FROM nivelasignatura WHERE id_nivel_asignatura = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -24,18 +24,18 @@ const getNivel_AsignaturaById = (id, callback) => {
 
 
 const createNivel_Asignatura = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO NivelAsignatura( `fk_nivel`, `fk_asignatura`, `relacionNombre`) VALUES ($1, $2, $3)";
-    db.query(q, [Nivel_AsignaturaData.fk_nivel, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.relacionNombre], callback);
+    const q = "INSERT INTO nivelasignatura( `fk_nivel`, `fk_asignatura`, `relacionnombre`) VALUES ($1, $2, $3)";
+    db.query(q, [Nivel_AsignaturaData.fk_nivel, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.relacionnombre], callback);
 };
 
 const deleteNivel_Asignatura = (id, callback) => {
-    const q = "DELETE FROM NivelAsignatura WHERE id_nivel_asignatura = $1";
+    const q = "DELETE FROM nivelasignatura WHERE id_nivel_asignatura = $1";
     db.query(q, [id], callback);
 };
 
-const updateNivel_Asignatura = (id, fk_asignatura, fk_nivel, relacionNombre, callback) => {
-    const q = "UPDATE NivelAsignatura SET `fk_asignatura` = $1, `fk_nivel` = $2, `relacionNombre` = $3 WHERE id_nivel_asignatura = $4";
-    db.query(q, [fk_asignatura, fk_nivel, relacionNombre, id], callback);
+const updateNivel_Asignatura = (id, fk_asignatura, fk_nivel, relacionnombre, callback) => {
+    const q = "UPDATE nivelasignatura SET `fk_asignatura` = $1, `fk_nivel` = $2, `relacionnombre` = $3 WHERE id_nivel_asignatura = $4";
+    db.query(q, [fk_asignatura, fk_nivel, relacionnombre, id], callback);
 };
 
 export default {

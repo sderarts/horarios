@@ -1,12 +1,12 @@
 import db from '../../config/db.js';
 
 const getTipos_Solicitudes = (callback) => {
-    const q = "SELECT * FROM TipoSolicitud";
+    const q = "SELECT * FROM tiposolicitud";
     db.query(q, callback);
 };
 
 const getTipo_SolicitudById = (id, callback) => {
-    const query = 'SELECT * FROM TipoSolicitud WHERE id_tipo_solicitud = $1';
+    const query = 'SELECT * FROM tiposolicitud WHERE id_tipo_solicitud = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {

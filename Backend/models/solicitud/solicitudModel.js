@@ -3,30 +3,30 @@ import db from '../../config/db.js';
 const getAllSolicitudes = (callback) => {
     const q = ` SELECT *
             FROM 
-                Solicitud s
+                solicitud s
             JOIN 
-                Alumno a ON a.id_alumno = s.fk_alumno
+                alumno a ON a.id_alumno = s.fk_alumno
             JOIN 
-                TipoSolicitud tp ON tp.id_tipo_solicitud = s.fk_tipo_solicitud
+                tiposolicitud tp ON tp.id_tipo_solicitud = s.fk_tipo_solicitud
             JOIN 
-                AsignaturaSeccion acc ON acc.id_asignatura_seccion = s.fk_seccion_asignatura
+                asignaturaseccion acc ON acc.id_asignatura_seccion = s.fk_seccion_asignatura
             JOIN 
-                Asignatura ag ON ag.id_asignatura = acc.fk_asignatura
+                asignatura ag ON ag.id_asignatura = acc.fk_asignatura
             JOIN
-                Seccion scc ON scc.id_seccion = acc.fk_seccion;
+                seccion scc ON scc.id_seccion = acc.fk_seccion;
     `;
     db.query(q, callback);
 };
 const getAllSolicitudes2 = (callback) => {
     const q = ` SELECT *
             FROM 
-                Solicitud ;
+                solicitud ;
     `;
     db.query(q, callback);
 };
 
 const getSolicitudById = (id, callback) => {
-    const query = 'SELECT * FROM Solicitud WHERE id_solicitud = $1';
+    const query = 'SELECT * FROM solicitud WHERE id_solicitud = $1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {
@@ -44,7 +44,7 @@ const getSolicitudById = (id, callback) => {
 
 
 const createSolicitud = (SolicitudData, callback) => {
-    const q = "INSERT INTO Solicitud(`fk_alumno`, `fk_tipo_solicitud`, `fk_seccion_asignatura`) VALUES ($1, $2, $3)";
+    const q = "INSERT INTO solicitud(`fk_alumno`, `fk_tipo_solicitud`, `fk_seccion_asignatura`) VALUES ($1, $2, $3)";
 
     // Ejecutamos el query para insertar la solicitud
     db.query(q, [SolicitudData.fk_alumno, SolicitudData.fk_tipo_solicitud, SolicitudData.fk_seccion_asignatura], (err, result) => {
@@ -60,12 +60,12 @@ const createSolicitud = (SolicitudData, callback) => {
 
 
 const deleteSolicitud = (id, callback) => {
-    const q = "DELETE FROM Solicitud WHERE id_solicitud = $1";
+    const q = "DELETE FROM solicitud WHERE id_solicitud = $1";
     db.query(q, [id], callback);
 };
 
 const updateSolicitud = (id, fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, callback) => {
-    const q = "UPDATE Solicitud SET `fk_alumno` = $1, `fk_alumno_b` = $2, `fk_tipo_solicitud` = $3,  `fk_seccion_asignatura` = $4 WHERE id_solicitud = $5";
+    const q = "UPDATE solicitud SET `fk_alumno` = $1, `fk_alumno_b` = $2, `fk_tipo_solicitud` = $3,  `fk_seccion_asignatura` = $4 WHERE id_solicitud = $5";
     db.query(q, [fk_alumno, fk_alumno_b, fk_tipo_solicitud, fk_seccion_asignatura, id], callback);
 };
 

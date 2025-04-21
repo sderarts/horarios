@@ -1,12 +1,12 @@
 import db from '../../config/db.js';
 
 const getEstados_Solicitudes = (callback) => {
-    const q = "SELECT * FROM EstadoSolicitud";
+    const q = "SELECT * FROM estadosolicitud";
     db.query(q, callback);
 };
 
 const getEstado_SolicitudById = (id, callback) => {
-    const query = 'SELECT * FROM EstadoSolicitud WHERE id_estado =$1';
+    const query = 'SELECT * FROM estadosolicitud WHERE id_estado =$1';
 
     // Ejecutamos la consulta
     db.query(query, [id], (err, result) => {

@@ -23,14 +23,14 @@ const getNivel_AsignaturaById = (req, res) => {
 };
 
 const addNivel_Asignatura = (req, res) => {
-    const { fk_nivel, fk_asignatura, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_nivel, fk_asignatura, relacionnombre } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_nivel || !fk_asignatura || !relacionNombre) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_nivel, fk_asignatura,  relacionNombre)' });
+    if (!fk_nivel || !fk_asignatura || !relacionnombre) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios ( fk_nivel, fk_asignatura,  relacionnombre)' });
     }
 
-    const carrera_NivelData = { fk_nivel, fk_asignatura, relacionNombre };  // Creamos el objeto con los datos a insertar
+    const carrera_NivelData = { fk_nivel, fk_asignatura, relacionnombre };  // Creamos el objeto con los datos a insertar
 
     Nivel_Asignatura.createNivel_Asignatura(carrera_NivelData, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al crear la relación', error: err });
@@ -49,14 +49,14 @@ const deleteNivel_Asignatura = (req, res) => {
 
 const updateNivel_Asignatura = (req, res) => {
     const id = req.params.id;
-    const { fk_asignatura, fk_nivel, relacionNombre } = req.body;  // Recibimos las claves foráneas y otros datos
+    const { fk_asignatura, fk_nivel, relacionnombre } = req.body;  // Recibimos las claves foráneas y otros datos
 
     // Verificamos que los valores obligatorios estén presentes
-    if (!fk_asignatura || !fk_nivel || !relacionNombre) {
-        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_asignatura, fk_nivel, relacionNombre)' });
+    if (!fk_asignatura || !fk_nivel || !relacionnombre) {
+        return res.status(400).json({ message: 'Faltan datos obligatorios (fk_asignatura, fk_nivel, relacionnombre)' });
     }
 
-    Nivel_Asignatura.updateNivel_Asignatura(id, fk_asignatura, fk_nivel, relacionNombre, (err, data) => {
+    Nivel_Asignatura.updateNivel_Asignatura(id, fk_asignatura, fk_nivel, relacionnombre, (err, data) => {
         if (err) return res.status(500).json({ message: 'Error al actualizar la relación', error: err });
         return res.status(200).json({ message: 'Se ha actualizado exitosamente.' });
     });

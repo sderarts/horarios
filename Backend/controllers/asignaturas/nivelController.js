@@ -4,7 +4,7 @@ import Nivel from '../../models/asignaturas/nivelModel.js';
 const getNiveles = (req, res) => {
     Nivel.getAllNiveles((err, data) => {
         if (err) return res.status(500).json(err);
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 
@@ -26,8 +26,8 @@ const deleteNivel = (req, res) => {
 
 const updateNivel = (req, res) => {
     const id = req.params.id;
-    const { nombreNivel } = req.body;
-    Nivel.updateNivel(id, nombreNivel, (err, data) => {
+    const { nombrenivel } = req.body;
+    Nivel.updateNivel(id, nombrenivel, (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json("Se ha actualizado exitosamente.");
     });

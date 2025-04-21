@@ -1,20 +1,20 @@
 import db from '../../config/db.js';
 
 const getAllHorarios_Alumnos = (callback) => {
-    const q = "SELECT * FROM HorarioAlumno";
+    const q = "SELECT * FROM horarioalumno";
     db.query(q, callback);
 };
 
 const getHorario_AlumnoById = (id, callback) => {
     const query = `SELECT *
             FROM 
-                HorarioAlumno h
+                horarioalumno h
             JOIN
-                AsignaturaSeccion a ON h.fk_seccion_asignatura = a.id_asignatura_seccion
+                asignaturaseccion a ON h.fk_seccion_asignatura = a.id_asignatura_seccion
             JOIN
-                Seccion s ON a.fk_seccion = s.id_seccion
+                seccion s ON a.fk_seccion = s.id_seccion
             JOIN
-                Asignatura ai ON a.fk_asignatura = ai.id_asignatura
+                asignatura ai ON a.fk_asignatura = ai.id_asignatura
             WHERE 
                 h.fk_alumno = $1;
             `;
@@ -35,7 +35,7 @@ const getHorario_AlumnoById = (id, callback) => {
 const getHorarioById = (id, callback) => {
     const query = `SELECT *
             FROM 
-                HorarioAlumno 
+                horarioalumno 
             WHERE 
                 id_horario = $1;
             `;
@@ -57,17 +57,17 @@ const getHorarioById = (id, callback) => {
 
 
 const createHorario_Alumno = (Horario_AlumnoData, callback) => {
-    const q = "INSERT INTO HorarioAlumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES ($1, $2)";
+    const q = "INSERT INTO horarioalumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES ($1, $2)";
     db.query(q, [Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
 };
 
 const deleteHorario_Alumno = (id, callback) => {
-    const q = "DELETE FROM HorarioAlumno WHERE id_horario = $1";
+    const q = "DELETE FROM horarioalumno WHERE id_horario = $1";
     db.query(q, [id], callback);
 };
 
 const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, callback) => {
-    const q = "UPDATE HorarioAlumno SET `fk_seccion_asignatura` = $1, `fk_alumno` = $2, `id_horario` = $3 WHERE id_horario = $4 ";
+    const q = "UPDATE horarioalumno SET `fk_seccion_asignatura` = $1, `fk_alumno` = $2, `id_horario` = $3 WHERE id_horario = $4 ";
     db.query(q, [fk_seccion_asignatura, fk_alumno, id_horario, id], callback);
 };
 
@@ -92,7 +92,7 @@ const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, 
 
 //         // Verificar si el Alumno A ya está en la sección de destino
 //         const [resultA] = await connection.query(
-//             "SELECT * FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
+//             "SELECT * FROM horarioalumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
 //             [fk_alumno_a, fk_seccion_asignatura_b]
 //         );
 //         if (resultA.length > 0) {
@@ -101,7 +101,7 @@ const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, 
 
 //         // Verificar si el Alumno B ya está en la sección de destino
 //         const [resultB] = await connection.query(
-//             "SELECT * FROM HorarioAlumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
+//             "SELECT * FROM horarioalumno WHERE fk_alumno = ? AND fk_seccion_asignatura = ?",
 //             [fk_alumno_b, fk_seccion_asignatura_a]
 //         );
 //         if (resultB.length > 0) {
@@ -110,13 +110,13 @@ const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, 
 
 //         // Actualizar la sección de Alumno A
 //         await connection.query(
-//             "UPDATE HorarioAlumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
+//             "UPDATE horarioalumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
 //             [fk_seccion_asignatura_b, fk_alumno_a, id_horario_a]
 //         );
 
 //         // Actualizar la sección de Alumno B
 //         await connection.query(
-//             "UPDATE HorarioAlumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
+//             "UPDATE horarioalumno SET fk_seccion_asignatura = ? WHERE fk_alumno = ? AND id_horario = ?",
 //             [fk_seccion_asignatura_a, fk_alumno_b, id_horario_b]
 //         );
 
@@ -135,7 +135,7 @@ const updateHorario_Alumno = (id, fk_seccion_asignatura, fk_alumno, id_horario, 
 // };
 const verificarSeccionDestino = async (connection, fk_alumno, fk_seccion_asignatura_destino) => {
     const [result] = await connection.query(
-        "SELECT * FROM HorarioAlumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2",
+        "SELECT * FROM horarioalumno WHERE fk_alumno = $1 AND fk_seccion_asignatura = $2",
         [fk_alumno, fk_seccion_asignatura_destino]
     );
     if (result.length > 0) {
