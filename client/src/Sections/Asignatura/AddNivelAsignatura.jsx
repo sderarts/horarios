@@ -8,7 +8,7 @@ function AddNivelAsignatura() {
 
     const navigate = useNavigate();
     const [nivelAsignatura, setNivelAsignatura] = useState({
-        relacionNombre: "",
+        relacionnombre: "",
         fk_nivel: "",
         fk_asignatura: ""
     });
@@ -22,7 +22,7 @@ function AddNivelAsignatura() {
         const fetchNiveles = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/niveles");
-                setNiveles(response.data); // Suponiendo que la respuesta es un array de Asignaturas
+                setNiveles(Array.isArray(response.data) ? response.data : []);
             } catch (error) {
                 console.error("Error al obtener los Asignaturas", error);
             }
@@ -31,7 +31,7 @@ function AddNivelAsignatura() {
         const fetchAsignaturas = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/asignaturas/secciones");
-                setAsignaturas(response.data); // Suponiendo que la respuesta es un array de asignaturas
+                setAsignaturas(Array.isArray(response.data) ? response.data : []);
             } catch (error) {
                 console.error("Error al obtener los asignaturas", error);
             }
@@ -62,57 +62,58 @@ function AddNivelAsignatura() {
     };
 
     return (
-        <div className='flex px-12 bg-amber-400 w-2/4 flex-row space-y-2'>
-            {/*<div className='w-1/3'>
-                <Niveles />
-            </div>*/}
-            <div className="flex flex-wrap -mx-3 mb-6 form w-full">
+        <div >
+            <div >
                 <div className='w-full justify-center items-center p-4'>
                     <p className='text-black font-semibold text-xl'>Asigna a que semestre corresponde una asignatura</p>
                 </div>
 
                 {/* Lista desplegable para fk_nivel */}
-                <div className="w-full px-3 mb-4">
-                    {/* <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_nivel">
-                        Semestre
-                    </label>*/}
-                    <select
-                        className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="fk_nivel"
-                        onChange={handleChange}
-                        value={nivelAsignatura.fk_nivel}
-                    >
-                        <option value="">Seleccionar Semestre</option>
-                        {niveles.map((nivel) => (
+                {/* Select para el semestre */}
+            <div className="w-full px-3 mb-4">
+                <select
+                    className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    name="fk_nivel"
+                    onChange={handleChange}
+                    value={nivelAsignatura.fk_nivel}
+                >
+                    <option value="">Seleccionar Semestre</option>
+                    {Array.isArray(niveles) && niveles.length > 0 ? (
+                        niveles.map((nivel) => (
                             <option key={nivel.id_nivel} value={nivel.id_nivel}>
-                                {nivel.nombreNivel}
+                                {nivel.nombrenivel}
                             </option>
-                        ))}
-                    </select>
-                </div>
+                        ))
+                    ) : (
+                        <option disabled>No hay semestres disponibles</option>
+                    )}
+                </select>
+            </div>
 
-                {/* Lista desplegable para fk_asignatura */}
-                <div className="w-full px-3 mb-4">
-                    {/*<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="fk_asignatura">
-                        Asignatura
-                    </label>*/}
-                    <select
-                        className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="fk_asignatura"
-                        onChange={handleChange}
-                        value={nivelAsignatura.fk_asignatura}
-                    >
-                        <option value="">Seleccionar Asignatura</option>
-                        {asignaturas.map((asignatura) => (
+            {/* Select para la asignatura */}
+            <div className="w-full px-3 mb-4">
+                <select
+                    className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    name="fk_asignatura"
+                    onChange={handleChange}
+                    value={nivelAsignatura.fk_asignatura}
+                >
+                    <option value="">Seleccionar Asignatura</option>
+                    {Array.isArray(asignaturas) && asignaturas.length > 0 ? (
+                        asignaturas.map((asignatura) => (
                             <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
-                                {asignatura.nombreAsignatura}
+                                {asignatura.nombreasignatura}
                             </option>
-                        ))}
-                    </select>
-                </div>
+                        ))
+                    ) : (
+                        <option disabled>No hay asignaturas disponibles</option>
+                    )}
+                </select>
+            </div>
+
 
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionNombre">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="relacionnombre">
                         Nombre de la Relación
                     </label>
                     <input
@@ -120,7 +121,7 @@ function AddNivelAsignatura() {
                         type="text"
                         placeholder="Nombre de la relación"
                         onChange={handleChange}
-                        name="relacionNombre"
+                        name="relacionnombre"
                     />
                     <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre las asignaturas</p>
                 </div>

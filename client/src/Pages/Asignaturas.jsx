@@ -6,15 +6,26 @@ import AsignaturasSecciones from '../Sections/Horario/AsignaturasSecciones';
 import AddAsignaturaSeccion from '../Sections/Horario/AddAsignaturaSeccion';
 import Navbar from '../Layout/Navbar';
 import Footer from '../Layout/Footer';
+import AddCarrera from '../Sections/Carrera/AddCarrera';
+import AddCarreraNivel from '../Sections/Nivel/AddCarreraNivel';
+import AddAsignatura from '../Sections/Asignatura/AddAsignatura';
+import AddNivelAsignatura from '../Sections/Asignatura/AddNivelAsignatura';
 
 function Asignaturas() {
     return (
         <div>
             <Navbar />
-
-            <AsignaturasList />
-            {/* <AddSeccion /> */}
-            <AsignaturasSecciones />
+            <div className='flex flex-col p-4'>
+                <div className='flex flex-row w-full    '>
+                    <AddCarrera/>
+                    <AddAsignatura/>
+                </div>
+                <AddCarreraNivel/>
+                <AddNivelAsignatura/>
+                <AddSeccion/>
+                <AddAsignaturaSeccion/>
+                <AsignaturasSecciones />
+            </div>
             <Footer />
         </div>
     )

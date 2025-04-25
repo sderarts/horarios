@@ -24,7 +24,7 @@ const getNivel_AsignaturaById = (id, callback) => {
 
 
 const createNivel_Asignatura = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO nivelasignatura( `fk_nivel`, `fk_asignatura`, `relacionnombre`) VALUES ($1, $2, $3)";
+    const q = "INSERT INTO nivelasignatura( fk_nivel, fk_asignatura, relacionnombre) VALUES ($1, $2, $3)";
     db.query(q, [Nivel_AsignaturaData.fk_nivel, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.relacionnombre], callback);
 };
 
@@ -34,7 +34,7 @@ const deleteNivel_Asignatura = (id, callback) => {
 };
 
 const updateNivel_Asignatura = (id, fk_asignatura, fk_nivel, relacionnombre, callback) => {
-    const q = "UPDATE nivelasignatura SET `fk_asignatura` = $1, `fk_nivel` = $2, `relacionnombre` = $3 WHERE id_nivel_asignatura = $4";
+    const q = "UPDATE nivelasignatura SET fk_asignatura = $1, fk_nivel = $2, relacionnombre = $3 WHERE id_nivel_asignatura = $4";
     db.query(q, [fk_asignatura, fk_nivel, relacionnombre, id], callback);
 };
 

@@ -28,10 +28,7 @@ const getAllAsignaturas = (callback) => {
     db.query(q, callback);
 };
 const getAllAsignaturas2 = (callback) => {
-    const q = ` SELECT id_asignatura, nombreasignatura
-                FROM asignatura;
-                ;
-    `;
+    const q = " SELECT id_asignatura, nombreasignatura FROM asignatura";
     db.query(q, callback);
 };
 
@@ -54,8 +51,8 @@ const getAsignaturaById = (id, callback) => {
 
 
 const createAsignatura = (asignaturaData, callback) => {
-    const q = "INSERT INTO asignatura(`nombreasignatura`) VALUES ($1)";
-    db.query(q, [asignaturaData.nombreAsignatura], callback);
+    const q = "INSERT INTO asignatura(nombreasignatura) VALUES ($1)";
+    db.query(q, [asignaturaData.nombreasignatura], callback);
 };
 
 const deleteAsignatura = (id, callback) => {

@@ -72,7 +72,10 @@ function AsignaturasAlumno() {
         event.preventDefault();
 
         // Encontrar el fk_seccion usando el id_asignatura_seccion
+        console.log("ID que se busca:", idAsignaturaSeccion);
+        console.log("Lista de asignaturas:", asignaturas);
         const asignatura = asignaturas.find(asignatura => asignatura.id_asignatura_seccion === idAsignaturaSeccion);
+        console.log("Asignatura encontrada:", asignatura);
         const fk_seccion = asignatura ? asignatura.fk_seccion : null;
 
         if (fk_seccion) {
@@ -96,67 +99,82 @@ function AsignaturasAlumno() {
             setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
             return;
         }
-
+    
         if (!selectedAsignatura) {
             setErrorMessage("No se ha seleccionado una asignatura.");
             setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
             return;
         }
-
+    
         try {
             // Primero obtener los datos de la asignatura seleccionada
             const asignatura = asignaturas.find(asignatura => asignatura.id_asignatura_seccion === selectedAsignatura);
             const fk_seccion = asignatura ? asignatura.fk_seccion : null;
-
+    
             // Verificar que la asignatura y fk_seccion sean válidos
             if (!fk_seccion) {
                 setErrorMessage("No se pudo encontrar la sección de la asignatura.");
                 return;
             }
-
+    
             // Obtener los datos de la sección para la inscripción
             const responseSeccion = await axios.get(`http://localhost:8800/secciones/${fk_seccion}`);
             const seccionData = responseSeccion.data;
-
+    
             // Verificar si la sección tiene capacidad
             if (seccionData.inscripciones >= seccionData.capacidad) {
                 setErrorMessage("No hay suficiente capacidad para inscribir más estudiantes.");
                 setSuccessMessage(""); // Limpiar mensaje de éxito si hay error
                 return;
             }
-
+    
             // Si la inscripción es posible, actualizar el número de inscripciones
             const updatedInscribirAsignatura = {
                 fk_seccion_asignatura: selectedAsignatura,  // Usamos el id_asignatura_seccion
                 fk_alumno: inscribirAsignatura.fk_alumno,   // Asegúrate de tener el fk_alumno
             };
-
+    
             // Realizar el POST para la inscripción
             const postResponse = await axios.post("http://localhost:8800/horario_alumnos", updatedInscribirAsignatura);
             console.log("Inscripción realizada con éxito:", postResponse.data);
-
+    
             // Ahora actualizar las inscripciones de la sección
-            const updatedInscripciones = seccionData.inscripciones + 1;
-
+            let updatedInscripciones = seccionData.inscripciones + 1;
+            console.log('Inscripciones actualizadas:', updatedInscripciones); // Verifica el valor antes de enviar la solicitud
+    
+            // Asegurarse de que el valor de inscripciones no sea nulo o undefined
+            if (updatedInscripciones === null || updatedInscripciones === undefined || isNaN(updatedInscripciones)) {
+                setErrorMessage("No se pudo obtener el valor de las inscripciones.");
+                setShowModal(false);  // Cerrar el modal en caso de error
+                return;
+            }
+    
+            // Verificar que los datos de la sección sean válidos
+            if (!seccionData.nombreseccion || !seccionData.capacidad) {
+                setErrorMessage("Los datos de la sección no son válidos.");
+                setShowModal(false);  // Cerrar el modal en caso de error
+                return;
+            }
+    
             // Realizar el PUT para actualizar las inscripciones en la base de datos
             await axios.put(`http://localhost:8800/secciones/inscripciones/${fk_seccion}`, {
                 inscripciones: updatedInscripciones,
-                nombreSeccion: seccionData.nombreSeccion,
+                nombreseccion: seccionData.nombreseccion,
                 capacidad: seccionData.capacidad,
             });
-
+    
             // Mostrar mensaje de éxito
             setSuccessMessage("¡Inscripción realizada con éxito!");
             setErrorMessage("");
-            setShowModal(false);
-            // Limpiar mensaje de error
-
+            setShowModal(false);  // Cerrar el modal al completar con éxito
+    
         } catch (error) {
             console.error("Error al realizar la inscripción:", error);
             if (error.response && error.response.data && error.response.data.message) {
                 setErrorMessage(error.response.data.message);
                 setShowModal(false);  // Mostrar mensaje de backend
             } else {
+                console.log('error: ', error)
                 setErrorMessage("Error al registrar la inscripción.");
                 setShowModal(false);
             }
@@ -164,6 +182,7 @@ function AsignaturasAlumno() {
             setShowModal(false); // Limpiar mensaje de éxito si hay error
         }
     };
+    
 
 
 
@@ -201,10 +220,10 @@ function AsignaturasAlumno() {
                             return (
                                 <div className="border p-4 items-center bg-white rounded-lg z-100" key={e.id_asignatura_seccion}>
                                     <div className='p-4'>
-                                        <p className='font-bold'>{e.nombreAsignatura} - {e.nombreSeccion}</p>
-                                        <p>{e.nombreDocente}</p>
+                                        <p className='font-bold'>{e.nombreasignatura} - {e.nombreseccion}</p>
+                                        <p>{e.nombredocente}</p>
                                         <p>{e.inscripciones}/{e.capacidad}</p>
-                                        <p>{e.nombreCarrera} - {e.nombreNivel}</p>
+                                        <p>{e.nombrecarrera} - {e.nombrenivel}</p>
                                     </div>
                                     <div>
                                         <button

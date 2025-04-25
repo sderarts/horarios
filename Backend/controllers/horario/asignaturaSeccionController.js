@@ -3,7 +3,7 @@ import Asignatura_Seccion from '../../models/horario/asignaturaSeccionModel.js'
 const getAllAsignaturas_Secciones = (req, res) => {
     Asignatura_Seccion.getAllAsignaturas_Secciones((err, data) => {
         if (err) return res.status(500).json({ message: 'Error en la base de datos', error: err });
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 
@@ -18,7 +18,7 @@ const getAsignatura_SeccionById = (req, res) => {
             return res.status(500).json({ message: 'Error en la base de datos', error: err });
         }
 
-        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+        return res.status(200).json(data.rows);  // Devolvemos los datos de la sección encontrada
     });
 };
 const getAsignatura_SeccionById2 = (req, res) => {

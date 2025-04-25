@@ -6,7 +6,7 @@ function AddSeccion() {
 
     const navigate = useNavigate();
     const [seccion, setSeccion] = useState({
-        nombreSeccion: "",
+        nombreseccion: "",
         capacidad: "",
         inscripciones: ""
     })
@@ -34,14 +34,7 @@ function AddSeccion() {
 
     return (
         <div>
-
-            {/* <input type="number" placeholder='0' onChange={handleChange} name='id_seccion' />
-            <input type="text" placeholder='Nombre sección' onChange={handleChange} name='nombreSeccion' />
-            <input type="number" placeholder='Capacidad' onChange={handleChange} name='capacidad' />
-            <input type="number" placeholder='Inscripciones' onChange={handleChange} name='inscripciones' />
-            <button onClick={handleClick}>Add Nivel</button> */}
-
-            <div className='px-12 bg-amber-400'>
+            <div>
                 <div className='w-full justify-center items-center py-4'>
                     <p className='text-black font-semibold text-xl'>Crear una Sección</p>
                 </div>
@@ -51,7 +44,7 @@ function AddSeccion() {
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                             Siglas Sección
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder='Siglas sección' onChange={handleChange} name='nombreSeccion' />
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder='Siglas sección' onChange={handleChange} name='nombreseccion' />
 
                     </div>
                     <div class="w-full px-3">

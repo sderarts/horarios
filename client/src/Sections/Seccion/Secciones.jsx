@@ -68,7 +68,7 @@ function VerSecciones() {
   };
 
   return (
-    <div className='flex flex-row w-1/2 bg-amber-400'>
+    <div className='flex'>
       <div className="p-12">
         <div className='w-full justify-center items-center p-4'>
           <p className='text-black font-semibold text-xl'>Listado de secciones</p>
@@ -89,7 +89,7 @@ function VerSecciones() {
                 {secciones.map((e) => (
                   <tr key={e.id_seccion} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                     <td className="px-6 py-4 font-semibold bg-black text-white">
-                      {e.id_seccion} - {e.nombreSeccion}
+                      {e.id_seccion} - {e.nombreseccion}
                     </td>
                     <td className="px-6 py-4 font-semibold">
                       {e.inscripciones}/{e.capacidad}
@@ -97,7 +97,7 @@ function VerSecciones() {
                     <td className="px-6 py-4">
                       <button
                         className="font-bold text-blue-600 dark:text-blue-500 hover:underline"
-                        onClick={() => openEditModal(e.id_seccion, e.nombreSeccion, e.capacidad, e.inscripciones)}
+                        onClick={() => openEditModal(e.id_seccion, e.nombreseccion, e.capacidad, e.inscripciones)}
                       >
                         Actualizar
                       </button>
@@ -159,7 +159,7 @@ function VerSecciones() {
                   type="text"
                   placeholder="Nombre de la sección"
                   name="nombreSeccion"
-                  value={seccionToEdit.nombreSeccion}
+                  value={seccionToEdit.nombreseccion}
                   onChange={handleChange}
                 />
               </div>

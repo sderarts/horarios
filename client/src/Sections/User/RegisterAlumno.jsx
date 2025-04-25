@@ -228,7 +228,7 @@ const FormularioAlumno = () => {
                             <option value="">Selecciona una carrera</option>
                             {carreras.map((carrera) => (
                                 <option key={carrera.id_carrera} value={carrera.id_carrera}>
-                                    {carrera.nombreCarrera}
+                                    {carrera.nombrecarrera}
                                 </option>
                             ))}
                         </select>
@@ -249,7 +249,7 @@ const FormularioAlumno = () => {
                             <option value="">Selecciona un nivel</option>
                             {niveles.map((nivel) => (
                                 <option key={nivel.id_carrera_nivel} value={nivel.id_carrera_nivel}>
-                                    {nivel.relacionNombre}
+                                    {nivel.relacionnombre}
                                 </option>
                             ))}
                         </select>

@@ -4,13 +4,13 @@ import Asignatura from '../../models/asignaturas/asignaturaModel.js';
 const getAsignatura = (req, res) => {
     Asignatura.getAllAsignaturas((err, data) => {
         if (err) return res.status(500).json(err);
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 const getAsignatura2 = (req, res) => {
     Asignatura.getAllAsignaturas2((err, data) => {
         if (err) return res.status(500).json(err);
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 

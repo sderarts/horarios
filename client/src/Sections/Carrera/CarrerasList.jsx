@@ -107,9 +107,9 @@ function CarrerasList() {
                     <p>No hay carreras disponibles.</p>
                 )}
             </div>
-            <div>
+            {/* <div>
                 <AddCarrera />
-            </div>
+            </div> */}
 
             {/* Modal de eliminación */}
             {showDeleteModal && (

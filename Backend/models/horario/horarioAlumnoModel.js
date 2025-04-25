@@ -57,7 +57,7 @@ const getHorarioById = (id, callback) => {
 
 
 const createHorario_Alumno = (Horario_AlumnoData, callback) => {
-    const q = "INSERT INTO horarioalumno( `fk_alumno`, `fk_seccion_asignatura`) VALUES ($1, $2)";
+    const q = "INSERT INTO horarioalumno( fk_alumno, fk_seccion_asignatura) VALUES ($1, $2)";
     db.query(q, [Horario_AlumnoData.fk_alumno, Horario_AlumnoData.fk_seccion_asignatura], callback);
 };
 

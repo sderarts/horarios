@@ -78,7 +78,7 @@ function HorarioAlumno() {
                     // Realizar el PUT para actualizar las inscripciones en la tabla seccion
                     await axios.put(`http://localhost:8800/secciones/${fk_seccion}`, {
                         inscripciones: updatedInscripciones,
-                        nombreSeccion: seccionData.nombreSeccion,
+                        nombreseccion: seccionData.nombreseccion,
                         capacidad: seccionData.capacidad
                     });
 
@@ -113,9 +113,9 @@ function HorarioAlumno() {
                     {horario.map((e) => (
                         <div className="border p-4 items-center bg-white rounded-lg" key={e.id_horario}>
                             <div className='p-4'>
-                                <p className='font-bold'>{e.id_horario} - {e.nombreRelacion} - {e.nombreSeccion}</p>
-                                <p>{e.nombreAsignatura} </p>
-                                <p>{e.nombreDocente}</p>
+                                <p className='font-bold'>{e.id_horario} - {e.nombrerelacion} - {e.nombreseccion}</p>
+                                <p>{e.nombreasignatura} </p>
+                                <p>{e.nombredocente}</p>
                             </div>
                             <div className="flex justify-between">
                                 <button

@@ -14,8 +14,8 @@ function AsignaturasSecciones() {
     const [asignaturas, setAsignaturas] = useState([]);
     const [secciones, setSecciones] = useState([]);
     const [asignaturaSeccionToEdit, setAsignaturaSeccionToEdit] = useState({
-        nombreRelacion: "",
-        nombreDocente: "",
+        nombrerelacion: "",
+        nombredocente: "",
         fk_asignatura: "",
         fk_seccion: ""
     });
@@ -25,7 +25,7 @@ function AsignaturasSecciones() {
         const fetchAsignaturasSecciones = async () => {
             try {
                 const [asignaturasRes, seccionesRes] = await Promise.all([
-                    axios.get("http://localhost:8800/asignaturas"),
+                    axios.get("http://localhost:8800/asignaturas/secciones"),
                     axios.get("http://localhost:8800/secciones")
                 ]);
                 setAsignaturas(asignaturasRes.data);
@@ -114,16 +114,16 @@ function AsignaturasSecciones() {
                                 {asignaturaSeccion.map((e) => (
                                     <tr key={e.id_asignatura_seccion} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                                         <td className="px-6 py-4 font-semibold bg-black text-white" >
-                                            {e.id_asignatura_seccion} - {e.nombreRelacion}
+                                            {e.id_asignatura_seccion} - {e.nombrerelacion}
                                         </td>
                                         <td className="px-6 py-4 font-semibold">
-                                            {e.nombreAsignatura}
+                                            {e.nombreasignatura}
                                         </td>
                                         <td className="px-6 py-4 font-semibold">
-                                            {e.nombreSeccion}
+                                            {e.nombreseccion}
                                         </td>
                                         <td className="px-6 py-4 font-semibold">
-                                            {e.nombreDocente}
+                                            {e.nombredocente}
                                         </td>
                                         <td className="px-6 py-4">
                                             <button
@@ -184,8 +184,8 @@ function AsignaturasSecciones() {
                             <label className="block">Nombre relación</label>
                             <input
                                 type="text"
-                                value={asignaturaSeccionToEdit.nombreRelacion}
-                                onChange={(e) => setAsignaturaSeccionToEdit({ ...asignaturaSeccionToEdit, nombreRelacion: e.target.value })}
+                                value={asignaturaSeccionToEdit.nombrerelacion}
+                                onChange={(e) => setAsignaturaSeccionToEdit({ ...asignaturaSeccionToEdit, nombrerelacion: e.target.value })}
                                 className="w-full border rounded p-2"
                             />
                         </div>
@@ -193,8 +193,8 @@ function AsignaturasSecciones() {
                             <label className="block">Nombre docente</label>
                             <input
                                 type="text"
-                                value={asignaturaSeccionToEdit.nombreDocente}
-                                onChange={(e) => setAsignaturaSeccionToEdit({ ...asignaturaSeccionToEdit, nombreDocente: e.target.value })}
+                                value={asignaturaSeccionToEdit.nombredocente}
+                                onChange={(e) => setAsignaturaSeccionToEdit({ ...asignaturaSeccionToEdit, nombredocente: e.target.value })}
                                 className="w-full border rounded p-2"
                             />
                         </div>
@@ -208,7 +208,7 @@ function AsignaturasSecciones() {
                                 <option value="">Selecciona asignatura</option>
                                 {asignaturas.map(asignatura => (
                                     <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
-                                        {asignatura.nombreAsignatura}
+                                        {asignatura.nombreasignatura}
                                     </option>
                                 ))}
                             </select>
@@ -223,7 +223,7 @@ function AsignaturasSecciones() {
                                 <option value="">Selecciona sección</option>
                                 {secciones.map(seccion => (
                                     <option key={seccion.id_seccion} value={seccion.id_seccion}>
-                                        {seccion.nombreSeccion}
+                                        {seccion.nombreseccion}
                                     </option>
                                 ))}
                             </select>

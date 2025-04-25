@@ -5,6 +5,7 @@ import AsignaturasList from '../Sections/Asignatura/AsignaturasList';
 import Navbar from '../Layout/Navbar';
 import AddCarreraNivel from '../Sections/Nivel/AddCarreraNivel';
 import Footer from '../Layout/Footer';
+import VerSecciones from '../Sections/Seccion/Secciones';
 
 
 function Carreras() {
@@ -12,7 +13,8 @@ function Carreras() {
         <div className='bg-amber-400'>
             <Navbar />
             <CarrerasList />
-            <AddCarreraNivel />
+            <AsignaturasList/>
+            <VerSecciones/>
             <Footer />
         </div>
     )

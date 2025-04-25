@@ -2,31 +2,32 @@ import db from '../../config/db.js';
 
 const getAllAsignaturas_Secciones = (callback) => {
     const q = ` SELECT 
-                a.nombreasignatura, 
-                ac.fk_seccion,
-                ac.nombrerelacion,
-                a.id_asignatura,
-                ac.id_asignatura_seccion,
-                ac.nombredocente, 
-                s.nombreseccion, 
-                s.capacidad, 
-                s.inscripciones, 
-                n.nombrenivel, 
-                c.nombrecarrera
-            FROM 
-                asignatura a
-            JOIN 
-                nivelasignatura na ON a.id_asignatura = na.fk_asignatura
-            JOIN 
-                nivel n ON na.fk_nivel = n.id_nivel
-            JOIN 
-                carreranivel cn ON n.id_nivel = cn.fk_nivel
-            JOIN 
-                carrera c ON cn.fk_carrera = c.id_carrera
-            JOIN
-                asignaturaseccion ac ON a.id_asignatura = ac.fk_asignatura
-            JOIN
-                seccion s ON ac.fk_seccion = s.id_seccion;
+                    ac.id_asignatura_seccion,
+                    MAX(ac.fk_seccion) AS fk_seccion,  -- Agrega esto
+                    MAX(a.nombreasignatura) AS nombreasignatura,
+                    MAX(ac.nombrerelacion) AS nombrerelacion,
+                    MAX(ac.nombredocente) AS nombredocente,
+                    MAX(s.nombreseccion) AS nombreseccion,
+                    MAX(s.capacidad) AS capacidad,
+                    MAX(s.inscripciones) AS inscripciones,
+                    MAX(n.nombrenivel) AS nombrenivel,
+                    MAX(c.nombrecarrera) AS nombrecarrera
+                FROM 
+                    asignatura a
+                JOIN 
+                    nivelasignatura na ON a.id_asignatura = na.fk_asignatura
+                JOIN 
+                    nivel n ON na.fk_nivel = n.id_nivel
+                JOIN 
+                    carreranivel cn ON n.id_nivel = cn.fk_nivel
+                JOIN 
+                    carrera c ON cn.fk_carrera = c.id_carrera
+                JOIN
+                    asignaturaseccion ac ON a.id_asignatura = ac.fk_asignatura
+                JOIN
+                    seccion s ON ac.fk_seccion = s.id_seccion
+                GROUP BY ac.id_asignatura_seccion;
+
     `;
     db.query(q, callback);
 };
@@ -179,7 +180,7 @@ const getAsignatura_SeccionByAlumno = (id, callback) => {
 };
 
 const createAsignatura_Seccion = (Nivel_AsignaturaData, callback) => {
-    const q = "INSERT INTO asignaturaseccion(`fk_seccion`, `fk_asignatura`, `nombrerelacion`, `nombredocente`) VALUES ($1, $2, $3, $4)";
+    const q = "INSERT INTO asignaturaseccion(fk_seccion, fk_asignatura, nombrerelacion, nombredocente) VALUES ($1, $2, $3, $4)";
     db.query(q, [Nivel_AsignaturaData.fk_seccion, Nivel_AsignaturaData.fk_asignatura, Nivel_AsignaturaData.nombrerelacion, Nivel_AsignaturaData.nombredocente], callback);
 };
 
@@ -189,7 +190,7 @@ const deleteAsignatura_Seccion = (id, callback) => {
 };
 
 const updateAsignatura_Seccion = (id, asignatura, fk_seccion, nombrerelacion, nombredocente, callback) => {
-    const q = "UPDATE asignaturaseccion SET `fk_asignatura` = $1, `fk_seccion` = $2, `nombrerelacion` = $3 , `nombredocente` = $4 WHERE id_asignatura_seccion = $5";
+    const q = "UPDATE asignaturaseccion SET fk_asignatura = $1, fk_seccion = $2, nombrerelacion = $3 , nombredocente = $4 WHERE id_asignatura_seccion = $5";
     db.query(q, [asignatura, fk_seccion, nombrerelacion, nombredocente, id], callback);
 };
 

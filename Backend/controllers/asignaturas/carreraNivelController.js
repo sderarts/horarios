@@ -3,7 +3,7 @@ import Carrera_Nivel from '../../models/asignaturas/carreraNivelModel.js'
 const getAllCarreras_Niveles = (req, res) => {
     Carrera_Nivel.getAllCarreras_Niveles((err, data) => {
         if (err) return res.status(500).json({ message: 'Error en la base de datos', error: err });
-        return res.status(200).json(data);
+        return res.status(200).json(data.rows);
     });
 };
 

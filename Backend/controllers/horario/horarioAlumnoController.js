@@ -19,7 +19,7 @@ const getHorario_AlumnoById = (req, res) => {
             return res.status(500).json({ message: 'Error en la base de datos', error: err });
         }
 
-        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+        return res.status(200).json(data.rows);  // Devolvemos los datos de la sección encontrada
     });
 };
 
@@ -34,7 +34,7 @@ const getHorarioById = (req, res) => {
             return res.status(500).json({ message: 'Error en la base de datos', error: err });
         }
 
-        return res.status(200).json(data);  // Devolvemos los datos de la sección encontrada
+        return res.status(200).json(data.rows);  // Devolvemos los datos de la sección encontrada
     });
 };
 

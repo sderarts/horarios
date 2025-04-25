@@ -15,7 +15,7 @@ function AsignaturasList() {
     const [asignaturas, setAsignaturas] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8800/asignaturas")
+        axios.get("http://localhost:8800/asignatura_secciones")
             .then((response) => {
                 console.log('Datos recibidos:', response.data);  // Asegúrate de que los datos llegan aquí
                 setAsignaturas(response.data);  // Guardamos los datos de niveles en el estado
@@ -64,38 +64,26 @@ function AsignaturasList() {
                                     {asignaturas.map((e) => (
                                         <tr key={e.id_asignatura} className="bg-white border-b dark:bg-gray-50 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100">
                                             <td className="px-6 py-4 font-semibold bg-black text-white">
-                                                {e.id_asignatura} - {e.nombreAsignatura}
+                                                {e.id_asignatura} - {e.nombreasignatura}
                                             </td>
                                             <td className="px-6 py-4 font-semibold">
-                                                {e.nombreSeccion}
+                                                {e.nombreseccion || <span className="text-gray-400 italic">Sin sección</span>}
                                             </td>
                                             <td className="px-6 py-4 font-semibold">
-                                                {e.nombreDocente}
+                                                {e.nombredocente || <span className="text-gray-400 italic">Sin docente</span>}
                                             </td>
                                             <td className="px-6 py-4 font-semibold">
-                                                {e.inscripciones}/{e.capacidad}
+                                                {(e.inscripciones && e.capacidad) ? `${e.inscripciones}/${e.capacidad}` : 'N/A'}
                                             </td>
                                             <td className="px-6 py-4 font-semibold">
-                                                {e.nombreNivel}
+                                                {e.nombrenivel || 'Sin nivel'}
                                             </td>
                                             <td className="px-6 py-4 font-semibold">
-                                                {e.nombreCarrera}
+                                                {e.nombrecarrera || 'Sin carrera'}
                                             </td>
 
 
-                                            {/* <td className="px-6 py-4 text-right">
-                                                        <Link to={`/carreras/${e.id_asignatura}`}>
-                                                            <button className="font-bold text-blue-600 dark:text-blue-500 hover:underline">
-                                                                Update
-                                                            </button>
-                                                        </Link>
-                                                        <button
-                                                            className="delete font-bold text-red-600 dark:text-red-500 hover:underline ml-2"
-                                                            onClick={() => handleDelete(e.id_asignatura)}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td> */}
+
                                         </tr>
                                     ))}
                                 </tbody>
@@ -110,10 +98,10 @@ function AsignaturasList() {
 
             </div>
             <div className='flex flex-col w-full'>
-                <AddAsignatura />
+                {/* <AddAsignatura />
                 <AddNivelAsignatura />
                 <AddSeccion />
-                <AddAsignaturaSeccion />
+                <AddAsignaturaSeccion /> */}
             </div>
         </div>
     );

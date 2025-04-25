@@ -10,7 +10,7 @@ import Footer from '../Layout/Footer';
 function Alumno() {
     return (
         <div >
-            {/* <Navbar /> */}
+            <Navbar />
 
             <AsignaturasAlumno />
             {/* <AddHorarioAlumno /> */}

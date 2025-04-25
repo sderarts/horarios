@@ -6,7 +6,7 @@ function AddAsignatura() {
 
     const navigate = useNavigate();
     const [asignatura, setAsignatura] = useState({
-        nombreAsignatura: ""
+        nombreasignatura: ""
     })
 
     const handleChange = (e) => {
@@ -25,13 +25,13 @@ function AddAsignatura() {
     };
 
     return (
-        <div className='pt-12 px-12 w-2/4 bg-amber-400'>
+        <div>
             <div className="w-full justify-center items-center py-4">
                 <p className='text-black font-semibold text-xl'>Registrar asignatura</p>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6 form w-full">
                 <div class="w-full px-3">
-                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder='Asignatura NO Sección' onChange={handleChange} name='nombreAsignatura' />
+                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder='Asignatura NO Sección' onChange={handleChange} name='nombreasignatura' />
 
                 </div>
                 <div className="w-full px-3 mb-4">

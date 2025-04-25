@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router';
 function AddAsignaturaSeccion() {
     const navigate = useNavigate();
     const [asignaturaSeccion, setAsignaturaSeccion] = useState({
-        nombreRelacion: "",
-        nombreDocente: "",
+        nombrerelacion: "",
+        nombredocente: "",
         fk_asignatura: "",
         fk_seccion: ""
     });
@@ -20,7 +20,7 @@ function AddAsignaturaSeccion() {
         const fetchAsignaturas = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/asignaturas/secciones");
-                setAsignaturas(response.data); // Suponiendo que la respuesta es un array de días
+                setAsignaturas(Array.isArray(response.data) ? response.data : []); // Suponiendo que la respuesta es un array de días
             } catch (error) {
                 console.error("Error al obtener los días", error);
             }
@@ -29,7 +29,7 @@ function AddAsignaturaSeccion() {
         const fetchSecciones = async () => {
             try {
                 const response = await axios.get("http://localhost:8800/secciones");
-                setSecciones(response.data); // Suponiendo que la respuesta es un array de secciones
+                setSecciones(Array.isArray(response.data) ? response.data : []); // Suponiendo que la respuesta es un array de secciones
             } catch (error) {
                 console.error("Error al obtener los secciones", error);
             }
@@ -60,7 +60,7 @@ function AddAsignaturaSeccion() {
     };
 
     return (
-        <div className='bg-amber-400 w-1/3 px-12'>
+        <div>
             <div className="flex flex-wrap -mx-3 mb-6 form w-full">
                 <div className='w-full justify-center items-center p-4'>
                     <p className='text-black font-semibold text-xl'>Crear Asignatura-Sección</p>
@@ -76,7 +76,7 @@ function AddAsignaturaSeccion() {
                         <option value="">Asignatura</option>
                         {asignaturas.map((asignatura) => (
                             <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
-                                {asignatura.nombreAsignatura}
+                                {asignatura.nombreasignatura}
                             </option>
                         ))}
                     </select>
@@ -93,15 +93,15 @@ function AddAsignaturaSeccion() {
                         <option value="">Sección</option>
                         {secciones.map((seccion) => (
                             <option key={seccion.id_seccion} value={seccion.id_seccion}>
-                                {seccion.nombreSeccion}
+                                {seccion.nombreseccion}
                             </option>
                         ))}
                     </select>
                 </div>
 
-                {/* Input para nombreRelacion */}
+                {/* Input para nombrerelacion */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreRelacion">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombrerelacion">
                         Nombre de Relación
                     </label>
                     <input
@@ -109,14 +109,14 @@ function AddAsignaturaSeccion() {
                         type="text"
                         placeholder="Nombre de la relación"
                         onChange={handleChange}
-                        name="nombreRelacion"
+                        name="nombrerelacion"
                     />
                     <p className="text-gray-600 text-xs italic">Ingrese el nombre de la relación entre asignaturas y secciones</p>
                 </div>
 
-                {/* Input para nombreDocente */}
+                {/* Input para nombredocente */}
                 <div className="w-full px-3 mb-4">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombreDocente">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="nombredocente">
                         Nombre del Docente
                     </label>
                     <input
@@ -124,7 +124,7 @@ function AddAsignaturaSeccion() {
                         type="text"
                         placeholder="Nombre del docente"
                         onChange={handleChange}
-                        name="nombreDocente"
+                        name="nombredocente"
                     />
                     <p className="text-gray-600 text-xs italic">Ingrese el nombre del docente asignado</p>
                 </div>
